@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka+One&display=swap');
+
+
+/*  Regras para todos  */
+* {
+
+
+}
+
+/*  Regras Comuns  */
+body {
+    background-color: #FFF5EE;
+    margin:0;
+
+
+}
+
+
+
+nav ul {
+    font-family: 'Fredoka One', cursive;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color:#0C2340;
+    border-bottom: 5px solid #0396d6;
+}
+
+
+
+/*  Regras Escolha de Jogo  */
+.mine {
+    background-image: url("../img/mine.png");
+    background-repeat: no-repeat;
+
+    background-origin: content-box;
+    opacity: 0.8;
+    padding: 25px;
+    display: flex;
+    justify-content: space-around;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    box-shadow: inset hsla(0,0%,15%,  1) 0  0px 0px 4px, /* border */
+      inset hsla(0,0%,15%, .8) 0 -1px 5px 4px, /* soft SD */
+      inset hsla(0,0%,0%, .25) 0 -1px 0px 7px, /* bottom SD */
+      inset hsla(0,0%,100%,.7) 0  2px 1px 7px, /* top HL */
+      
+      hsla(0,0%, 0%,.15) 0 -5px 6px 4px, /* outer SD */
+      hsla(0,0%,100%,.5) 0  5px 6px 4px; /* outer HL */ 
+
+}
+
+
+
+
+
+.mine:hover {
+  
+
+    animation: slide 1s linear infinite;
+
+
+}
+.mine:active {
+    background-image: url("../img/explosion.png");
+    background-repeat: no-repeat;
+
+    background-origin: content-box;
+    opacity: 0.8;
+    padding: 25px;
+    display: flex;
+    justify-content: space-around;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    box-shadow: inset hsla(0,0%,15%,  1) 0  0px 0px 4px, /* border */
+      inset hsla(0,0%,15%, .8) 0 -1px 5px 4px, /* soft SD */
+      inset hsla(0,0%,0%, .25) 0 -1px 0px 7px, /* bottom SD */
+      inset hsla(0,0%,100%,.7) 0  2px 1px 7px, /* top HL */
+      
+      hsla(0,0%, 0%,.15) 0 -5px 6px 4px, /* outer SD */
+      hsla(0,0%,100%,.5) 0  5px 6px 4px; /* outer HL */ 
+
+
+}
+
+@keyframes slide {
+    0%   {
+        background-color: goldenrod;}
+    25%  {
+        background-color: rgb(238, 128, 38);
+    }
+    50%  {
+        background-color:brown}
+    75%  {
+        background-color: rgb(223, 254, 136);
+    }
+    100% {background-color: rgb(227, 17, 17);}
+}
+
+
+
+
+
+.buttonLabel{
+    font-family: 'Fredoka One', cursive;
+    z-index: 1;
+}
+
+
+nav li {
+    float: left;
+    padding: 1%;
+}
+
+/* Extra small devices (phones, 599px and down) */
+@media screen and (max-width: 599px) {
+    nav li {
+        float: none;
+        width: 100%;
+    }
+}
+
+.active {
+    background-color:#0396d6;
+}
+
+.active :hover {
+    color:black;
+}
+
+
+nav li :hover {
+    color: yellow;
+
+}
+
+.right{
+    float: right;
+}
+
+nav li a{
+    display: block;
+    color:white;
+    text-align: center;
+    text-decoration: none;
+}
+
+footer {
+
+
+    background-color: #0C2340;
+    opacity: 1.0;
+    color: white;
+    text-align: center;
+
+
+
+}
+.gamelabel {
+    font-family: 'Fredoka One', cursive;
+    color: #FFF5EE;
+    z-index: 1;
+    min-height: 70px;
+}
+
+
+.gameTable{
+    padding:0;
+    margin: 2px auto;
+   height: 200px;
+    width: auto;
+    height: auto;
+    border-style: solid;
+    border-color: black;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    overflow: hidden;
+}
+.gameRow{
+    display: flex;           /* new */
+    align-items: center;     /* new; vertical alignment */
+    justify-content: center;
+}
+
+
+.gridGameM2  table  {
+    padding:0;
+    margin: 2px auto;
+   height: 200px;
+    width: auto;
+    height: auto;
+    border-style: solid;
+    border-color: black;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    overflow: hidden;
+}
+.gridGameM2 tr{
+    display: flex;           /* new */
+    align-items: center;     /* new; vertical alignment */
+    justify-content: center;
+}
+
+
+.celula{
+  
+    width: 30px;
+    height: 30px;
+  
+    max-width: 40px;
+    max-height: 40px;
+    background-color:#e7e7e78e;
+    border: 2px;
+    border: 1px solid black;
+    
+}
+
+.energia {
+    background-color: silver;
+    grid-row-start:3;
+    grid-row-end: 4;
+
+}
+
+
+.celula:hover{
+    background-color: rgba(128, 128, 128, 0.678);
+        
+    } 

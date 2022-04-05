@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css" type="text/css">
+    <link rel="stylesheet" href="estilos/layout.css" type="text/css">
+    <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Tangerine">
+    <title>Minesweeper</title>
+</head>
+<body>
+
+    <div class="container">
+        <nav class="navigation"> 
+            <ul>
+                <li ><a href="index.html">Minesweeper</a></li>
+                <li><a href="singleplayer.html">Jogar</a></li>
+                <li class="active"><a href="tutorial.html">Tutorial</a></li>
+                <li><a href="ranking.html">Ranking</a></li>
+                <li><a href="sobrenos.html">Sobre Nós</a></li>
+                <li class="right"><a href="login.html">User</a></li>
+            </ul>
+        </nav>
+
+
+
+
+  
+    <article class="regras">
+    <h2>Regras do jogo</h2>
+    <!--https://pt.wikipedia.org/wiki/Campo_minado-->
+
+       <p> A área de jogo consiste num campo de quadrados retangular. <br>
+        Cada quadrado pode ser revelado clicando sobre ele, e se o quadrado clicado contiver uma mina, então o jogo acaba. <br>
+        Se, por outro lado, o quadrado não contiver uma mina, uma de duas coisas poderá acontecer:</p>
+        <ol>
+            <li>Um número aparece, indicando a quantidade de quadrados adjacentes que contêm minas;</li>
+            <li>Nenhum número aparece. Neste caso, o jogo revela automaticamente os quadrados que se encontram adjacentes ao quadrado vazio, já que não podem conter minas;</li>
+        </ol>
+        O jogo é ganho quando todos os quadrados que não têm minas são revelados. <br>
+        Opcionalmente, o jogador pode marcar qualquer quadrado que acredita que contém uma mina com uma bandeira, bastando para isso clicar sobre ele com o botão direito do rato. <br>
+    <iframe width="200" height="300" src="https://www.youtube.com/embed/pw9CM2dD64c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    
+    <h3>Regras adicionais</h3>
+
+        Se o jogador quiser aumentar a dificuldade do jogo pode adicionar um tempo limite para o resolver e um nível de energia. <br>
+        Com a opção de tempo limite, o jogador perde se o tempo limite for atingido. <br>
+        O nível de energia começa a 100 e o jogador perde se o nível chegar a 0. Os impactos das minas encontram-se na seguinte tabela: <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Cor da mina</th>
+                    <th>Impacto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Azul</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>Amarela</td>
+                    <td>10</td>
+                </tr>
+            </tbody>
+        </table>   
+
+    </article>   
+          
+
+</div>
+        <footer >
+        &copy; Cidália, Filipe, Rita
+    </footer>
+
+</body>
+</html>

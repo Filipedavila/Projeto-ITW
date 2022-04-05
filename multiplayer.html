@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css" type="text/css">
+    <link rel="stylesheet" href="estilos/layout.css" type="text/css">
+    <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Tangerine">
+    <script src="js/jogo.js" ></script>
+    <link rel="stylesheet" href="estilos/jogo.css" type="text/css">
+  <title>Minesweeper</title>
+</head>
+<body onload='initMulti(8,8)'>
+    <div class="container">
+
+        <nav class="navigation"> 
+            <ul>
+                <li><a href="index.html">Minesweeper</a></li>
+                <li class="active"><a href="singleplayer.html">Jogar</a></li>
+                <li><a href="tutorial.html">Tutorial</a></li>
+                <li><a href="ranking.html">Ranking</a></li>
+                <li><a href="sobrenos.html">Sobre Nós</a></li>
+                <li class="right"><a href="login.html">User</a></li>
+            </ul>
+        </nav>
+
+      
+  
+            <div  class="gridGameM1">
+        
+                <div class="menu_jogo">
+                    <div id="relogio">00:00</div>
+                    <div id="smile_container"><img id="smile" src="./img/happy.png" alt="Smile para fazer restart do jogo"></div>
+                    <div id="bombas_falta">000</div>                    
+
+                </div>
+                  <div id="game1" class="">
+            
+                </div>
+                <div class="energia">
+                    <div id="energy_icon_container"><img id="energy_icon" src="./img/lightning.jpg" alt="Símbolo de energia"></div>         
+                    <div id="energy_bar"></div>
+                    <div id="energy_value">100</div>
+                </div>
+            </div>
+
+          
+            
+           <div  class="gridGameM2">
+        
+            <div class="menu_jogo">
+                <div id="relogio">00:00</div>
+                <div id="smile_container"><img id="smile" src="./img/happy.png" alt="Smile para fazer restart do jogo"></div>
+                <div id="bombas_falta">000</div>                    
+
+            </div>
+              <div id="game2" class="">
+        
+            </div>
+            <div class="energia">
+                <div id="energy_icon_container"><img id="energy_icon" src="./img/lightning.jpg" alt="Símbolo de energia"></div>         
+                <div id="energy_bar"></div>
+                <div id="energy_value">100</div>
+            </div>
+        </div>
+
+       
+
+
+        
+
+        <audio controls autoplay muted>
+            <source src="./audio/bensound-creativeminds.mp3" type="audio/mpeg"> <!-- Music: www.bensound.com -->
+        <p>O seu browser não suporta o elemento Audio.</p>    
+        </audio>
+
+      
+   <footer>
+            &copy; Cidália, Filipe, Rita
+        </footer>  
+    </div>        
+ 
+</body>
+</html>
