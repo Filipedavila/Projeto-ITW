@@ -1,0 +1,387 @@
+
+
+
+/* ###############    Layouyt para ecrãs menores do 481px  de largura     ##################*/
+@media only screen and (max-width: 560px) {
+    
+     /* Contentor principal Grid */ 
+    .container{
+        display: grid;
+        grid-row: repeat;
+        grid-template-columns: 100%;
+        grid-template-rows: auto auto auto ;
+        
+    }
+         /* Menu principal Grid position */ 
+        nav li {
+            float: none;
+            grid-row-start: 1;
+            width: 100%;
+        }
+          /* Menu Escolha de tipo de jogo Grid position */ 
+        .modos_jogo{
+            grid-row-start: 2;
+            align-self: center;
+            justify-self: center;
+            width: 100%;
+            height: 80%;
+        }
+       /* Tamanho de Celulas do Jogo */ 
+        .celula{
+  
+             width: 15px;
+             height: 15px;
+        }
+
+
+         /* Caixa que contem o Jogo SinglePlayer Posição em grid  */ 
+        .gridGame { 
+       
+            grid-row-start:2;
+            align-self: center;
+            padding: 10px;
+            margin: 10px auto;
+            width: fit-content;
+           
+            max-width: fit-content;
+            background-color: silver;
+            border: 1px solid black;
+            display: inline-grid;
+            grid-template-rows: auto  auto auto;
+            
+    
+        }
+        
+         /* Caixa que contem o Jogo Multiplayer P1 Posição em grid  */ 
+        .gridGameM1 { 
+   
+            grid-row-start:2;
+
+            padding: 10px;
+            margin: 10px auto;
+            width: fit-content;
+           
+            max-width: fit-content;
+            background-color: silver;
+            border: 1px solid black;
+            display: inline-grid;
+            grid-template-rows: auto  auto auto;
+            
+    
+        }
+    
+            /* Caixa que contem o Jogo Multiplayer P2 Posição em grid  */ 
+        .gridGameM2 { 
+      
+            grid-row-start:3;
+
+    
+    
+            margin: 10px auto;
+            width: fit-content;
+           
+            max-width: fit-content;
+            background-color: silver;
+            border: 1px solid black;
+            display: inline-grid;
+            grid-template-rows: auto  auto auto;
+        }
+
+             /* Caixa que contem o Jogo Multiplayer P2 Posição em grid  */ 
+
+
+        #energy_bar {
+            margin: 3% 3%;
+            padding: 3%;
+            width: 20%;
+    
+        }
+
+
+             /* Caixa que contem o Jogo Multiplayer P2 Posição em grid  */ 
+        footer{
+            grid-row: 9 / span 2;
+           
+            margin: 0;
+            width: 100%;
+    
+        }
+    
+    }
+/* ###############    Layouyt para ecrãs maiores do que 769px de largura     ##################*/
+@media only screen and (min-width: 561px){
+    /* Contentor principal Grid */ 
+    .container{
+        min-height: 100%;
+
+        display: grid; 
+        grid-template-columns: repeat(11, 1fr);
+        grid-template-rows: auto auto auto;
+        height: 100vh;
+        gap: 10px;
+    }
+      /* Local na grid para a barra de navegação principal */
+      .navigation {
+        margin: 0;
+        grid-column-start: 1;
+        grid-column-end: 13;
+        grid-row-start:1;
+        grid-row-end: 2;
+        width: 100%;
+        height: 100%;
+ 
+    }
+
+    .celula{
+  
+        width: 20px;
+        height: 20px;
+   }
+    .caixa{
+        justify-content: center;
+        grid-column-start: 5;
+        grid-column-end: 9;
+        grid-row-start:2;
+        grid-row-end: 4;
+        height: 100%;
+        width: 100%;
+       
+    }
+              /* Menu Escolha de tipo de jogo Grid position */ 
+    .modos_jogo{
+        align-self: center;
+        justify-self: center;
+        display: grid;
+        grid-template-columns: 15vw 15vw;
+        grid-template-rows: 15vw 15vw;
+        grid-gap: 5px;
+        height: 100%;
+        width: 100%;
+    }
+
+
+
+       /* Caixa que contem o Jogo SinglePlayer Posição em grid  */ 
+    .gridGame { 
+        grid-column-start: 4;
+        grid-column-end: 8;
+        grid-row-start:2;
+
+        padding: 10px;
+        margin: 10px auto;
+        width: fit-content;
+       
+        max-width: fit-content;
+        background-color: silver;
+        border: 1px solid black;
+        display: inline-grid;
+        grid-template-rows: auto  auto auto;
+        
+
+    }
+    
+       /* Caixa que contem o Jogo Multiplayer P1 Posição em grid  */ 
+    .gridGameM1 { 
+        grid-column-start: 2;
+        grid-column-end: 5;
+        grid-row-start:2;
+
+        padding: 10px;
+        margin: 10px auto;
+        width: fit-content;
+       
+        max-width: fit-content;
+        background-color: silver;
+        border: 1px solid black;
+        display: inline-grid;
+        grid-template-rows: auto  auto auto;
+        
+
+    }
+
+        /* Caixa que contem o Jogo Multiplayer P2 Posição em grid  */ 
+    .gridGameM2 { 
+        grid-column-start: 7;
+        grid-column-end: 11;
+        grid-row-start:2;
+    
+
+
+        margin: 10px auto;
+        width: fit-content;
+       
+        max-width: fit-content;
+        background-color: silver;
+        border: 1px solid black;
+        display: inline-grid;
+        grid-template-rows: auto  auto auto;
+    }
+    #energy_bar {
+        margin: 3% 3%;
+        padding: 3%;
+        width: 20%;
+
+    }
+   
+    /* Local na grid para o footer */
+    footer{
+        
+        grid-column-start: 1;
+        grid-column-end: 13;
+        grid-row-start:8;
+        grid-row-end: 9;
+        margin: 0;
+        width: 100%;
+        height: auto;
+
+    }
+}
+/* ###############    Layouyt para ecrãs maiores do que 1200px de largura     ##################*/
+@media only screen and (min-width: 1200px){
+
+ /* Contentor principal Grid */ 
+    .container{
+        min-height: 100%;
+
+        display: grid; 
+        grid-template-columns: repeat(11, 1fr);
+        grid-template-rows: 6vw  repeat(6,1fr)  2vw;
+        height: 100vh;
+        gap: 10px;
+    }
+ article{
+    grid-row: 2/10;
+    grid-column: 2/11;
+
+    }
+    .celula{
+  
+        width: 40px;
+        height: 40px;
+   }
+    .caixa{
+        justify-content: center;
+        grid-column-start: 5;
+        grid-column-end: 9;
+        grid-row-start:2;
+        grid-row-end: 4;
+        height: 100%;
+        width: 100%;
+       
+    }
+
+       /* Caixa que contem o Jogo SinglePlayer Posição em grid  */ 
+    .gridGame { 
+        grid-column-start: 5;
+        grid-column-end: 7;
+        grid-row-start:2;
+
+        padding: 10px;
+        margin: 10px auto;
+        width: fit-content;
+       
+        max-width: fit-content;
+        background-color: silver;
+        border: 1px solid black;
+        display: inline-grid;
+        grid-template-rows: auto  auto auto;
+        
+
+    }
+
+
+       /* Caixa que contem o Jogo Multiplayer P1 Posição em grid  */ 
+    .gridGameM1 { 
+        grid-column-start: 3;
+        grid-column-end: 6;
+        grid-row-start:2;
+
+        padding: 10px;
+        margin: 10px auto;
+        width: fit-content;
+       
+        max-width: fit-content;
+        background-color: silver;
+        border: 1px solid black;
+        display: inline-grid;
+        grid-template-rows: auto  auto auto;
+        
+
+    }
+
+       /* Caixa que contem o Jogo Multiplayer P2 Posição em grid  */ 
+    .gridGameM2 { 
+        grid-column-start: 7;
+        grid-column-end: 10;
+        grid-row-start:2;
+
+
+
+        margin: 10px auto;
+        width: fit-content;
+       
+        max-width: fit-content;
+        background-color: silver;
+        border: 1px solid black;
+        display: inline-grid;
+        grid-template-rows: auto  auto auto;
+        
+
+    }
+    #energy_bar {
+        margin: 3% 3%;
+        padding: 3%;
+        width: 20%;
+
+    }
+    .modos_jogo{
+        position: relative;
+        align-self: center;
+        justify-self: center;
+        display: grid;
+        grid-template-columns: 15vw 15vw;
+        grid-template-rows: 15vw 15vw;
+        grid-gap: 5px;
+        height: 100%;
+        width: 100%;
+    }
+
+    .menu_jogo{
+        display: flex;
+        justify-content: center;
+        grid-row: 1;
+
+    }
+
+    .energia {
+        display: flex;
+        justify-content: center;
+        grid-row: 3;
+        width: fit-content;
+    }
+    .celula{
+
+    }
+
+    .navigation {
+        margin: 0;
+        grid-column-start: 1;
+        grid-column-end: 13;
+        grid-row-start:1;
+        grid-row-end: 2;
+        width: 100%;
+        height: 100%;
+ 
+    }
+   /* Local na grid para o footer */
+    footer{
+        
+        grid-column-start: 1;
+        grid-column-end: 13;
+        grid-row-start:8;
+        grid-row-end: 9;
+        margin: 0;
+        width: 100%;
+
+    }
+}

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="estilos/main.css" type="text/css">
     <link rel="stylesheet" href="estilos/layout.css" type="text/css">
     <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Tangerine">
-    <title>Minesweeper</title>
+    <title>Minesweeper - Tutorial</title>
 </head>
 <body>
 
@@ -27,27 +27,36 @@
 
 
   
-    <article class="regras">
-    <h2>Regras do jogo</h2>
-    <!--https://pt.wikipedia.org/wiki/Campo_minado-->
 
-       <p> A área de jogo consiste num campo de quadrados retangular. <br>
-        Cada quadrado pode ser revelado clicando sobre ele, e se o quadrado clicado contiver uma mina, então o jogo acaba. <br>
-        Se, por outro lado, o quadrado não contiver uma mina, uma de duas coisas poderá acontecer:</p>
-        <ol>
-            <li>Um número aparece, indicando a quantidade de quadrados adjacentes que contêm minas;</li>
-            <li>Nenhum número aparece. Neste caso, o jogo revela automaticamente os quadrados que se encontram adjacentes ao quadrado vazio, já que não podem conter minas;</li>
-        </ol>
-        O jogo é ganho quando todos os quadrados que não têm minas são revelados. <br>
-        Opcionalmente, o jogador pode marcar qualquer quadrado que acredita que contém uma mina com uma bandeira, bastando para isso clicar sobre ele com o botão direito do rato. <br>
-    <iframe width="200" height="300" src="https://www.youtube.com/embed/pw9CM2dD64c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+       
     
-    <h3>Regras adicionais</h3>
+    <!--https://pt.wikipedia.org/wiki/Campo_minado-->
+        <section class="tutorial" >
+            <h1> Tutorial</h1>
+                <h2>Regras do jogo</h2>
+        <p> A área de jogo consiste num campo de quadrados retangular. <br>
+            Cada quadrado pode ser revelado clicando sobre ele, e se o quadrado clicado contiver uma mina, então o jogo acaba. <br>
+            Se, por outro lado, o quadrado não contiver uma mina, uma de duas coisas poderá acontecer:</p>
+            <ol>
+                <li>Um número aparece, indicando a quantidade de quadrados adjacentes que contêm minas;</li>
+                <li>Nenhum número aparece. Neste caso, o jogo revela automaticamente os quadrados que se encontram adjacentes ao quadrado vazio, já que não podem conter minas;</li>
+            </ol>
+            <p>O jogo é ganho quando todos os quadrados que não têm minas são revelados. <br>
+            Opcionalmente, o jogador pode marcar qualquer quadrado que acredita que contém uma mina com uma bandeira, bastando para isso clicar sobre ele com o botão direito do rato.</p> <br>
 
-        Se o jogador quiser aumentar a dificuldade do jogo pode adicionar um tempo limite para o resolver e um nível de energia. <br>
-        Com a opção de tempo limite, o jogador perde se o tempo limite for atingido. <br>
-        O nível de energia começa a 100 e o jogador perde se o nível chegar a 0. Os impactos das minas encontram-se na seguinte tabela: <br>
-        <table>
+        </section>
+ 
+                <aside class="videoTutorial" >
+                    <iframe src="https://www.youtube.com/embed/pw9CM2dD64c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+   
+                </aside>
+                <div class="regras">
+                <h3>Regras adicionais</h3>
+
+                <p>  Se o jogador quiser aumentar a dificuldade do jogo pode adicionar um tempo limite para o resolver e um nível de energia. <br>
+                    Com a opção de tempo limite, o jogador perde se o tempo limite for atingido. <br>
+                    O nível de energia começa a 100 e o jogador perde se o nível chegar a 0. Os impactos das minas encontram-se na seguinte tabela: <br>
+                  <table>
             <thead>
                 <tr>
                     <th>Cor da mina</th>
@@ -66,13 +75,17 @@
             </tbody>
         </table>   
 
-    </article>   
-          
+                </div>
 
-</div>
+
+
+
+
+
+
         <footer >
-        &copy; Cidália, Filipe, Rita
+            <p> &copy; Cidália, Filipe, Rita</p>
     </footer>
-
+</div>
 </body>
 </html>

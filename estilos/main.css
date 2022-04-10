@@ -1,22 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka+One&display=swap');
-
-
-/*  Regras para todos  */
+/* Font importadada do google fonts     */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Ubuntu+Condensed&display=swap');
+/*  ------ Regras Globais --------------------------------------  */
 * {
 
 
 }
+/*  -------------------------------- Regras Comuns ----------------------------------------- */
+
+
+/* Remoção de decoração em links */
+a { 
+
+    text-decoration: none;
+ }
+
 
 /*  Regras Comuns  */
 body {
     background-color: #FFF5EE;
     margin:0;
 
-
 }
 
+h1 {
+    font-family: 'Fredoka One', cursive;
+    text-align: center;
+    font-size:3vw;
+}
+
+h2 ,th , h3 {
+    font-family: 'Fredoka One', cursive;
+    text-align: center;
+    font-size:2vw;
+}
+p, li, ol , td {
+    font-family: 'Ubuntu Condensed', sans-serif;
+    font-size:2vw;
+}
+footer p {
+    font-family: 'Ubuntu Condensed', sans-serif;
+    font-size:1vw;
+}
+
+/*  --------------------------------   Navegação  ----------------------------------------- */
 
 
+/* ##### barra de navegação Principal ##### */
+
+
+/*Botão de navegação */
 nav ul {
     font-family: 'Fredoka One', cursive;
     list-style-type: none;
@@ -28,33 +60,80 @@ nav ul {
 }
 
 
+.buttonLabel{
+    font-family: 'Fredoka One', cursive;
+    z-index: 1;
+}
 
-/*  Regras Escolha de Jogo  */
+/* Ordem de posição dos botões da barra de navegação */
+nav li {
+    float: left;
+    padding: 1%;
+}
+
+
+/* Comportamento on hover botão da pagina atual */
+.active {
+    background-color:#0396d6;
+}
+
+
+/* Comportamento on hover botão da pagina atual */
+.active :hover {
+    color:black;
+}
+
+
+/* Comportamento on hover botões da barra de navegação * */
+nav li :hover {
+    color: yellow;
+
+}
+/* botão user para a direita */
+.right{
+    float: right;
+}
+
+/* texto dos botões da barra de navegação */
+nav li a{
+    display: block;
+    color:white;
+    text-align: center;
+    text-decoration: none;
+}
+
+
+/* ##### Botões de Escolha de tipo de jogo ####### */
+
+
+/* Texto do botão  */
+.gamelabel {
+    font-family: 'Fredoka One', cursive;
+    color: #FFF5EE;
+    font-size: 2vw;
+    z-index: 1;
+
+}
+
+/* imagem do botão  */
 .mine {
     background-image: url("../img/mine.png");
     background-repeat: no-repeat;
+    background-size: cover;
 
-    background-origin: content-box;
+    background-origin: border-box;
     opacity: 0.8;
     padding: 25px;
     display: flex;
     justify-content: space-around;
     background-position: center;
     background-color: rgba(0, 0, 0, 0.9);
-    box-shadow: inset hsla(0,0%,15%,  1) 0  0px 0px 4px, /* border */
-      inset hsla(0,0%,15%, .8) 0 -1px 5px 4px, /* soft SD */
-      inset hsla(0,0%,0%, .25) 0 -1px 0px 7px, /* bottom SD */
-      inset hsla(0,0%,100%,.7) 0  2px 1px 7px, /* top HL */
-      
-      hsla(0,0%, 0%,.15) 0 -5px 6px 4px, /* outer SD */
-      hsla(0,0%,100%,.5) 0  5px 6px 4px; /* outer HL */ 
 
 }
 
 
 
-
-
+/* Comportamento on Hover do botão     */
 .mine:hover {
   
 
@@ -62,10 +141,13 @@ nav ul {
 
 
 }
+
+
+/* Comportamento de click do botão     */
 .mine:active {
     background-image: url("../img/explosion.png");
     background-repeat: no-repeat;
-
+    transform: scale(0.99);
     background-origin: content-box;
     opacity: 0.8;
     padding: 25px;
@@ -84,6 +166,7 @@ nav ul {
 
 }
 
+/* efeito do botão  */
 @keyframes slide {
     0%   {
         background-color: goldenrod;}
@@ -98,73 +181,13 @@ nav ul {
     100% {background-color: rgb(227, 17, 17);}
 }
 
+/*  --------------------------------   JOGO  ----------------------------------------- */
 
 
+/* ##### Caixa do Jogo ##### */
 
 
-.buttonLabel{
-    font-family: 'Fredoka One', cursive;
-    z-index: 1;
-}
-
-
-nav li {
-    float: left;
-    padding: 1%;
-}
-
-/* Extra small devices (phones, 599px and down) */
-@media screen and (max-width: 599px) {
-    nav li {
-        float: none;
-        width: 100%;
-    }
-}
-
-.active {
-    background-color:#0396d6;
-}
-
-.active :hover {
-    color:black;
-}
-
-
-nav li :hover {
-    color: yellow;
-
-}
-
-.right{
-    float: right;
-}
-
-nav li a{
-    display: block;
-    color:white;
-    text-align: center;
-    text-decoration: none;
-}
-
-footer {
-
-
-    background-color: #0C2340;
-    opacity: 1.0;
-    color: white;
-    text-align: center;
-
-
-
-}
-.gamelabel {
-    font-family: 'Fredoka One', cursive;
-    color: #FFF5EE;
-    z-index: 1;
-    min-height: 70px;
-}
-
-
+/* Tabela do jogo */
 .gameTable{
     padding:0;
     margin: 2px auto;
@@ -173,17 +196,23 @@ footer {
     height: auto;
     border-style: solid;
     border-color: black;
-    grid-row-start: 2;
-    grid-row-end: 3;
     overflow: hidden;
+    
 }
+.gridGame{
+
+    -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+}
+/* Cada linha do Jogo */
 .gameRow{
-    display: flex;           /* new */
-    align-items: center;     /* new; vertical alignment */
+    display: flex;          
+    align-items: center;    
     justify-content: center;
 }
 
-
+/* Tabela do jogo Multiplayer 2  */
 .gridGameM2  table  {
     padding:0;
     margin: 2px auto;
@@ -196,35 +225,106 @@ footer {
     grid-row-end: 3;
     overflow: hidden;
 }
+/* Linha do jogo Multiplayer 2  */
 .gridGameM2 tr{
     display: flex;           /* new */
     align-items: center;     /* new; vertical alignment */
     justify-content: center;
 }
 
-
+/* Cada Celula do Jogo */
 .celula{
-  
-    width: 30px;
-    height: 30px;
-  
     max-width: 40px;
     max-height: 40px;
     background-color:#e7e7e78e;
     border: 2px;
     border: 1px solid black;
-    
+-webkit-box-shadow:  0 0  3px 3px  #6e7d89;
+-moz-box-shadow: 0 0 3px 3px  #6e7d89;
+box-shadow: 0 0  3px 3px  #6e7d89;
 }
 
-.energia {
-    background-color: silver;
-    grid-row-start:3;
-    grid-row-end: 4;
-
-}
-
-
+/* Cada Celula do Jogo */
 .celula:hover{
     background-color: rgba(128, 128, 128, 0.678);
         
     } 
+/* Cada Celula do Jogo */
+.celula:active{
+    -webkit-box-shadow: 0 0  1px 1px   #6e7d89;
+    -moz-box-shadow: 0 0 1px  1px   #6e7d89;
+    box-shadow: 0 0  1px  1px   #6e7d89;
+    transform: scale(0.90);
+    background-color:#e7e7e78e;
+        
+    } 
+
+/* */
+
+.regras{
+    justify-content: center;
+    text-align: justify;
+
+   width: fit-content;    
+
+   margin: 0 auto;
+}
+/*  --------------------------------   Tutorial  ----------------------------------------- */
+.regras {
+    height: fit-content;
+    padding-right: 20px;
+}
+
+iframe {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 20px;
+
+}
+
+
+/*  --------------------------------   Ranking  ----------------------------------------- */
+
+.ranking table {
+padding:20px;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+border: 1px solid black;
+
+}
+
+.ranking td, .ranking th {
+    text-align: center;
+    border: 1px solid black;
+
+}
+
+
+
+
+
+
+
+/*  --------------------------------   Quem Somos  ----------------------------------------- */
+
+.wrapperCard {
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+
+/*  --------------------------------   FOOTER  ----------------------------------------- */
+
+footer {
+
+
+    background-color: #0C2340;
+
+    opacity: 1.0;
+    color: white;
+    text-align: center;
+
+
+
+}
+
+

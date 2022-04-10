@@ -1,3 +1,5 @@
+const openedCellSound = new Audio('../audio/open.mp3');
+
 function init(colunas = 8, linhas = 8){
 
 var localJogo = document.getElementById("table");
@@ -16,7 +18,7 @@ for(i=1;i<=linhas; i++ ){
         
         celula.setAttribute('class','celula');
         celula.setAttribute('id', i*10+j);
-        celula.addEventListener("click",clicado(i,j));
+        celula.addEventListener("click",clicado,false);
         
         linha.appendChild(celula);
         
@@ -49,7 +51,7 @@ function initMulti(colunas = 8, linhas = 8){
           celula.setAttribute('class','celula');
           celula.setAttribute('id', i*10+j);
           celula.setAttribute('alt','Celula nº ' + i*10+j);
-          celula.addEventListener("click",clicado(i,j));
+          celula.addEventListener("click",clicado,false);
           
           linha.appendChild(celula);
           
@@ -76,7 +78,7 @@ function initMulti(colunas = 8, linhas = 8){
           celula2.setAttribute('class','celula');
           celula2.setAttribute('id',  i*10+j);
           celula2.setAttribute('alt','Celula nº ' + i*10+j);
-          celula2.addEventListener("click",clicado(i,j));
+          celula2.addEventListener("click",clicado,false);
           
           linha2.appendChild(celula2);
           
@@ -89,7 +91,8 @@ function initMulti(colunas = 8, linhas = 8){
 
 
 
-function clicado(linha,coluna){
- console.log("clicado a celula linha" + linha + "e a coluna" + coluna);
+function clicado(){
+    openedCellSound.play();
+
 
 }

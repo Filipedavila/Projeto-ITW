@@ -1,0 +1,316 @@
+
+/* ##########----------------- Grid Container de todas as paginas ---------------------############*/
+/* Grid Principal Responsiva 12 colunas*/
+.container{
+    min-height: 100%;
+
+    display: grid; 
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows:auto auto auto;
+    height: 100vh;
+    gap: 10px;
+}
+
+ /* Contentor de artigos para textos */
+    article {
+
+        grid-row: 2/8;
+        grid-column: 2/11;
+    }
+/* ######## Escolha Tipo de Jogo  ################# */
+
+/* Botão Mina */
+
+
+.mine{
+
+    box-shadow: inset hsla(0,0%,15%,  1) 0  0px 0px 4px, /* border */
+    inset hsla(0,0%,15%, .8) 0 -2px 6px 4px, /* soft SD */
+    inset hsla(0,0%,0%, .25) 0 -2px 4px 5px, /* bottom SD */
+    inset hsla(0,0%,100%,.7) 0  2px 3px 4px, /* top HL */
+
+    hsla(0,0%, 0%,.15) 0 -3px 5px 4px, /* outer SD */
+    hsla(0,0%,100%,.5) 0  3px 4px 5px; /* outer HL */
+}
+
+
+/* ##########----------------- Layout Jogo ---------------------############*/
+
+
+ /* Tamanho celulas jogo  */
+.celula{
+
+    width: 40px;
+    height: 40px;
+}
+ /* Contentor de artigos  */
+.caixa{
+    justify-content: center;
+    grid-column-start: 5;
+    grid-column-end: 9;
+    grid-row-start:2;
+    grid-row-end: 4;
+    height: 100%;
+    width: 100%;
+   
+}
+
+
+ /* Experiencia  jogo */
+
+ .caixaJogo {
+
+     display:grid;
+     grid-template-rows: auto auto auto;
+
+
+
+ }
+.game {
+    grid-column-start:1 ;
+    grid-column-end:13 ;
+    grid-row-start: 2;
+    display: flex;
+
+    align-content: center;
+
+}
+
+   /* Caixa que contem o Jogo SinglePlayer Posição em grid  */ 
+.gridGame { 
+    grid-column-start: 5;
+    grid-column-end: 7;
+    grid-row-start:2;
+    padding: 4vh;
+    padding: 10px;
+    margin: 10px auto;
+    width: fit-content;
+   
+    max-width: fit-content;
+    background-color: silver;
+    border: 1px solid black;
+    display: inline-grid;
+    grid-template-rows: auto  auto auto;
+    
+
+}
+
+
+   /* Caixa que contem o Jogo Multiplayer P1 Posição em grid  */ 
+.gridGameM1 { 
+    grid-column-start: 3;
+    grid-column-end: 6;
+    grid-row-start:2;
+
+    padding: 10px;
+    margin: 10px auto;
+    width: fit-content;
+   
+    max-width: fit-content;
+    background-color: silver;
+    border: 1px solid black;
+    display: inline-grid;
+    grid-template-rows: auto  auto auto;
+    
+
+}
+
+   /* Caixa que contem o Jogo Multiplayer P2 Posição em grid  */ 
+.gridGameM2 { 
+    grid-column-start: 7;
+    grid-column-end: 10;
+    grid-row-start:2;
+
+
+
+    margin: 10px auto;
+    width: fit-content;
+   
+    max-width: fit-content;
+    background-color: silver;
+    border: 1px solid black;
+    display: inline-grid;
+    grid-template-rows: auto  auto auto;
+    
+
+}
+#energy_bar {
+    margin: 3% 3%;
+    padding: 3%;
+    width: 20%;
+
+}
+.modos_jogo{
+    position: relative;
+    align-self: center;
+    justify-self: center;
+    display: grid;
+    grid-template-columns: 15vw 15vw;
+    grid-template-rows: 15vw 15vw;
+    grid-gap: 5px;
+    height: 100%;
+    width: 100%;
+}
+
+.menu_jogo{
+    display: flex;
+    justify-content: center;
+    grid-row: 1;
+
+}
+
+.energia {
+    display: flex;
+    justify-content: center;
+    grid-row: 3;
+    width: fit-content;
+}
+.celula{
+
+}
+
+.navigation {
+    margin: 0;
+    grid-column-start: 1;
+    grid-column-end: 13;
+    grid-row-start:1;
+    grid-row-end: 2;
+    width: 100%;
+    height: 100%;
+
+}
+
+/* ##########----------------- Tutorial ---------------------############*/
+
+/* Contentor para texto tutorial  */
+.tutorial{
+
+    grid-column-start: 3;
+    grid-column-end: 10;
+    grid-row-start: 2;
+
+
+
+ 
+
+    }
+
+/* Contentor para regras tutorial  */
+    .regras{
+        
+       
+    grid-column-start: 3;
+    grid-column-end: 7;
+    grid-row-start:3;
+
+    }
+
+
+/* Container para o iframe do video youtube */
+.videoTutorial{
+    grid-column-start: 7;
+    grid-column-end: 10;
+    grid-row-start:3;
+
+
+
+
+}
+/* tamanho video youtube */
+    iframe{
+
+        width: 100%;
+        height: 70%;
+   
+    }
+    
+    
+
+
+
+
+
+ /* ##########----------------- Layout Ranking ---------------------############*/
+
+/* ranking position e size */
+.ranking{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+ 
+    }
+
+ /* ##########----------------- Layout Pagina Quem Somos ---------------------############*/
+
+
+/* ranking position e size */
+.perfilContainer{
+
+    display: flex;
+    justify-content: space-around;
+    
+    }
+
+
+/* ranking position e size */
+    .wrapperCard{
+        padding:20px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+        width: 22%;
+
+
+
+    }
+    .perfil{
+
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+
+    }
+.perfil img{
+
+    min-width: 20vh;
+    max-width: 35vh;
+
+
+}
+    .descricão{
+        text-align: center;
+        width: 100%;
+    
+    }
+
+.textoContainer{
+    padding-top: 50px;
+    grid-column-start: 2;
+    grid-column-end: 10;
+    grid-row-start:6;
+
+
+}
+
+
+
+
+
+
+ /* ##########----------------- Layout Footer ---------------------############*/
+footer{
+    
+   grid-column-start: 1;
+    grid-column-end: 13;
+    grid-row-start:9;
+    grid-row-end:10;
+
+    margin: 0;
+    width: 100%;
+    height: 100%;
+
+
+}
+
+.gamelabel {
+    font-size:2vw;
+}
