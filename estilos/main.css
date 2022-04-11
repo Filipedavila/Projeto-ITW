@@ -33,14 +33,19 @@ h2 ,th , h3 {
     text-align: center;
     font-size:2vw;
 }
-p, li, ol , td {
+p, li, ol , td ,span{
     font-family: 'Ubuntu Condensed', sans-serif;
     font-size:2vw;
 }
+span{
+     font-family: 'Ubuntu Condensed', sans-serif;
+     font-size:1.5vw;
+ }
 footer p {
     font-family: 'Ubuntu Condensed', sans-serif;
     font-size:1vw;
 }
+
 
 /*  --------------------------------   Navegação  ----------------------------------------- */
 
@@ -59,7 +64,7 @@ nav ul {
     border-bottom: 5px solid #0396d6;
 }
 
-
+/*Texto dos links do butão */
 .buttonLabel{
     font-family: 'Fredoka One', cursive;
     z-index: 1;
@@ -186,11 +191,19 @@ nav li a{
 
 /* ##### Caixa do Jogo ##### */
 
-
-/* Tabela do jogo */
+/* Caixa do jogo */
+.gridGame{
+    background-color: silver;
+    border: 1px solid black;
+    -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+}
+/* Tabela criada pelo javascript para jogo*/
 .gameTable{
     padding:0;
-    margin: 2px auto;
+    margin: 10px;
+
    height: 200px;
     width: auto;
     height: auto;
@@ -199,38 +212,113 @@ nav li a{
     overflow: hidden;
     
 }
-.gridGame{
+/* */
+.menu_jogo{
 
+}
+
+.time{
+
+    width: fit-content;
+    border: 1px solid grey;
+    color: red;
+    font-family: Consolas;
+    background-color: black;
+
+    text-align: center;
+    font-size:medium;
+    width: fit-content;
+
+}
+.timeMulti{
+    width: fit-content;
+    border: 1px solid grey;
+    color: red;
+    font-family: Consolas;
+    background-color: black;
+    margin: 0 auto;
+    text-align: center;
+    font-size:medium;
+    width: fit-content;
+
+}
+.smallicon{
+    height: 10px;
+    width: 10px;
+}
+.normalicon{
+    height: 20px;
+    width: 20px;
+}
+
+.centrado {
+    margin:0 auto;
+}
+.buttonStart{
+    padding: 1px;
+    border: 1px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+}
+.buttonStart:active {
+    background-color: dimgrey;
+    border: 1px solid grey;
+
+}
+
+.points{
+    border: 1px solid grey;
+    color: red;
+    font-family: Consolas;
+    background-color: black;
+
+    width: fit-content;
+    text-align: center;
+
+
+}
+
+/* Cada linha do Jogo */
+.first{
+    order:1;
+}
+
+.gameStatus{
+    align-content: center;
+    background-color: silver;
+    border: 1px solid black;
+    padding: 4px;
+    order:2;
     -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
     -moz-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
     box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    height: fit-content;
 }
-/* Cada linha do Jogo */
+.second{
+    order:2;
+}
+.third{
+    order:3;
+}
+.win{
+    width: fit-content;
+    border: 1px solid grey;
+    color: red;
+    font-family: Consolas;
+    background-color: black;
+
+    text-align: center;
+    font-size:5vh;
+    width: fit-content;
+
+
+}
 .gameRow{
     display: flex;          
     align-items: center;    
     justify-content: center;
 }
 
-/* Tabela do jogo Multiplayer 2  */
-.gridGameM2  table  {
-    padding:0;
-    margin: 2px auto;
-   height: 200px;
-    width: auto;
-    height: auto;
-    border-style: solid;
-    border-color: black;
-    grid-row-start: 2;
-    grid-row-end: 3;
-    overflow: hidden;
-}
-/* Linha do jogo Multiplayer 2  */
-.gridGameM2 tr{
-    display: flex;           /* new */
-    align-items: center;     /* new; vertical alignment */
-    justify-content: center;
-}
 
 /* Cada Celula do Jogo */
 .celula{
@@ -259,7 +347,6 @@ box-shadow: 0 0  3px 3px  #6e7d89;
         
     } 
 
-/* */
 
 .regras{
     justify-content: center;
@@ -269,7 +356,42 @@ box-shadow: 0 0  3px 3px  #6e7d89;
 
    margin: 0 auto;
 }
-/*  --------------------------------   Tutorial  ----------------------------------------- */
+
+
+/*  ---------------##################   custom Game SinglePlayer  ##############-------------------------------- */
+
+.customContainer table {
+    background-color: silver;
+    border: 1px solid black;
+    padding: 4px;
+
+    -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    height: fit-content;
+
+}
+
+.customContainer th {
+    color:midnightblue;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    font-size: 4vh;
+    margin: 0 auto;
+}
+
+.customContainer tr {
+    margin: 0 auto;
+    font-size: 4vh;
+    text-align: center;
+}
+.customContainer td {
+   margin: 0 auto;
+    font-size: 4vh;
+    text-align: center;
+}
+
+
+/*  ---------------##################   Tutorial  ##############-------------------------------- */
 .regras {
     height: fit-content;
     padding-right: 20px;
@@ -279,6 +401,10 @@ iframe {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 20px;
 
+}
+.regras img{
+    height:5vh ;
+    width:5vh ;
 }
 
 
@@ -291,7 +417,32 @@ border: 1px solid black;
 
 }
 
-.ranking td, .ranking th {
+.rankingTable{
+    background-color: silver;
+    border: 1px solid black;
+    padding: 4px;
+
+    -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    height: fit-content;
+}
+.rankingTable th{
+    gap: 0;
+    border: 0;
+    color: white;
+    background-color:darkblue;
+}
+.ranking tr:nth-child(even){
+    background-color:lightgray;
+
+}
+.ranking tr:nth-child(odd){
+    background-color:blanchedalmond;
+}
+.ranking td {
+
+    gap: 0;
     text-align: center;
     border: 1px solid black;
 

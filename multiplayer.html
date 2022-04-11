@@ -17,60 +17,83 @@
         <nav class="navigation"> 
             <ul>
                 <li><a href="index.html">Minesweeper</a></li>
-                <li class="active"><a href="singleplayer.html">Jogar</a></li>
+                <li class="active"><a href="quickGame.html">Jogar</a></li>
                 <li><a href="tutorial.html">Tutorial</a></li>
                 <li><a href="ranking.html">Ranking</a></li>
                 <li><a href="sobrenos.html">Sobre Nós</a></li>
-                <li class="right"><a href="login.html">User</a></li>
+
             </ul>
         </nav>
 
         <section class="game">
-  
-            <div  class="gridGame">
+
+            <div  class="gridGame first">
 
                 <div class="menu_jogo">
-                    <table>
-                        <tr>
-                            <td style="border: black">00:00</td>
-                            <td><img id="smile" src="./img/smile.png" alt="Smile para fazer restart do jogo"></td>
-                            <td style="border: black">000</td>
+                    <div class="jogador">
+                      <img src="/img/icons8-gamer-64-man.png" alt="avatar jogador 1">
+                        <span>Jogador 1</span>
+                    </div>
+
+                    <img class="buttonStart" id="smileP1" src="./img/smile.png" alt="Smile para fazer restart do jogo">
+
+                    <div class="points">000</div>
 
 
-                        </tr>
-                    </table>
+
 
                 </div>
-                  <div id="game1" class="">
-            
+                <div id="game1" class="tablePlace">
+
                 </div>
                 <div class="energia">
 
                 </div>
             </div>
 
-          
-            
-           <div  class="gridGame">
+            <div class="gameStatus">
 
-               <div class="menu_jogo">
-                   <table>
-                       <tr>
-                           <td style="border: black">00:00</td>
-                           <td><img id="smile" src="./img/smile.png" alt="Smile para fazer restart do jogo"></td>
-                           <td style="border: black">000</td>
+                <span class="centrado">Tempo</span>
+            <span class="timeMulti ">00:00</span>
 
 
-                       </tr>
-                   </table>
+                <span class="centrado">Jogador 1</span>
+                <span class="centrado"> <span Class="win">00</span>
+                    <img class="smallicon" src="img/icons8-troféu-20.png" alt="Trophy won"></span>
 
-               </div>
-              <div id="game2" class="">
-        
+
+
+
+                <span class="centrado">Jogador 2</span>
+
+                <span class="centrado"><span Class="win">00</span>
+                    <img class="smallicon"  src="img/icons8-troféu-20.png" alt="Trophy won">
+                </span>
+
+
+                <span class="centrado">Sound</span>
+                <img class="mute  centrado" src="img/sound-off.png" alt="desligar som" >
+
             </div>
-               <div class="energia">
+            <div  class="gridGame third">
 
-               </div>
+                <div class="menu_jogo">
+                    <div class="jogador">
+                    <img src="/img/icons8-gamer-64-woman.png" alt="avatar jogador 1">
+                        <span>Jogador 2</span>
+                    </div>
+                    <img class="buttonStart" id="smileP2" src="./img/smile.png" alt="Smile para fazer restart do jogo">
+
+                    <div class="points">000</div>
+
+
+
+
+                </div>
+                <div id="game2" class="tablePlace">
+
+                </div>
+
         </div>
         </section>
        
@@ -78,16 +101,19 @@
 
         
 
-       <!-- <audio controls autoplay controls loop hidden>
-            <source src="./audio/bensound-creativeminds.mp3" type="audio/mpeg">
+ <audio controls autoplay  loop hidden>
+            <source src="audio/creative.mp3" type="audio/mpeg">
         <p>O seu browser não suporta o elemento Audio.</p>    
-        </audio> -->
+        </audio>
 
       
    <footer>
        <p> &copy; Cidália, Filipe, Rita</p>
         </footer>  
-    </div>        
- 
+    </div>
+    <audio autoplay>
+        <source src="/audio/creative.mp3" type="audio/mpeg">
+        <p>O seu browser não suporta o elemento Audio.</p>
+    </audio>
 </body>
 </html>

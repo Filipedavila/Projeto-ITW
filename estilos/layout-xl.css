@@ -40,8 +40,10 @@
  /* Tamanho celulas jogo  */
 .celula{
 
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
+    min-width: 5vh;
+    min-height: 5vh;
 }
  /* Contentor de artigos  */
 .caixa{
@@ -56,16 +58,7 @@
 }
 
 
- /* Experiencia  jogo */
 
- .caixaJogo {
-
-     display:grid;
-     grid-template-rows: auto auto auto;
-
-
-
- }
 .game {
     grid-column-start:1 ;
     grid-column-end:13 ;
@@ -89,57 +82,13 @@
     max-width: fit-content;
     background-color: silver;
     border: 1px solid black;
-    display: inline-grid;
+    display: grid;
     grid-template-rows: auto  auto auto;
     
 
 }
 
 
-   /* Caixa que contem o Jogo Multiplayer P1 Posição em grid  */ 
-.gridGameM1 { 
-    grid-column-start: 3;
-    grid-column-end: 6;
-    grid-row-start:2;
-
-    padding: 10px;
-    margin: 10px auto;
-    width: fit-content;
-   
-    max-width: fit-content;
-    background-color: silver;
-    border: 1px solid black;
-    display: inline-grid;
-    grid-template-rows: auto  auto auto;
-    
-
-}
-
-   /* Caixa que contem o Jogo Multiplayer P2 Posição em grid  */ 
-.gridGameM2 { 
-    grid-column-start: 7;
-    grid-column-end: 10;
-    grid-row-start:2;
-
-
-
-    margin: 10px auto;
-    width: fit-content;
-   
-    max-width: fit-content;
-    background-color: silver;
-    border: 1px solid black;
-    display: inline-grid;
-    grid-template-rows: auto  auto auto;
-    
-
-}
-#energy_bar {
-    margin: 3% 3%;
-    padding: 3%;
-    width: 20%;
-
-}
 .modos_jogo{
     position: relative;
     align-self: center;
@@ -153,12 +102,69 @@
 }
 
 .menu_jogo{
+
     display: flex;
+    flex-direction: row;
     justify-content: center;
-    grid-row: 1;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    width: 100%;
 
 }
 
+.jogador{
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: fit-content;
+    width: fit-content;
+
+}
+.jogador img{
+    margin: 0 auto;
+    height: 10vh;
+    width: 10vh;
+
+}
+
+.time {
+    order: 1;
+
+    margin-right: 2vh;
+    margin-bottom: 5px;
+    font-size: 4vh;
+
+}
+.buttonStart{
+    width: 5vh;
+    height: 5vh;
+    margin-bottom: 5px;
+    order: 2;
+
+}
+.points{
+    order: 3;
+    margin-left: 2vh ;
+
+    margin-bottom: 5px;
+
+
+    font-size: 4vh;
+}
+.gameStatus{
+    display: flex;
+    flex-direction: column;
+
+
+
+}
+.mute {
+    height: 20px;
+    width: 20px;
+}
 .energia {
     display: flex;
     justify-content: center;
@@ -179,6 +185,61 @@
     height: 100%;
 
 }
+
+.points{
+    order: 3;
+    margin-left: 2vh ;
+
+    margin-bottom: 5px;
+
+
+    font-size: 4vh;
+}
+.gameStatus{
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+}
+.mute {
+    height: 5vh;
+    width: 5vh;
+}
+.smallicon{
+    height: 3vh;
+    width: 3vh;
+}
+
+.downbar {
+    display: flex;
+    justify-content: space-between;
+    grid-row-start:3;
+    grid-row-end: 4;
+    width: 100%;
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+}
+
+/*  ---------------##################   custom Game SinglePlayer  ##############-------------------------------- */
+.customContainer {
+    grid-column-start:1 ;
+    grid-column-end:13 ;
+    grid-row-start: 2;
+    display: flex;
+
+    align-content: center;
+
+}
+.customContainer table {
+    border-spacing:5vh;
+}
+.customContainer input {
+    size: 20vh;
+}
+
 
 /* ##########----------------- Tutorial ---------------------############*/
 

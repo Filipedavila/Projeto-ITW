@@ -107,21 +107,117 @@
         
 
     }
-    
+
+  .jogador{
+      padding-right: 20px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      height: fit-content;
+      width: fit-content;
+
+  }
+  .jogador img{
+      margin: 0 auto;
+      height: 15vh;
+      width: 15vh;
+
+  }
+  .menu_jogo{
+
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      grid-column-start: 1;
+      grid-column-end: 2;
+      width: 100%;
+
+  }
+  .jogador span{
+     font-size: medium;
+
+  }
+  .gameStatus span{
+      font-size: medium;
+
+  }
+  .mute{
+      height: 40px;
+      width: 40px;
+
+
+  }
+
+  .time {
+      order: 1;
+
+      margin-right: 10vh;
+      margin-bottom: 5px;
+      font-size: 6vh;
+
+  }
+  .buttonStart{
+      width: 10vh;
+      height: 10vh;
+      margin-bottom: 5px;
+      order: 2;
+
+  }
+  .points{
+      order: 3;
+      margin-left: 10vh;
+
+      margin-bottom: 5px;
+
+
+      font-size: 6vh;
+  }
+  .gameStatus{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: fit-content;
+      margin: 0 auto;
+
+
+  }
+  .downbar {
+      display: flex;
+      justify-content: space-between;
+      grid-row-start:3;
+      grid-row-end: 4;
+      width: 100%;
+      grid-column-start: 1;
+      grid-column-end: 2;
+
+  }
 
 
 
-         /* Caixa que contem o Jogo Multiplayer P2 Posição em grid  */ 
 
+  /*  ---------------##################   custom Game SinglePlayer  ##############-------------------------------- */
+  .customContainer {
+      grid-column-start:1 ;
+      grid-column-end:2 ;
+      grid-row-start: 2;
+      display: flex;
 
-    #energy_bar {
-        margin: 3% 3%;
-        padding: 3%;
-        width: 20%;
+      align-content: center;
 
-    }
+  }
+  .customContainer table {
+      font-size: large;
+      border-spacing:5vh;
+      margin:8px;
+  }
+  .customContainer td{
 
-/* ----------------- Tutorial ---------------------*/
+      font-family: 'Ubuntu Condensed', sans-serif;
+
+  }
+      /* ----------------- Tutorial ---------------------*/
 
 .tutorial{
     
@@ -153,16 +249,30 @@
         grid-row-start: 3;
   
     }
+  .tutorial h1 ,.regras h1{
+      font-size: 6vh;
+
+  }
+
+ .tutorial h2, .regras h2  {
+     font-size: 5vh;
+  }
+
+    .tutorial p,.regras p,.regras h3,.tutorial li,.tutorial h3, .regras td,.regras th{
+
+        font-size: 4vh;
+    }
+
     iframe{
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         padding: 20px;
         width: 90%;
-        height: 70%;
+        height: 80%;
     }
     
     .videoTutorial{
         margin: 0 auto;
-        width: 60%;
+        width: 100%;
         grid-row-start: 4;
         height: 100%;
      
@@ -247,7 +357,7 @@
   .perfil img{
 
 
-      max-width: 50vw;
+      max-width: 30vw;
 
 
   }
