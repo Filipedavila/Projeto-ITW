@@ -1,5 +1,5 @@
 const openedCellSound = new Audio('../audio/open.mp3');
-
+var table ;
 function init(colunas = 8, linhas = 8){
 
 var localJogo = document.getElementById("table");
@@ -18,8 +18,8 @@ for(i=1;i<=linhas; i++ ){
         
         celula.setAttribute('class','celula');
         celula.setAttribute('id', i*10+j);
-        celula.addEventListener("click",clicado,false);
-        
+        celula.addEventListener("click",function(e){ clicado(e.id) },false)
+        table.cells[linha][colunas].setTdElement(celula);
         linha.appendChild(celula);
         
         } 
@@ -28,7 +28,7 @@ for(i=1;i<=linhas; i++ ){
 }
 
 localJogo.appendChild(tabela);
-
+table = new Table(colunas,linhas)
 }
 
 function initMulti(colunas = 8, linhas = 8){
@@ -52,6 +52,8 @@ function initMulti(colunas = 8, linhas = 8){
           celula.setAttribute('id', i*10+j);
           celula.setAttribute('alt','Celula nº ' + i*10+j);
           celula.addEventListener("click",clicado,false);
+          // por o elemento da celula diretamente na abstração da celula
+          table.cells[linha][colunas].setTdElement(celula);
           
           linha.appendChild(celula);
           
@@ -78,7 +80,7 @@ function initMulti(colunas = 8, linhas = 8){
           celula2.setAttribute('class','celula');
           celula2.setAttribute('id',  i*10+j);
           celula2.setAttribute('alt','Celula nº ' + i*10+j);
-          celula2.addEventListener("click",clicado,false);
+          celula2.addEventListener("click",function(e){ clicado(e.id) },false);
           
           linha2.appendChild(celula2);
           
@@ -91,8 +93,13 @@ function initMulti(colunas = 8, linhas = 8){
 
 
 
-function clicado(){
+function clicado(id){
+     // manda abrir o opencell e espera retorno, dependendo do retorno ira fazer uma acção no jogo
     openedCellSound.play();
+    let stringID = id.toString();
+    let col = Number(stringID.charAt(0));
+    let row = Number(stringID.charAt(1));
+    table.cells[row][col].openCell();
 
 
 }
