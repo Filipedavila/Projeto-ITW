@@ -1,8 +1,17 @@
+//TO DO , FUNÇÕES QUE RECEBAM AS OPÇÕES DOS JOGOS DO HTML
 
 const openedCellSound = new Audio('../audio/open.mp3');
 
 var table;
 
+/**TO DO , ligar o init as definições do user
+ * TEREMOS QUE ARRANJAR MANEIRA TAMBÉM DE PASSAR TODOS OS DADOS
+ * CRIAR LIGAÇÕES ENTRE CERTAS PARTES DO HTML PARA APRESENTAR O NOME DO JOGADOR,
+ * O SCORE DO JOGADOR , E NO CASO DE MULTIPLAYER FUNÇÕES EXTRA
+ *
+ * @param colunas
+ * @param linhas
+ */
 function init(colunas = 8, linhas = 8){
      this.table  =  new Table(colunas,linhas);
 console.log("criou table");
@@ -44,6 +53,11 @@ function startGame(){
 
 }
 
+/**
+ *
+ * @param colunas
+ * @param linhas
+ */
 function initMulti(colunas = 8, linhas = 8){
 
   var localJogo = document.getElementById("game1");
@@ -109,7 +123,10 @@ function initMulti(colunas = 8, linhas = 8){
   }
 
 
-
+/**
+ *
+ * @param e
+ */
 function clicado(e){
     openedCellSound.play();
      // manda abrir o opencell e espera retorno, dependendo do retorno ira fazer uma acção no jogo
@@ -133,11 +150,21 @@ console.log(e.button )
 
 }
 
+/**Classe que representa o tabuleiro do jogo que contem todos as celulas ou seja butões do Jogo
+ * , é responsavel por manipular a lógica do jogo.
+ *
+ */
 class Table {
 
     cells;
     col ;
     row;
+
+    /**
+     *
+     * @param row
+     * @param col
+     */
     constructor(row,col){
         row++;
         col++; //acerto pois não usammos a fila ou coluna 0
@@ -156,6 +183,11 @@ class Table {
 
         }
     }
+
+    /**Função que inicia a tablet, apesar de já estar funcional faltam uns retoques , na
+     * parte que inicia e põe uma referencia das celulas adjacentes de cada celula na propria celula
+     *
+     */
     initTable(){
         if(this.cells != undefined){
 
@@ -180,12 +212,32 @@ class Table {
 
     }
 
+    /** TO DO
+     * função que inicia o jogo , terá de criar um random e com esse random tera que ao calhas colocar
+     * tantas minas quando definidas pelo utilizador
+     */
+    startGame(){
 
+    }
+
+    startMultiplayerGame(){
+
+    }
+
+    /**TO DO
+     * Função que faz reset do jogo atual
+     *
+     */
+    resetGame(){
+
+    }
 
 }
 
 
-
+/**
+ *
+ */
 class Cell {
     adjCells = [];
     col ;
@@ -195,6 +247,11 @@ class Cell {
     buttonTd;
     nearBombNumber;
 
+    /**
+     *
+     * @param row
+     * @param col
+     */
     constructor(row,col){
         this.row = Number(row);
         this.col = Number(col);
@@ -203,10 +260,18 @@ class Cell {
         this.adjCells = new Array(4);
 
     }
+
+    /**
+     *
+     * @param cellButton
+     */
     setTdElement(cellButton){
         this.buttonTd = cellButton;
     }
 
+    /**
+     *
+     */
     openCell(){
         if(this.isBombed){
             this.explode();
@@ -216,7 +281,12 @@ class Cell {
             this.buttonTd.setAttribute('class', 'openedCell');
             this.placeNumber();
         }
-        }
+    }
+
+    /**
+     *
+     * @returns {number}
+     */
     hasBomb(){
         let bomb = 0;
         if(this.isBombed){
@@ -224,6 +294,10 @@ class Cell {
         }
         return bomb;
     }
+
+    /**
+     *
+     */
     openAdj(){
     for(let i = 0; i< 4 ; i++){
         if(this.adjCells[i] != undefined) {
@@ -237,11 +311,18 @@ class Cell {
 
 
     }
+
+    /**
+     *
+     */
     placeFlag(){
         this.isFlagged = true;
         this.buttonTd.setAttribute('class','celula flagCell');
     }
 
+    /**
+     *
+     */
     placeNumber(){
         if(this.nearBombNumber > 0) {
             this.buttonTd.setAttribute('class', 'openedCell numberBombs');
@@ -249,6 +330,9 @@ class Cell {
         }
     }
 
+    /**
+     *
+     */
     explode(){
 
         this.buttonTd.setAttribute('class','openedCell bombCell');
@@ -261,6 +345,11 @@ class Cell {
 }
 
 
+/**Código que impossibilita que quando clickemos com o botão direito apareça o menu de opções,
+ * Util para conseguirmos meter bandeiras nas celulas
+ *
+ * @type {string}
+ */
 var message ="";
 function clickIE() {if (document.all) {(message);return false;}}
 function clickNS(e) {if
