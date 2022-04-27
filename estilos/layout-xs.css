@@ -79,6 +79,11 @@
          width: 30px;
          height: 30px;
     }
+  openedCell{
+
+      width: 30px;
+      height: 30px;
+  }
 
   .game {
       grid-column-start:1 ;

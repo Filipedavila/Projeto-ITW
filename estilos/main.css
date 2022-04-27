@@ -345,7 +345,24 @@ box-shadow: 0 0  3px 3px  #6e7d89;
     transform: scale(0.90);
     background-color:#e7e7e78e;
         
-    } 
+    }
+
+.openedCell{
+    max-width: 40px;
+    max-height: 40px;
+    width: 30px;
+    height: 30px;
+    border: 2px;
+    border: 1px solid black;
+    -webkit-box-shadow:  0 0  3px 3px  #6e7d89;
+    -moz-box-shadow: 0 0 3px 3px  #6e7d89;
+    box-shadow: 0 0  3px 3px  #6e7d89;
+    -webkit-box-shadow: 0 0  1px 1px   #6e7d89;
+    -moz-box-shadow: 0 0 1px  1px   #6e7d89;
+    box-shadow: 0 0  1px  1px   #6e7d89;
+
+    background-color:gold;
+}
 
 
 .regras{

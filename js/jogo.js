@@ -1,25 +1,33 @@
-const openedCellSound = new Audio('../audio/open.mp3');
-var table ;
-function init(colunas = 8, linhas = 8){
 
+const openedCellSound = new Audio('../audio/open.mp3');
+
+var table
+
+function init(colunas = 8, linhas = 8){
+     this.table  =  new Table(colunas,linhas);
+console.log("criou table");
 var localJogo = document.getElementById("table");
 
+// criar table
 var tabela = document.createElement('table');
 tabela.setAttribute('class' ,'gameTable');
 tabela.setAttribute('alt','Janela do Jogo');
 
 // faz cada linha
-for(i=1;i<=linhas; i++ ){
+for(i=0;i<linhas; i++ ){
  var linha =document.createElement('tr');
  linha.setAttribute('class' ,'gameRow');
-    //faz cada celula
-    for(j = 1 ; j <= colunas;j++){
+
+    //Criar Celulas do jogo
+    for(j = 1 ; j < colunas;j++){
         var celula = document.createElement('td');
-        
+        let row = String(i);
+        let col = String(j);
+        let id = row + col ;
         celula.setAttribute('class','celula');
-        celula.setAttribute('id', i*10+j);
-        celula.addEventListener("click",function(e){ clicado(e.id) },false)
-        table.cells[linha][colunas].setTdElement(celula);
+        celula.setAttribute('id', id);
+       celula.addEventListener("click",function(e){ clicado(e) },false)
+       table.cells[i][j].buttonTd = celula;
         linha.appendChild(celula);
         
         } 
@@ -28,7 +36,7 @@ for(i=1;i<=linhas; i++ ){
 }
 
 localJogo.appendChild(tabela);
-table = new Table(colunas,linhas)
+
 }
 
 function initMulti(colunas = 8, linhas = 8){
@@ -69,18 +77,20 @@ function initMulti(colunas = 8, linhas = 8){
   tabela2.setAttribute('alt','Jogador 2');
   
   // faz cada linha
-  for(i=1;i<=linhas; i++ ){
+  for(i=0;i<linhas; i++){
    var linha2 =document.createElement('tr');
    linha2.setAttribute('class' ,'gameRow');
    linha2.setAttribute('alt','Linha ' + i);
       //faz cada celula
-      for(j = 1 ; j <= colunas;j++){
+      for(j = 0 ; j < colunas;j++){
           var celula2 = document.createElement('td');
-          
+          let row = String(i);
+          let col = String(j);
+          let id = row + col ;
           celula2.setAttribute('class','celula');
-          celula2.setAttribute('id',  i*10+j);
-          celula2.setAttribute('alt','Celula nº ' + i*10+j);
-          celula2.addEventListener("click",function(e){ clicado(e.id) },false);
+          celula2.setAttribute('id',  id);
+          celula2.setAttribute('alt','Celula nº ' + id);
+          celula2.addEventListener("click",function(e){ clicado(e.id);    },false);
           
           linha2.appendChild(celula2);
           
@@ -93,13 +103,94 @@ function initMulti(colunas = 8, linhas = 8){
 
 
 
-function clicado(id){
+function clicado(e){
      // manda abrir o opencell e espera retorno, dependendo do retorno ira fazer uma acção no jogo
+    var t = e.target;
+
+   let id = t.id;
+   let row = id.charAt(0);
+   let col = id.charAt(1);
+console.log(col);
     openedCellSound.play();
-    let stringID = id.toString();
-    let col = Number(stringID.charAt(0));
-    let row = Number(stringID.charAt(1));
     table.cells[row][col].openCell();
+
+
+
+
+}
+
+class Table {
+
+    cells;
+    col ;
+    row;
+    constructor(row,col){
+        this.col = col;
+        this.row = row;
+
+        this.cells = new Array(row);
+        for(var i = 0 ; i< row ; i++){
+                this.cells[i] =new Array(col);
+        }
+
+        for(var i = 0 ; i< col ; i++){
+            for(var j = 0; j< row; j++){
+            this.cells[i][j] =new Cell();
+            }
+
+        }
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Cell {
+
+    col ;
+    row;
+    buttonTd;
+
+    constructor(){
+        this.buttonTd = null;
+
+
+    }
+    setTdElement(cellButton){
+        this.buttonTd = cellButton;
+    }
+
+    openCell(){
+        this.buttonTd.setAttribute(  'class','openedCell');
+    }
+
+
+
+
+
+
+
+
 
 
 }

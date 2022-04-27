@@ -1,36 +1,33 @@
 class Cell {
      adjCells =[];
      buttonTd;
-constructor(col,row,adjCells,isBomb,isFlag,isOpen){
-this.colN = col;
-this.rowN = row;
-this.adjCells = adjCells;
-this.isBomb = isBomb;
-this.isFlag = isFlag;
-this.isOpen= isOpen;
-this.number ;
+     col ;
+     row;
+
+constructor(col,row){
+this.col = col;
+this.row = row;
 this.buttonTd = null;
+this.adjCells = null;
 }
 
   openCell() {
-    if(this.isBomb){
 
-    }
+
+
     
 }
     setTdElement(cellButton){
     this.buttonTd = cellButton
     }
-    openAdj(){
+
    
-}
+
     setAdjacentCells(adj){
     this.adjCells = adj;
     }
 
-    isOpen(){
 
-}
 
 
     

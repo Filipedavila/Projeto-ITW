@@ -118,7 +118,11 @@ footer{
     width: 20px;
     height: 20px;
 }
+openedCell{
 
+    width: 20px;
+    height: 20px;
+}
 
  .menu_jogo{
     display: flex;

@@ -1,14 +1,15 @@
+
 class Table {
     cells = [];
     col ;
     row;
-    constructor(col,row,typeOfGame, diffculty){
+    constructor(col,row){
         this.col = col;
         this.row = row;
 
     for(let i = 0 ; i< col ; i++){
         for(let j = 0 ; j< row; j++){
-            this.cells[i][j] = new Cell();
+            this.cells[i][j] = new Cell(i,j);
         }
 
     }
