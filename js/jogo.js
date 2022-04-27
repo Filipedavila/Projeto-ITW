@@ -35,13 +35,12 @@ for(i=1;i<=linhas; i++ ){
         let id = row + col ;
         celula.setAttribute('class','celula');
         celula.setAttribute('id', id);
-        celula.addEventListener("mouseup",function(e){
-            clicado(e);    },false);
+        celula.addEventListener("mouseup",clicado,false);
        table.cells[i][j].buttonTd = celula;
         linha.appendChild(celula);
         
         }
-    table.initTable();
+
         
   tabela.appendChild(linha);
 }
@@ -138,7 +137,7 @@ function clicado(e){
 console.log(e.button )
 
     if(e.button == 0) {
-        table.cells[row][col].placeNumber();
+        table.cells[row][col].openCell();
     }
     if(e.button ==2){
         table.cells[row][col].placeFlag();
@@ -256,6 +255,7 @@ class Cell {
         this.row = Number(row);
         this.col = Number(col);
         this.buttonTd = null;
+        this.isBombed=false;
         this.nearBombNumber =0;
         this.adjCells = new Array(4);
 
@@ -276,9 +276,10 @@ class Cell {
         if(this.isBombed){
             this.explode();
         }else {
-            this.openAdj();
+            //this.openAdj();
             console.log("Aberta Celula [" + this.row + "," + this.col + "]");
             this.buttonTd.setAttribute('class', 'openedCell');
+            this.buttonTd.removeEventListener("mouseup",clicado);
             this.placeNumber();
         }
     }
