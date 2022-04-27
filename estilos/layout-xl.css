@@ -45,7 +45,7 @@
     min-width: 5vh;
     min-height: 5vh;
 }
-openedCell{
+.openedCell{
 
     width: 60px;
     height: 60px;

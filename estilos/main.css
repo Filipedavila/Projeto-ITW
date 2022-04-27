@@ -1,5 +1,11 @@
 /* Font importadada do google fonts     */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Ubuntu+Condensed&display=swap');
+/*  ------ Variaveis Globais--------------------------------------  */
+:root {
+    --blue: #1e90ff;
+    --white: #ffffff;
+}
+
 /*  ------ Regras Globais --------------------------------------  */
 * {
 
@@ -350,18 +356,64 @@ box-shadow: 0 0  3px 3px  #6e7d89;
 .openedCell{
     max-width: 40px;
     max-height: 40px;
-    width: 30px;
-    height: 30px;
+
     border: 2px;
     border: 1px solid black;
-    -webkit-box-shadow:  0 0  3px 3px  #6e7d89;
-    -moz-box-shadow: 0 0 3px 3px  #6e7d89;
-    box-shadow: 0 0  3px 3px  #6e7d89;
-    -webkit-box-shadow: 0 0  1px 1px   #6e7d89;
-    -moz-box-shadow: 0 0 1px  1px   #6e7d89;
-    box-shadow: 0 0  1px  1px   #6e7d89;
+    background-color: silver;
+}
 
-    background-color:gold;
+.flagCell{
+    max-width: 40px;
+    max-height: 40px;
+    background-image: url("../img/portuguese-flag.png");
+    z-index: 3;
+    background-repeat: no-repeat;
+
+    background-origin: content-box;
+    opacity: 0.8;
+
+    display: flex;
+    justify-content: space-around;
+    background-position: center;
+}
+.bombCell{
+    max-width: 40px;
+    max-height: 40px;
+    background-image: url("../img/explosionCell2.png");
+    z-index: 3;
+    background-repeat: no-repeat;
+
+    background-origin: content-box;
+    opacity: 0.8;
+
+    display: flex;
+    justify-content: space-around;
+    background-position: center;
+    animation: explosion 500ms ease-in ;
+}
+.numberBombs{
+    font-family: Consolas;
+    z-index: 3;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+/* efeito do mina celula  */
+@keyframes explosion {
+    0%   {
+        background-image: url("../img/mineCell.png");
+
+    }
+    98%  {
+        background-color: rgb(227, 17, 17);
+        background-image: url("../img/explosionCell.png");
+    }
+    99%  {
+        background-image: url("../img/explosionCell2.png");
+        background-color: rgb(223, 254, 136);
+    }
+    100% {
+        background-image: url("../img/explosionCell2.png");}
 }
 
 
