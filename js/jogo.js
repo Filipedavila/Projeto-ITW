@@ -1,3 +1,22 @@
+/* ------------------------------------------------------------------------- */
+
+/** Tempo do jogo */
+const TEMPO_JOGO = "tempoJogo";
+
+/** Intervalo do tempo do jogo */
+var temporizadorTempoJogo;
+
+/* ------------------------------------------------------------------------- */
+
+/** Estado do jogo, que vai sendo preenchido no decorrer do jogo. */
+let jogo = {
+  
+    inicio: null
+  
+};
+  
+/* ------------------------------------------------------------------------- */
+
 //TO DO , FUNÇÕES QUE RECEBAM AS OPÇÕES DOS JOGOS DO HTML
 
 const openedCellSound = new Audio('../audio/open.mp3');
@@ -41,13 +60,34 @@ for(i=1;i<=linhas; i++ ){
         
         }
 
-        
+
   tabela.appendChild(linha);
 }
 
 localJogo.appendChild(tabela);
 
+  // Marca o inicio do tempo de jogo
+  jogo.inicio = Math.floor(Date.now() / 1000);
+
+  // Chama mostraTempoJogo() a cada segundo
+  temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
+
+
 }
+
+
+/** Mostra o tempo do jogo */
+function mostraTempoJogo() {
+    var zeroPad = (num, places) => String(num).padStart(places, '0')
+    document.getElementById(TEMPO_JOGO).innerHTML = zeroPad(Math.floor((Date.now()/1000)-jogo.inicio), 3);
+}
+
+/**
+ * Colocar na funcao que terminar o jogo
+ * Cancela o tempo do jogo
+ * clearInterval(temporizadorTempoJogo)
+ */
+
 function startGame(){
 
 }
