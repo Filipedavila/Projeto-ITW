@@ -1,7 +1,13 @@
 /* ------------------------------------------------------------------------- */
+"use strict";
 
+
+/* ---------------------------ID´S JOGO ---------------------------------------------- */
 /** Tempo do jogo */
 const TEMPO_JOGO = "tempoJogo";
+
+
+
 
 /** Intervalo do tempo do jogo */
 var temporizadorTempoJogo;
@@ -14,6 +20,8 @@ let jogo = {
     inicio: null
   
 };
+
+var table;
   
 /* ------------------------------------------------------------------------- */
 
@@ -21,7 +29,7 @@ let jogo = {
 
 const openedCellSound = new Audio('../audio/open.mp3');
 
-var table;
+
 
 /**TO DO , ligar o init as definições do user
  * TEREMOS QUE ARRANJAR MANEIRA TAMBÉM DE PASSAR TODOS OS DADOS
@@ -32,7 +40,7 @@ var table;
  * @param linhas
  */
 function init(colunas = 8, linhas = 8){
-     this.table  =  new Table(colunas,linhas);
+     table  =  new Table(colunas,linhas);
 console.log("criou table");
 var localJogo = document.getElementById("table");
 
@@ -42,12 +50,12 @@ tabela.setAttribute('class' ,'gameTable');
 tabela.setAttribute('alt','Janela do Jogo');
 
 // faz cada linha
-for(i=1;i<=linhas; i++ ){
+for(let i=1;i<=linhas; i++ ){
  var linha =document.createElement('tr');
  linha.setAttribute('class' ,'gameRow');
 
     //Criar Celulas do jogo
-    for(j = 1 ; j <= colunas;j++){
+    for(let j = 1 ; j <= colunas;j++){
         var celula = document.createElement('td');
         let row = String(i);
         let col = String(j);
@@ -78,7 +86,7 @@ localJogo.appendChild(tabela);
 
 /** Mostra o tempo do jogo */
 function mostraTempoJogo() {
-    var zeroPad = (num, places) => String(num).padStart(places, '0')
+    var zeroPad = (num, places) => String(num).padStart(places, '0');
     document.getElementById(TEMPO_JOGO).innerHTML = zeroPad(Math.floor((Date.now()/1000)-jogo.inicio), 3);
 }
 
@@ -107,11 +115,11 @@ function initMulti(colunas = 8, linhas = 8){
   tabela.setAttribute('alt','Jogador 1');
   
   // faz cada linha
-  for(i=1;i<=linhas; i++ ){
+  for(let i=1;i<=linhas; i++ ){
    var linha =document.createElement('tr');
    linha.setAttribute('class' ,'gameRow');
       //faz cada celula
-      for(j = 1 ; j <= colunas;j++){
+      for(let j = 1 ; j <= colunas;j++){
           var celula = document.createElement('td');
           
           celula.setAttribute('class','celula');
@@ -135,12 +143,12 @@ function initMulti(colunas = 8, linhas = 8){
   tabela2.setAttribute('alt','Jogador 2');
   
   // faz cada linha
-  for(i=0;i<linhas; i++){
+  for(let i=0;i<linhas; i++){
    var linha2 =document.createElement('tr');
    linha2.setAttribute('class' ,'gameRow');
    linha2.setAttribute('alt','Linha ' + i);
       //faz cada celula
-      for(j = 0 ; j < colunas;j++){
+      for(let j = 0 ; j < colunas;j++){
           var celula2 = document.createElement('td');
           let row = String(i);
           let col = String(j);
@@ -159,7 +167,7 @@ function initMulti(colunas = 8, linhas = 8){
     tabela2.appendChild(linha2);
   }
   localJogo2.appendChild(tabela2);
-  }
+}
 
 
 /**
@@ -176,12 +184,13 @@ function clicado(e){
    let col = id.charAt(1);
 console.log(e.button )
 
-    if(e.button == 0) {
+    if(e.button === 0) {
         table.cells[row][col].openCell();
     }
-    if(e.button ==2){
+    if(e.button ===2){
         table.cells[row][col].placeFlag();
     }
+
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
@@ -211,12 +220,12 @@ class Table {
         this.row = row;
 
         this.cells = new Array(row);
-        for(var i = 1 ; i<= row ; i++){
+        for(let i = 1 ; i<= row ; i++){
                 this.cells[i] =new Array(col);
         }
 
-        for(var i = 1 ; i <= col ; i++){
-            for(var j = 0; j< row; j++){
+        for(let i = 1 ; i <= col ; i++){
+            for(let j = 0; j< row; j++){
             this.cells[i][j] =new Cell(i,j);
             }
 
