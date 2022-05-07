@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="estilos/main.css" type="text/css">
     <link rel="stylesheet" href="estilos/layout.css" type="text/css">
     <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Tangerine">
+    <script src="js/jogo.js" ></script>
 
     <title>Minesweeper - Settings</title>
 </head>
-<body >
+<body>
     <div class="container">
 
         <nav class="navigation">
@@ -24,17 +25,16 @@
             </ul>
         </nav>
         <div class ="customContainer">
-            <form class="centrado"  method="POST" action="singleplayer.html" >
+            <form id="frmSinglePlayerSettings" class="centrado"  method="POST" action="singleplayer.html" >
                 <table >
                     <tr>
                         <th colspan="3" >Opções do Jogo</th>
                     </tr>
+
                     <tr>
                         <td colspan="3"  >
-                            <label for="nome">Nome Jogador  :</label>
-
-
-                            <input type="text" id="nome" name="nome"  >
+                            <label for="txtNome">Nome Jogador:</label>
+                            <input id="txtNome" type="text" name="nome" required>
                         </td>
                     </tr>
 
@@ -43,18 +43,18 @@
                             Tamanho
                         </th>
                     </tr>
-                    <tr >
+                    <tr>
                         <td>
-                            <label for="gameEasy">Easy (8x8)</label>
-                            <input type="radio" id="gameEasy"  name="tamanho">
+                            <label for="gameEasy">Easy (9x9)</label>
+                            <input type="radio" id="gameEasy"  name="tamanho" value="tamanhoEasy">
                         </td>
                         <td>
-                            <label for="gameMedium">Medium (12x12)</label>
-                            <input type="radio" id="gameMedium"   name="tamanho" >
+                            <label for="gameMedium">Medium (16x16)</label>
+                            <input type="radio" id="gameMedium"   name="tamanho" value="tamanhoMedium">
                         </td>
                         <td>
-                            <label for="gameHard">Hard (16x16)</label>
-                            <input type="radio" id="gameHard"  name="tamanho">
+                            <label for="gameHard">Hard (30x16)</label>
+                            <input type="radio" id="gameHard"  name="tamanho" value="tamanhoHard">
                         </td>
                     </tr>
                     <tr>
@@ -65,15 +65,15 @@
                     <tr>
                         <td>
                             <label for="EasyDif">Easy</label>
-                            <input type="radio" id="EasyDif" name="difficulty" >
+                            <input type="radio" id="EasyDif" name="difficulty" value="dificuldadeEasy">
                         </td>
                         <td>
                             <label for="MediumDif">Medium</label>
-                            <input type="radio" id="MediumDif"  name="difficulty" >
+                            <input type="radio" id="MediumDif"  name="difficulty" value="dificuldadeMedium">
                         </td>
                         <td>
                             <label for="hardDif">Hard</label>
-                            <input type="radio" id="hardDif" name="difficulty" >
+                            <input type="radio" id="hardDif" name="difficulty" value="dificuldadeHard">
                         </td>
                     </tr>
                     <tr>
@@ -92,7 +92,7 @@
                     <tr>
                         <td colspan="2" >
                         </td>
-                        <td>            <input type="submit" value="Jogar"></td>
+                        <td>            <input type="submit" value="Jogar" onclick="recolheDadosConfiguracaoSingleplayer()"></td>
                     </tr>
 
                 </table>

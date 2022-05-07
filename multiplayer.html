@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="estilos/jogo.css" type="text/css">
   <title>Minesweeper - Multiplayer Mode</title>
 </head>
-<body onload='initMulti(8,8)'>
+<body onload="configuracaoMultiplayer()">
     <div class="container">
 
         <nav class="navigation"> 
@@ -31,8 +31,8 @@
 
                 <div class="menu_jogo">
                     <div class="jogador">
-                      <img src="/img/icons8-gamer-64-man.png" alt="avatar jogador 1">
-                        <span>Jogador 1</span>
+                      <img src="./img/icons8-gamer-64-man.png" alt="avatar jogador 1" id="imagemAvatar1">
+                        <div class="nomeAvatar1"></div>
                     </div>
 
                     <img class="buttonStart" id="smileP1" src="./img/smile.png" alt="Smile para fazer restart do jogo">
@@ -54,17 +54,17 @@
             <div class="gameStatus">
 
                 <span class="centrado">Tempo</span>
-            <span class="timeMulti ">00:00</span>
+            <span class="timeMulti ">000</span>
 
 
-                <span class="centrado">Jogador 1</span>
+                <span class="centrado nomeAvatar1"></span>
                 <span class="centrado"> <span Class="win">00</span>
                     <img class="smallicon" src="img/icons8-troféu-20.png" alt="Trophy won"></span>
 
 
 
 
-                <span class="centrado">Jogador 2</span>
+                <span class="centrado nomeAvatar2"></span>
 
                 <span class="centrado"><span Class="win">00</span>
                     <img class="smallicon"  src="img/icons8-troféu-20.png" alt="Trophy won">
@@ -79,8 +79,8 @@
 
                 <div class="menu_jogo">
                     <div class="jogador">
-                    <img src="/img/icons8-gamer-64-woman.png" alt="avatar jogador 1">
-                        <span>Jogador 2</span>
+                    <img src="./img/icons8-gamer-64-woman.png" alt="avatar jogador 2" id="imagemAvatar2">
+                        <div class="nomeAvatar2"></div>
                     </div>
                     <img class="buttonStart" id="smileP2" src="./img/smile.png" alt="Smile para fazer restart do jogo">
 
