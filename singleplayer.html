@@ -30,25 +30,25 @@
             <div class="gameStatus">
                 <img class="avatar" src="./img/icons8-gamer-64-man.png" alt="avatar jogador 1" id="imagemAvatar">
                 <div id="nomeAvatar"></div>   
-                <span class="centrado"><span Class="win">00</span>
+                <span class="centrado"><span Class="win " id="timesWonPlayer">00</span>
                 <img class="smallicon" src="img/icons8-troféu-20.png" alt="Trophy won"></span>
             </div>
             <div  class="gridGame">
 
                 <div class="menu_jogo">
 
-                    <div class="points">000</div>
+                    <div class="points" id="idPointsSinglePlayer">000</div>
 
                     <img class="buttonStart" id="smile" src="./img/smile.png" alt="Smile para fazer restart do jogo">
 
-                    <div id="tempoJogo" class="time">000</div>
+                    <div id="idScreenTempoJogo" class="time">000</div>
 
                 </div>
-                  <div id="table" class="tablePlace">
+                  <div id="idGameTable" class="tablePlace">
             
                 </div>
                 <div class="downbar">
-                    <img class="mute  centrado" src="img/sound-off.png" alt="desligar som" >
+                    <img class="mute  centrado" src="img/sound-off.png" alt="desligar som"  id="soundControl">
 
 
                 </div>
@@ -73,9 +73,9 @@
        <p> &copy; Cidália, Filipe, Rita</p>
         </footer>  
     </div>
-    <audio autoplay>
+   <!-- <audio autoplay>
         <source src="./audio/creative.mp3" type="audio/mpeg">
         <p>O seu browser não suporta o elemento Audio.</p>
     </audio>
-</body>
+ --></body>
 </html>
