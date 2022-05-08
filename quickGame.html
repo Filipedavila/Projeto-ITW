@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="estilos/main.css" type="text/css">
     <link rel="stylesheet" href="estilos/layout.css" type="text/css">
     <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Tangerine">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="estilos/jogo.css" type="text/css">
 
     <script src="js/jogo.js" ></script>
 
   <title>Minesweeper  - Modo singleplayer</title>
 </head>
-<body onload='init(8,8)'>
+<body onload='init(16,16,40)'>
 
 <div class="container">
 
@@ -34,12 +35,14 @@
         
                 <div class="menu_jogo">
 
-                    <div class="points">000</div>
+                    <div >Points<span class="points" id="idPointsSinglePlayer">000</span></div>
 
-                    <img class="buttonStart" id="smile" src="./img/smile.png" alt="Smile para fazer restart do jogo">
 
-                    <div id="idScreenTempoJogo" class="time">000</div>
 
+                    <div >Time<span id="idScreenTempoJogo" class="time" >000</span></div>
+
+                    <div > Bombs <span id="idBombsRemained" class="time">000</span></div>
+                    <img class="buttonStart centrado" id="idResetGame" src="./img/smile.png" alt="Smile para fazer restart do jogo">
                 </div>
                   <div id="idGameTable" class="tablePlace">
             
