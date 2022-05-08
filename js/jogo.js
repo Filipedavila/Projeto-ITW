@@ -1,16 +1,65 @@
 /* ------------------------------------------------------------------------- */
-"use strict";
 
-
-/* ---------------------------ID´S JOGO ---------------------------------------------- */
 /** Tempo do jogo */
 const TEMPO_JOGO = "tempoJogo";
 
-
-
-
 /** Intervalo do tempo do jogo */
 var temporizadorTempoJogo;
+
+/* ------------------------------------------------------------------------- */
+
+/** Identificador do formulário para escolher as opções de um jogo singleplayer */
+const FORMULARIO_SINGLEPLAYER = 'frmSinglePlayerSettings';
+
+/** Campo do formulário com o nome do jogador no caso singleplayer */
+const NOME_JOGADOR_S = 'nome';
+
+/** Campo do formulário com o tamanho do jogo no caso singleplayer */
+const TAMANHO_JOGO_S = 'tamanho';
+
+/** Campo do formulário com a dificuldade do jogo no caso singleplayer */
+const DIFICULDADE_JOGO_S = 'difficulty';
+
+/** Item de local storage que guarda as configurações do jogo singleplayer */
+const ITEM_CONFIGURACAO_S = 'configuracao';
+
+/** Identificador do nome do avatar no caso singleplayer */
+const NOME_AVATAR_S = 'nomeAvatar';
+
+/** Identificador da imagem do avatar no caso singleplayer */
+const IMAGEM_AVATAR_S = 'imagemAvatar';
+
+/* ------------------------------------------------------------------------- */
+
+/** Identificador do formulário para escolher as opções de um jogo multiplayer */
+const FORMULARIO_MULTIPLAYER = 'frmMultiPlayerSettings';
+
+/** Campo do formulário com o nome do jogador 1 no caso multiplayer */
+const NOME_JOGADOR_1 = 'nome1';
+
+/** Campo do formulário com o nome do jogador 2 no caso multiplayer */
+const NOME_JOGADOR_2 = 'nome2';
+
+/** Campo do formulário com o tamanho do jogo no caso multiplayer */
+const TAMANHO_JOGO_M = 'tamanhoMulti';
+
+/** Campo do formulário com a dificuldade do jogo no caso multiplayer */
+const DIFICULDADE_JOGO_M = 'difficultyMulti';
+
+/** Item de local storage que guarda as configurações do jogo multiplayer */
+const ITEM_CONFIGURACAO_M = 'configuracaoMulti';
+
+/** Identificador do nome do avatar 1 no caso multiplayer */
+const NOME_AVATAR_1 = 'nomeAvatar1';
+
+/** Identificador da imagem do avatar 1 no caso multiplayer */
+const IMAGEM_AVATAR_1 = 'imagemAvatar1'
+
+/** Identificador do nome do avatar 2 no caso multiplayer */
+const NOME_AVATAR_2 = 'nomeAvatar2';
+
+/** Identificador da imagem do avatar 2 no caso multiplayer */
+const IMAGEM_AVATAR_2 = 'imagemAvatar2';
 
 /* ------------------------------------------------------------------------- */
 
@@ -21,15 +70,160 @@ let jogo = {
   
 };
 
-var table;
-  
 /* ------------------------------------------------------------------------- */
+
+/** Recolhe os dados da configuração para um jogo singleplayer e guarda-os na
+ * local storage
+ */
+function recolheDadosConfiguracaoSingleplayer() {
+
+    let formulario = document.forms[FORMULARIO_SINGLEPLAYER];
+
+    let configuracao = [];
+
+    let nome = formulario.elements[NOME_JOGADOR_S].value;
+    configuracao.push(nome);
+
+    for (let t of formulario.elements[TAMANHO_JOGO_S]) {
+        if (t.checked) {
+            configuracao.push(t.value);
+        }
+    }
+
+    for (let d of formulario.elements[DIFICULDADE_JOGO_S]) {
+        if (d.checked) {
+            configuracao.push(d.value)
+        }
+    }
+
+    // falta guardar a imagem do jogador
+
+    localStorage.setItem(ITEM_CONFIGURACAO_S, JSON.stringify(configuracao));
+
+}
+
+/* ------------------------------------------------------------------------- */
+
+/** Recolhe os dados da configuração para um jogo multiplayer e guarda-os na
+ * local storage
+ */
+ function recolheDadosConfiguracaoMultiplayer() {
+
+    let formulario = document.forms[FORMULARIO_MULTIPLAYER];
+
+    let configuracaoM = [];
+
+    let nome1 = formulario.elements[NOME_JOGADOR_1].value;
+    configuracaoM.push(nome1);
+
+    let nome2 = formulario.elements[NOME_JOGADOR_2].value;
+    configuracaoM.push(nome2);
+
+    console.log(configuracaoM);
+
+
+    for (let t of formulario.elements[TAMANHO_JOGO_M]) {
+        if (t.checked) {
+            configuracaoM.push(t.value);
+        }
+    }
+
+    for (let d of formulario.elements[DIFICULDADE_JOGO_M]) {
+        if (d.checked) {
+            configuracaoM.push(d.value)
+        }
+    }
+
+    // falta guardar a imagem do jogador
+
+    localStorage.setItem(ITEM_CONFIGURACAO_M, JSON.stringify(configuracaoM));
+
+}
+
+/* ------------------------------------------------------------------------- */
+
+/** Configura o tamanho inicial do tabuleiro e o nome do jogador no
+ * caso singleplayer
+ */
+
+function configuracaoSingleplayer() {
+
+    configuracao = JSON.parse(localStorage.getItem(ITEM_CONFIGURACAO_S)) || [];
+
+    let tamanho = configuracao[1];
+
+    if (tamanho == 'tamanhoEasy') {
+        init(9,9);
+    }
+    else if (tamanho == 'tamanhoMedium') {
+        init(16,16);
+    }
+    else if (tamanho == 'tamanhoHard') {
+        init(30,16);
+    }
+
+    document.getElementById(NOME_AVATAR_S).innerHTML = configuracao[0];
+
+    // Falta configurar a imagem
+    
+
+}
+
+/* ------------------------------------------------------------------------- */
+
+/** Configura o tamanho inicial do tabuleiro e o nome do jogador no
+ * caso multiplayer
+ */
+
+ function configuracaoMultiplayer() {
+
+    configuracaoM = JSON.parse(localStorage.getItem(ITEM_CONFIGURACAO_M)) || [];
+
+    let nomesAvatar1 = document.getElementsByClassName(NOME_AVATAR_1);
+
+    for (let i = 0; i < nomesAvatar1.length; i++) {
+        nomesAvatar1[i].innerHTML = configuracaoM[0];
+    }
+
+    let nomesAvatar2 = document.getElementsByClassName(NOME_AVATAR_2);
+
+    for (let i = 0; i < nomesAvatar2.length; i++) {
+        nomesAvatar2[i].innerHTML = configuracaoM[1];
+    }
+
+    let tamanho = configuracaoM[2];
+
+
+    /**
+     * nao funciona o tamanho
+     * problema com initMulti
+     * Uncaught TypeError: Cannot read properties of undefined (reading 'cells')
+     */
+
+    if (tamanho == 'tamanhoEasy') {
+        initMulti(9,9);
+    }
+    else if (tamanho == 'tamanhoMedium') {
+        initMulti(16,16);
+    }
+    else if (tamanho == 'tamanhoHard') {
+        initMulti(30,16);
+    }
+
+    // Falta configurar a imagem
+    
+
+}
+
+/* ------------------------------------------------------------------------- */
+
+
 
 //TO DO , FUNÇÕES QUE RECEBAM AS OPÇÕES DOS JOGOS DO HTML
 
 const openedCellSound = new Audio('../audio/open.mp3');
 
-
+var table;
 
 /**TO DO , ligar o init as definições do user
  * TEREMOS QUE ARRANJAR MANEIRA TAMBÉM DE PASSAR TODOS OS DADOS
@@ -40,7 +234,7 @@ const openedCellSound = new Audio('../audio/open.mp3');
  * @param linhas
  */
 function init(colunas = 8, linhas = 8){
-     table  =  new Table(colunas,linhas);
+     this.table  =  new Table(colunas,linhas);
 console.log("criou table");
 var localJogo = document.getElementById("table");
 
@@ -50,12 +244,12 @@ tabela.setAttribute('class' ,'gameTable');
 tabela.setAttribute('alt','Janela do Jogo');
 
 // faz cada linha
-for(let i=1;i<=linhas; i++ ){
+for(i=1;i<=linhas; i++ ){
  var linha =document.createElement('tr');
  linha.setAttribute('class' ,'gameRow');
 
     //Criar Celulas do jogo
-    for(let j = 1 ; j <= colunas;j++){
+    for(j = 1 ; j <= colunas;j++){
         var celula = document.createElement('td');
         let row = String(i);
         let col = String(j);
@@ -86,7 +280,7 @@ localJogo.appendChild(tabela);
 
 /** Mostra o tempo do jogo */
 function mostraTempoJogo() {
-    var zeroPad = (num, places) => String(num).padStart(places, '0');
+    var zeroPad = (num, places) => String(num).padStart(places, '0')
     document.getElementById(TEMPO_JOGO).innerHTML = zeroPad(Math.floor((Date.now()/1000)-jogo.inicio), 3);
 }
 
@@ -115,11 +309,11 @@ function initMulti(colunas = 8, linhas = 8){
   tabela.setAttribute('alt','Jogador 1');
   
   // faz cada linha
-  for(let i=1;i<=linhas; i++ ){
+  for(i=1;i<=linhas; i++ ){
    var linha =document.createElement('tr');
    linha.setAttribute('class' ,'gameRow');
       //faz cada celula
-      for(let j = 1 ; j <= colunas;j++){
+      for(j = 1 ; j <= colunas;j++){
           var celula = document.createElement('td');
           
           celula.setAttribute('class','celula');
@@ -143,12 +337,12 @@ function initMulti(colunas = 8, linhas = 8){
   tabela2.setAttribute('alt','Jogador 2');
   
   // faz cada linha
-  for(let i=0;i<linhas; i++){
+  for(i=0;i<linhas; i++){
    var linha2 =document.createElement('tr');
    linha2.setAttribute('class' ,'gameRow');
    linha2.setAttribute('alt','Linha ' + i);
       //faz cada celula
-      for(let j = 0 ; j < colunas;j++){
+      for(j = 0 ; j < colunas;j++){
           var celula2 = document.createElement('td');
           let row = String(i);
           let col = String(j);
@@ -167,7 +361,7 @@ function initMulti(colunas = 8, linhas = 8){
     tabela2.appendChild(linha2);
   }
   localJogo2.appendChild(tabela2);
-}
+  }
 
 
 /**
@@ -184,13 +378,12 @@ function clicado(e){
    let col = id.charAt(1);
 console.log(e.button )
 
-    if(e.button === 0) {
+    if(e.button == 0) {
         table.cells[row][col].openCell();
     }
-    if(e.button ===2){
+    if(e.button ==2){
         table.cells[row][col].placeFlag();
     }
-
     e.preventDefault();
     e.stopPropagation();
     e.stopImmediatePropagation();
@@ -220,12 +413,12 @@ class Table {
         this.row = row;
 
         this.cells = new Array(row);
-        for(let i = 1 ; i<= row ; i++){
+        for(var i = 1 ; i<= row ; i++){
                 this.cells[i] =new Array(col);
         }
 
-        for(let i = 1 ; i <= col ; i++){
-            for(let j = 0; j< row; j++){
+        for(var i = 1 ; i <= col ; i++){
+            for(var j = 0; j< row; j++){
             this.cells[i][j] =new Cell(i,j);
             }
 
