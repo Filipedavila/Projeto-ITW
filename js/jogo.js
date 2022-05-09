@@ -79,13 +79,20 @@ const ID_TABLE_MULTIPLAYER_P1 = "idGameTableP1";
 
 const ID_TABLE_MULTIPLAYER_P2  = "idGameTableP2";
 
-/* ------------------------Game Type--------------------------- */
+/* ------------------------Game OPTIONS--------------------------- */
 
+/** Numero de bombas modo EASY */
 const BOMBS_GAME_EASY  = 10;
 
+/** Numero de bombas modo MEDIUM */
 const BOMBS_GAME_MEDIUM  = 40;
 
+/** Numero de bombas modo HARD */
 const BOMBS_GAME_HARD  = 99;
+
+/** Pontuação ganha por cada Celula Aberta */
+
+const POINTS_GIVEN_OPENED_CELL = 1;
 
 
 
@@ -657,6 +664,7 @@ class Table {
         while (bombsToPlace != 0) {
             let colRandom = Math.floor(Math.random() * (this.col  -1 )) + 1;
             let rowRandom = Math.floor(Math.random() * (this.row - 1  )) + 1;
+
             console.log(colRandom);
             console.log(rowRandom);
             console.log(this.col);
@@ -691,41 +699,65 @@ class Table {
     }
 
     openCell(row,col){
-        let numberAdjsBombs= 0;
+        // numero de bombas adjacentes iniciado
+
+        // caso esta celula tenha bomba ela explode
         if(this.cells[row][col].hasBomb()){
             this.cells[row][col].explode();
-            //pontuação
+            //é posto como verdadeiro o estado jogoCurrente finished
             jogoCurrente.finished = true;
+            // caso contrario se não estiver aberto
         }else if(!this.cells[row][col].isOpened()){
+            // abrir celula
             this.cells[row][col].openCell();
+            this.points+= POINTS_GIVEN_OPENED_CELL;
             let AdjCells =this.cells[row][col].getAdj();
-            if(AdjCells.length > 0){
-                for(let i = 0; i< AdjCells.length;i++){
-                    let id = AdjCells[i].split(",");
-                    let rowAdj = id[0];
-                    let colAdj = id[1];
-                    let numBomb = 0;
-                    if(this.cells[rowAdj][colAdj].hasBomb()){
-                        numberAdjsBombs++;
-                        break
-                    }else {
+            // se array contiver adjacencias
+            this.openAdjCells(row,col,AdjCells);
 
-                        this.openAdj(rowAdj,colAdj);
-
-                    }
-                }
-            }
-            this.points += 1;
-            if(numberAdjsBombs != 0) this.cells[row][col].setNumber(numberAdjsBombs);
         }
 
 
     }
 
-    openAdj(row,col){
-        this.cells[row][col].openCell();
+    openAdjCells(rowOrigin,colOrigin,AdjCells){
+        let numBombs= 0;
+
+        if(AdjCells.length > 0){
+            // fazer um loop nas adjacencias
+            for(let i = 0; i< AdjCells.length;i++){
+                // obter o id
+                let id = AdjCells[i].split(",");
+                //obter linha e coluna do id
+                let rowAdj = id[0];
+                let colAdj = id[1];
+
+                //se a adjacente atual tiver bomba continua para a proxima iteração e adiciona uma bomba a contagem
+                if(this.cells[rowAdj][colAdj].hasBomb()){
+                    numBombs++;
+                    continue;
+                    // se a celula adjacente não esta aberta, abre a adjacente
+                }else if (!this.cells[rowAdj][colAdj].isOpened()) {
+                    this.cells[rowAdj][colAdj].openCell()
+                    // adiciona pontos
+                    this.points += POINTS_GIVEN_OPENED_CELL;
+                    let newAdjCell = [];
+                    newAdjCell =this.cells[rowAdj][colAdj].getAdj();
+                    this.openAdjCells(rowAdj,colAdj,newAdjCell);
+
+
+                }else{
+                    break;
+                }
+            }
+        }else {
+            return;
+        }
+        if(numBombs != 0) this.cells[rowOrigin][colOrigin].setNumber(numBombs);
 
     }
+
+
 
     /**Função que inicia a tablet, apesar de já estar funcional faltam uns retoques , na
      * parte que inicia e põe uma referencia das celulas adjacentes de cada celula na propria celula
@@ -734,8 +766,8 @@ class Table {
     setAdjCell(){
         if(this.cells != undefined){
 
-            for(let i = 1 ; i<=this.col ; i++){
-                for(let j = 1 ; j<= this.row; j++){
+            for(let i = 1 ; i<=this.row ; i++){
+                for(let j = 1 ; j<= this.col; j++){
 
                     let AdjCells = [];
                     if(i>1) {
@@ -743,6 +775,41 @@ class Table {
                             if (this.cells[i - 1][j] != undefined) {
                                 //console.log("Adj of " + i + " " + j + " =  " + Number(i - 1) + "," + j);
                                 AdjCells.push(Number(i - 1) + "," + j);
+                            }
+                        }
+                    }
+                    if(i>1 && j> 1) {
+                        if (this.cells[i - 1] != undefined) {
+                            if (this.cells[i - 1][j-1] != undefined) {
+                                //console.log("Adj of " + i + " " + j + " =  " + Number(i - 1) + "," + j);
+                                AdjCells.push(Number(i - 1) + "," + Number(j-1));
+                            }
+                        }
+                    }
+                    if(i<this.row && j < this.col){
+
+                        if (this.cells[i + 1] != undefined) {
+                            if (this.cells[i + 1][j+1] != undefined) {
+                                //console.log("Adj of " + i + " " + j + " =  " + Number(i - 1) + "," + j);
+                                AdjCells.push(Number(i + 1) + "," + Number(j+1));
+                            }
+                        }
+                    }
+                    if(i<this.row && j > 1){
+
+                        if (this.cells[i + 1] != undefined) {
+                            if (this.cells[i + 1][j-1] != undefined) {
+                                //console.log("Adj of " + i + " " + j + " =  " + Number(i - 1) + "," + j);
+                                AdjCells.push(Number(i + 1) + "," + Number(j-1));
+                            }
+                        }
+                    }
+                    if(i>1 && j < this.col){
+
+                        if (this.cells[i - 1] != undefined) {
+                            if (this.cells[i - 1][j+1] != undefined) {
+                                //console.log("Adj of " + i + " " + j + " =  " + Number(i - 1) + "," + j);
+                                AdjCells.push(Number(i - 1) + "," + Number(j+1));
                             }
                         }
                     }
@@ -777,6 +844,16 @@ class Table {
                             }
                         }
                     }
+                    if(j> 1) {
+                        if (this.cells[i] != undefined) {
+                            if (this.cells[i][j - 1] != undefined) {
+                                //console.log("Adj of " + i + " " + j + " =  " + i +","+ Number( j-1));
+                                AdjCells.push(i + "," + Number( j-1));
+
+
+                            }
+                        }
+                    }
                     this.cells[i][j].addAjacentCells(AdjCells);
 
                 }
@@ -786,6 +863,8 @@ class Table {
     getBombsRemained(){
         return Number(this.bombs - this.placedFlags);
     }
+
+
 
 
 
@@ -844,6 +923,7 @@ class Cell {
         }else {
 
             console.log("Aberta Celula [" + this.row + "," + this.col + "]");
+
             this.buttonTd.setAttribute('class', 'openedCell');
             this.buttonTd.removeEventListener("mouseup",clicado);
             this.isOpen=true;
