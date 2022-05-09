@@ -409,7 +409,7 @@ function init(linhas, colunas,bombs){
     document.getElementById(BTN_ID_RESET_GAME_SP).addEventListener("mouseup",jogoCurrente.resetGame, false);
     // Chama mostraTempoJogo() a cada segundo
     temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
-    verificarSeAcabou = setInterval(isFinished, 1000);
+    verificarSeAcabou = setInterval(isFinished, 300);
     verificacaoPontos = setInterval(updatePointsSP, 1000);
 
 }
@@ -496,7 +496,7 @@ function initMulti(colunas, linhas, bombs){
 }
 
 function clicado(e){
-    openedCellSound.play();
+
     // manda abrir o opencell e espera retorno, dependendo do retorno ira fazer uma acção no jogo
     let t = e.target;
 
@@ -513,7 +513,7 @@ function clicado(e){
  * @param e
  */
 function clicadoSp(id,e){
-    openedCellSound.play();
+
 
     // manda abrir o opencell e espera retorno, dependendo do retorno ira fazer uma acção no jogo
 
@@ -523,14 +523,18 @@ function clicadoSp(id,e){
 
     if(e.button == 0) {
         if (!jogoSp.table_player.cells[row][col].hasFlag()){
-            jogoSp.table_player.openCell(row, col);
+            openedCellSound.play();
+            jogoSp.table_player.open(row, col);
     }
     }
     if(e.button ==2){
         if (!jogoSp.table_player.cells[row][col].hasFlag()) {
+            openedCellSound.play();
             jogoSp.table_player.placeFlag(row, col);
         }else{
+            openedCellSound.play();
             jogoSp.table_player.removeFlag(row,col)
+
         }
     }
     e.preventDefault();
@@ -623,6 +627,8 @@ function updatePointsMP() {
 class Table {
 
     cells;
+    cellNumbers;
+    openedCells;
     col ;
     row;
     difficulty;
@@ -640,6 +646,8 @@ class Table {
      */
     constructor(row,col,bombs){
         //acerto pois não usammos a fila ou coluna 0
+        this.cellNumbers = row * col;
+        this.openedCells=0;
         this.col = col;
         this.row = row;
         this.points = 0;
@@ -663,10 +671,20 @@ class Table {
         this.setAdjCell();
 
     }
+
+    /**
+     *
+     * @returns {*}
+     */
     getPoints() {
         return this.points;
     }
 
+    /**
+     *
+     * @param firsOpenedCol
+     * @param firsOpenedRow
+     */
     scrambleBombs(firsOpenedCol,firsOpenedRow) {
         let bombsToPlace = this.bombs;
         while (bombsToPlace != 0) {
@@ -686,18 +704,30 @@ class Table {
         this.scrambled = true;
     }
 
-
+    /**Função responsavel por gerir a colocação e remoção de flags
+     *
+     * @param row
+     * @param col
+     */
     placeFlag(row,col){
             if(!this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened()){
                 this.cells[row][col].placeFlag();
                 this.placedFlags++;
+
+
             }else if (this.cells[row][col].isFlagged()){
                 this.cells[row][col].removeFlag();
                 this.placedFlags++;
 
             }
+        this.checkIfWon();
         }
 
+    /**
+     *
+     * @param row
+     * @param col
+     */
     removeFlag(row,col){
         if(this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened()){
             this.cells[row][col].removeFlag();
@@ -707,7 +737,13 @@ class Table {
         }
     }
 
-    openCell(row,col){
+    /**
+     *
+     * @param row
+     * @param col
+     */
+    open(row, col){
+        let AdjCells = [];
         if(this.scrambled) {
             // numero de bombas adjacentes iniciado
 
@@ -716,38 +752,49 @@ class Table {
                 this.cells[row][col].explode();
                 //é posto como verdadeiro o estado jogoCurrente finished
                 jogoCurrente.finished = true;
+                jogoCurrente.lost = true;
                 // caso contrario se não estiver aberto
             } else if (!this.cells[row][col].isOpened()) {
                 // abrir celula
-                this.cells[row][col].openCell();
-                this.points += POINTS_GIVEN_OPENED_CELL;
-                let AdjCells = this.cells[row][col].getAdj();
-                let numBombs = this.coundAdjBombs(AdjCells);
-                AdjCells.filter(cell => cell !== this.cells[row][col].id);
-                if(numBombs == 0) {
-                    this.openAdjCells( AdjCells);
-                }else{
-                    this.cells[row][col].placeNumber(numBombs);
-                }
+                this.openCell(row,col);
+
+                AdjCells = this.cells[row][col].getAdj();
+                this.processAdjacentCells(AdjCells, row, col);
                 // se array contiver adjacencias
 
             }
         }else{
-            this.cells[row][col].openCell();
-            this.points += POINTS_GIVEN_OPENED_CELL;
+            // Em caso de ser a primeira jogada, abre a celula e depois invoca a função para distribuir as bombas
+            this.openCell(row,col);
             this.scrambleBombs(row,col);
-            let AdjCells = this.cells[row][col].getAdj();
-            let numBombs = this.coundAdjBombs(AdjCells);
-            AdjCells.filter(cell => cell !== this.cells[row][col].id);
-            if(numBombs == 0) {
-                this.openAdjCells( AdjCells);
-            }else{
-                this.cells[row][col].placeNumber(numBombs);
-            }
+             AdjCells = this.cells[row][col].getAdj();
+             // invoca a função para processar as adjacentes
+            this.processAdjacentCells(AdjCells, row, col);
+
         }
 
     }
 
+    /**
+     *
+     * @param AdjCells
+     * @param row
+     * @param col
+     */
+    processAdjacentCells(AdjCells, row, col) {
+        let numBombs = this.countAdjBombs(AdjCells);
+        AdjCells.filter(cell => cell !== this.cells[row][col].id);
+        if (numBombs == 0) {
+            this.openAdjCells(AdjCells);
+        } else {
+            this.cells[row][col].placeNumber(numBombs);
+        }
+    }
+
+    /**
+     *
+     * @param AdjCells
+     */
     openAdjCells(AdjCells){
 
 
@@ -765,33 +812,17 @@ class Table {
                     newAdjCell =this.cells[rowAdj][colAdj].getAdj();
 
                     newAdjCell.filter(cell => cell !== AdjCells[i])
-                    let numBombs = this.coundAdjBombs(newAdjCell);
-
-                    if (numBombs == 0) {
-                        this.cells[rowAdj][colAdj].openCell();
-                        this.openAdjCells(newAdjCell);
-                    } else {
+                    let numBombs = this.countAdjBombs(newAdjCell);
+                    this.openCell(rowAdj,colAdj);
+                    if (numBombs != 0) {
                         this.cells[rowAdj][colAdj].placeNumber(numBombs);
+
+                    } else {
+                        this.openAdjCells(newAdjCell);
+
                     }
                 }
-                //se a adjacente atual tiver bomba continua para a proxima iteração e adiciona uma bomba a contagem
-               /* if(this.cells[rowAdj][colAdj].hasBomb()){
-                    numBombs++;
 
-                    // se a celula adjacente não esta aberta, abre a adjacente
-                }else if (!this.cells[rowAdj][colAdj].isOpened()) {
-                    this.cells[rowAdj][colAdj].openCell()
-
-                    // adiciona pontos
-                    this.points += POINTS_GIVEN_OPENED_CELL;
-                    let newAdjCell = [];
-                    newAdjCell =this.cells[rowAdj][colAdj].getAdj();
-                    newAdjCell.filter(cell => cell !== AdjCells[i]);
-
-                    this.openAdjCells(rowAdj,colAdj,newAdjCell);
-
-
-                }*/
 
             }
 
@@ -803,7 +834,26 @@ class Table {
 
     }
 
-    coundAdjBombs(Adj){
+    /**Função que abre a celula e faz update do estado do jogo
+     *
+     * @param row - numero da Linha
+     * @param col - numero da Coluna
+     * @requires !this.cells[row][col].isOpened() &&  !this.cells[row][col].hasBomb()
+     */
+    openCell(row,col){
+        this.cells[row][col].openCell();
+        this.points += POINTS_GIVEN_OPENED_CELL;
+        this.openedCells++;
+        this.checkIfWon();
+
+    }
+
+    /**Função que verifica quantas bombas existem nas celulas adjacentes
+     *
+     * @param Adj - array que contem os ids das celulas adjacentes
+     * @returns {number} numero de celulas adjacentes
+     */
+    countAdjBombs(Adj){
         let numBomb = 0;
         for(let i = 0 ; i< Adj.length ; i++){
             let id = Adj[i].split(",");
@@ -904,16 +954,7 @@ class Table {
                             }
                         }
                     }
-                    if(j> 1) {
-                        if (this.cells[i] != undefined) {
-                            if (this.cells[i][j - 1] != undefined) {
-                                //console.log("Adj of " + i + " " + j + " =  " + i +","+ Number( j-1));
-                                AdjCells.push(i + "," + Number( j-1));
 
-
-                            }
-                        }
-                    }
                     this.cells[i][j].addAjacentCells(AdjCells);
 
                 }
@@ -924,7 +965,13 @@ class Table {
         return Number(this.bombs - this.placedFlags);
     }
 
-
+    checkIfWon(){
+        let cellsToGo = this.cellNumbers - ( this.openedCells + this.placedFlags);
+        if(cellsToGo == 0){
+            jogoCurrente.finished = true;
+            jogoCurrente.won = true;
+        }
+    }
 
 
 
@@ -934,7 +981,7 @@ class Table {
 }
 
 
-/**
+/**Classe que representa uma celula do jogo
  *
  */
 class Cell {
@@ -945,19 +992,18 @@ class Cell {
     isBombed;
     isOpen;
     buttonTd;
-    nearBombNumber;
 
-    /**
+
+    /**Construtor de Celula do jogo
      *
-     * @param row
-     * @param col
+     * @param row - recebe a linha do jogo
+     * @param col - recebe a coluna do jogo
      */
     constructor(row,col){
         this.row = Number(row);
         this.col = Number(col);
         this.buttonTd = null;
         this.isBombed=false;
-        this.nearBombNumber =0;
         this.isFlagged = false;
         this.adjCells = [];
 
@@ -1009,13 +1055,15 @@ class Cell {
 
     /**
      *
+     * @returns {*}
      */
     getAdj(){
-        return this.adjCells;
+        let Adjacent = this.adjCells;
+        return Adjacent;
 
     }
 
-    /**
+    /**M etodo que coloca a flag mudando o estado da celula e coloca as classes css associadas a celula com flag
      *
      */
     placeFlag(){
@@ -1025,7 +1073,7 @@ class Cell {
         }
         ;
     }
-    /**
+    /**Metodo que remove a flag mudando o estado da celula e coloca as classes css associadas a celula normal
      *
      */
     removeFlag(){
@@ -1036,22 +1084,29 @@ class Cell {
             this.buttonTd.setAttribute('class', 'celula ');
         }
     }
-    /**
+
+    /**Método que verifica se a celula currente contem uma flag e
      *
+     * @returns {flagged} booleano que representa se a celula tem flag
      */
     hasFlag(){
-        return this.isFlagged;
+        let flagged = this.isFlagged;
+        return flagged;
         }
 
 
-    /**
+    /**Metodo getter para o estado da celula em relação a estar aberta ou não
      *
-     */
+     * @returns {opened} booleano que representa se a celula está aberta
+      */
     isOpened(){
-        return this.isOpen;
+        let opened = this.isOpen;
+        return opened;
     }
-    /**
+
+    /**Método responsavel por colocar o numero de bombas e a classe associada caso o numero de bombas seja maior que 0
      *
+     * @param numberBomb
      */
     placeNumber(numberBomb){
         if(numberBomb > 0) {
@@ -1060,7 +1115,7 @@ class Cell {
         }
     }
 
-    /**
+    /**Método responsavel por mudar a classe da celula associada para estado aberto e de bomba explodida
      *
      */
     explode(){
@@ -1068,14 +1123,17 @@ class Cell {
         this.buttonTd.setAttribute('class','openedCell bombCell');
         this.buttonTd.removeEventListener("mouseup",clicado);
     }
+
+    /**
+     *
+     * @param AdjCells
+     */
     addAjacentCells(AdjCells){
         this.adjCells = AdjCells;
 
     }
 
-    setNumber(num){
-        this.buttonTd.innerText = num;
-    }
+
 
 }
 
