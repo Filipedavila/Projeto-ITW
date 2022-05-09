@@ -603,7 +603,9 @@ function isFinished() {
 
 function updatePointsSP() {
     let pointElement = document.getElementById(ID_POINTS_SINGLEPLAYER);
-    pointElement.innerText = jogoSp.table_player.getPoints();
+    var zeroPad = (num, places) => String(num).padStart(places, '0')
+    pointElement.innerText = zeroPad(jogoSp.table_player.getPoints(),3);
+
     let bombsRemained = document.getElementById(ID_BOMBS_REMAINED);
     bombsRemained.innerText= jogoSp.table_player.getBombsRemained();
 
@@ -726,6 +728,7 @@ class Table {
             }
         }else{
             this.cells[row][col].openCell();
+            this.points += POINTS_GIVEN_OPENED_CELL;
             this.scrambleBombs(row,col);
             let AdjCells = this.cells[row][col].getAdj();
             this.openAdjCells(row, col, AdjCells);
