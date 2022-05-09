@@ -723,7 +723,7 @@ class Table {
                 this.points += POINTS_GIVEN_OPENED_CELL;
                 let AdjCells = this.cells[row][col].getAdj();
                 // se array contiver adjacencias
-                this.openAdjCells(row, col, AdjCells);
+                this.openAdjCells(AdjCells);
 
             }
         }else{
@@ -731,15 +731,22 @@ class Table {
             this.points += POINTS_GIVEN_OPENED_CELL;
             this.scrambleBombs(row,col);
             let AdjCells = this.cells[row][col].getAdj();
-            this.openAdjCells(row, col, AdjCells);
+            let numBombs = this.coundAdjBombs(AdjCells);
+            AdjCells.filter(cell => cell !== this.cells[row][col].id);
+            if(numBombs == 0) {
+                this.openAdjCells( AdjCells);
+            }else{
+                this.cells[row][col].placeNumber(numBombs);
+            }
         }
 
     }
 
-    openAdjCells(rowOrigin,colOrigin,AdjCells){
-        let numBombs= 0;
+    openAdjCells(AdjCells){
+
 
         if(AdjCells.length > 0){
+
             // fazer um loop nas adjacencias
             for(let i = 0; i< AdjCells.length;i++){
                 // obter o id
@@ -747,30 +754,61 @@ class Table {
                 //obter linha e coluna do id
                 let rowAdj = id[0];
                 let colAdj = id[1];
+                if(!this.cells[rowAdj][colAdj].isOpen && !this.cells[rowAdj][colAdj].hasBomb()) {
+                    let newAdjCell = [];
+                    newAdjCell =this.cells[rowAdj][colAdj].getAdj();
 
+                    newAdjCell.filter(cell => cell !== AdjCells[i])
+                    let numBombs = this.coundAdjBombs(newAdjCell);
+
+                    if (numBombs == 0) {
+                        this.cells[rowAdj][colAdj].openCell();
+                        this.openAdjCells(newAdjCell);
+                    } else {
+                        this.cells[rowAdj][colAdj].placeNumber(numBombs);
+                    }
+                }
                 //se a adjacente atual tiver bomba continua para a proxima iteração e adiciona uma bomba a contagem
-                if(this.cells[rowAdj][colAdj].hasBomb()){
+               /* if(this.cells[rowAdj][colAdj].hasBomb()){
                     numBombs++;
-                    continue;
+
                     // se a celula adjacente não esta aberta, abre a adjacente
                 }else if (!this.cells[rowAdj][colAdj].isOpened()) {
                     this.cells[rowAdj][colAdj].openCell()
+
                     // adiciona pontos
                     this.points += POINTS_GIVEN_OPENED_CELL;
                     let newAdjCell = [];
                     newAdjCell =this.cells[rowAdj][colAdj].getAdj();
+                    newAdjCell.filter(cell => cell !== AdjCells[i]);
+
                     this.openAdjCells(rowAdj,colAdj,newAdjCell);
 
 
-                }else{
-                    break;
-                }
+                }*/
+
             }
+
+
         }else {
             return;
         }
-        if(numBombs != 0) this.cells[rowOrigin][colOrigin].setNumber(numBombs);
 
+
+    }
+
+    coundAdjBombs(Adj){
+        let numBomb = 0;
+        for(let i = 0 ; i< Adj.length ; i++){
+            let id = Adj[i].split(",");
+            //obter linha e coluna do id
+            let rowAdj = id[0];
+            let colAdj = id[1];
+            if( this.cells[rowAdj][colAdj].hasBomb()){
+                numBomb++
+            }
+        }
+        return numBomb;
     }
 
 
@@ -1009,10 +1047,10 @@ class Cell {
     /**
      *
      */
-    placeNumber(){
-        if(this.nearBombNumber > 0) {
+    placeNumber(numberBomb){
+        if(numberBomb > 0) {
             this.buttonTd.setAttribute('class', 'openedCell numberBombs');
-            this.buttonTd.innerText = String(this.nearBombNumber);
+            this.buttonTd.innerText = numberBomb;
         }
     }
 
