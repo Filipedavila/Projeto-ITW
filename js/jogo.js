@@ -583,18 +583,20 @@ function mostraTempoJogo() {
     document.getElementById(ID_SPAN_TEMPO_JOGO).innerHTML = zeroPad(Math.floor((Date.now()/1000)-jogoCurrente.inicio), 3);
 }
 function isFinished() {
-    if(jogoCurrente !=null){
-        if(jogoCurrente.finished){
-            let celulas = document.getElementsByClassName("celula");
+    if (jogoCurrente != null) {
+        if (jogoCurrente.finished) {
 
-         for(let i= 0 ; i< celulas.length; i++){
-             celulas[i].removeEventListener("mouseup",clicado);
-         }
+            let celulas = document.getElementsByClassName("celula");
+            for (let i = 0; i < celulas.length; i++) {
+                celulas[i].removeEventListener("mouseup", clicado);
+
+
+
+            }
 
             clearInterval(temporizadorTempoJogo);
             clearInterval(verificacaoPontos);
             clearInterval(verificarSeAcabou);
-
         }
     }
 }
@@ -625,7 +627,8 @@ class Table {
     bombs;
     placedFlags;
     points;
-    finished;
+    lost;
+    won;
 
 
     /**
@@ -640,6 +643,9 @@ class Table {
         this.points = 0;
         this.bombs = bombs;
         this.placedFlags = 0;
+        this.lost = false;
+        this.won = false;
+        this.scrambled = false;
         this.cells = new Array(this.row);
         for(let i = 1 ; i<= this.row ; i++){
             this.cells[i] =new Array(this.col);
@@ -651,20 +657,20 @@ class Table {
             }
 
         }
+        this.scrambled = false;
         this.setAdjCell();
-        this.scrambleBombs();
-        console.log(this.cells);
+
     }
     getPoints() {
         return this.points;
     }
 
-    scrambleBombs() {
+    scrambleBombs(firsOpenedCol,firsOpenedRow) {
         let bombsToPlace = this.bombs;
         while (bombsToPlace != 0) {
             let colRandom = Math.floor(Math.random() * (this.col  -1 )) + 1;
             let rowRandom = Math.floor(Math.random() * (this.row - 1  )) + 1;
-
+            if(colRandom == firsOpenedCol && rowRandom ==firsOpenedRow ) continue;
             console.log(colRandom);
             console.log(rowRandom);
             console.log(this.col);
@@ -675,6 +681,7 @@ class Table {
                 bombsToPlace--;
             }
         }
+        this.scrambled = true;
     }
 
 
@@ -699,24 +706,30 @@ class Table {
     }
 
     openCell(row,col){
-        // numero de bombas adjacentes iniciado
+        if(this.scrambled) {
+            // numero de bombas adjacentes iniciado
 
-        // caso esta celula tenha bomba ela explode
-        if(this.cells[row][col].hasBomb()){
-            this.cells[row][col].explode();
-            //é posto como verdadeiro o estado jogoCurrente finished
-            jogoCurrente.finished = true;
-            // caso contrario se não estiver aberto
-        }else if(!this.cells[row][col].isOpened()){
-            // abrir celula
+            // caso esta celula tenha bomba ela explode
+            if (this.cells[row][col].hasBomb()) {
+                this.cells[row][col].explode();
+                //é posto como verdadeiro o estado jogoCurrente finished
+                jogoCurrente.finished = true;
+                // caso contrario se não estiver aberto
+            } else if (!this.cells[row][col].isOpened()) {
+                // abrir celula
+                this.cells[row][col].openCell();
+                this.points += POINTS_GIVEN_OPENED_CELL;
+                let AdjCells = this.cells[row][col].getAdj();
+                // se array contiver adjacencias
+                this.openAdjCells(row, col, AdjCells);
+
+            }
+        }else{
             this.cells[row][col].openCell();
-            this.points+= POINTS_GIVEN_OPENED_CELL;
-            let AdjCells =this.cells[row][col].getAdj();
-            // se array contiver adjacencias
-            this.openAdjCells(row,col,AdjCells);
-
+            this.scrambleBombs(row,col);
+            let AdjCells = this.cells[row][col].getAdj();
+            this.openAdjCells(row, col, AdjCells);
         }
-
 
     }
 
