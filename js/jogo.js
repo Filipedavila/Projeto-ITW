@@ -722,8 +722,14 @@ class Table {
                 this.cells[row][col].openCell();
                 this.points += POINTS_GIVEN_OPENED_CELL;
                 let AdjCells = this.cells[row][col].getAdj();
+                let numBombs = this.coundAdjBombs(AdjCells);
+                AdjCells.filter(cell => cell !== this.cells[row][col].id);
+                if(numBombs == 0) {
+                    this.openAdjCells( AdjCells);
+                }else{
+                    this.cells[row][col].placeNumber(numBombs);
+                }
                 // se array contiver adjacencias
-                this.openAdjCells(AdjCells);
 
             }
         }else{
