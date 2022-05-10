@@ -18,7 +18,7 @@
 
     });</script>
 
-    <title>Minesweeper - Ranking</title>
+    <title>Minesweeper - Register</title>
 </head>
 <body>
     <div class="container">
@@ -27,66 +27,60 @@
                 <li ><a href="index.html">Minesweeper</a></li>
                 <li><a href="quickGame.html">Jogar</a></li>
                 <li><a href="tutorial.html">Tutorial</a></li>
-                <li class="active"><a href="ranking.html">Ranking</a></li>
+                <li><a href="ranking.html">Ranking</a></li>
                 <li><a href="sobrenos.html">Sobre Nós</a></li>
 
             </ul>
         </nav>   
-         <article>
-
-
-
-                 <div >
-
-
-                     <form action="" method="POST" id="registro" >
-
-
-
-
-
-                         <div >
-                             <div >
-                                 <label for="nome">Nome:
-
-                                 </label>
-                                 <input type="text"  name="nome" id="nome" value="" >
-
+        <article>
+                <div>
+                    <form action="" id="registro">
+                        <div>
+                            <div>
+                                <label for="nome">Nome:</label>
+                                <input id="nome" type="text" name="nome" required maxlength="40" size="10">
                              </div>
                              <div class="col">
-                                 <label for="email">Email:     </label>
-                                 <input type="text"  class="form-control" id="email" name="email" value="">
-
-
+                                 <label for="email">Email:</label>
+                                 <input type="text" class="form-control" id="email" name="email" value="">
                              </div>
-                         </div>
-                         <div >
-
-                             <div >
-
-                                 <label for="password">Password:
-
-                                 </label>
-                                 <input type="password"  class="form-control" name="password" id="password">
-
+                        </div>
+                        <div>
+                            <div>
+                                <label for="password">Password:</label>
+                                <input type="password"  class="form-control" name="password" id="password">
+                            </div>
+                            <div>
+                                <label for="password2">Repita sua Password:</label>
+                                <input type="password"  class="form-control" name="password2" id="password2">
                              </div>
+                        </div>
+                        <div>
+                            <label for="selFaixaEtaria">Faixa Etária</label>
+                            <select name="faixaetaria" id="selFaixaEtaria" required>
+                                <option value="5-10">5 a 10 anos</option>
+                                <option value="10-15">10 a 15 anos</option>
+                                <option value="15-20">15 a 20 anos</option>
+                                <option value="20-25">20 a 25 anos</option>
+                                <option value="25-35">25 a 35 anos</option>
+                                <option value="35-50">35 a 50 anos</option>
+                                <option value="+50">mais de 50 anos</option>
+                            </select>
+                        </div>
+                        <div>
 
-                             <div >
+                            Género
 
-                                 <label for="password2">Repita sua Password:
-                                 </label>
-                                 <input type="password"  class="form-control" name="password2" id="password2">
-                             </div>
-                         </div>
+                            <label for="chkFeminino">Feminino</label>
+                            <input id="chkFeminino" type="checkbox" name="genero" value="Feminino">
 
-                             <div >
+                            <label for="chkMasculino">Masculino</label>
+                            <input id="chkMasculino" type="checkbox" name="genero" value="Masculino">
 
-                                 <label for="dob">Data de Nascimento
+                            <label for="chkOutro">Outro</label>
+                            <input id="chkOutro" type="checkbox" name="genero" value="Outro">
 
-                                 </label>
-                                 <input type="date"  name="dob" id="dob">
-
-                             </div>
+                        </div>
 
 
 
