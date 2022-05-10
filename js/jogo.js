@@ -345,7 +345,7 @@ function configuracaoMultiplayer() {
         } else if (tamanho == 'tamanhoMedium') {
             initMulti(16, 16,BOMBS_GAME_MEDIUM);
         } else if (tamanho == 'tamanhoHard') {
-            initMulti(30, 16,BOMBS_GAME_HARD);
+            initMulti(16, 30,BOMBS_GAME_HARD);
         }
 
 
@@ -435,12 +435,12 @@ function init(linhas, colunas,bombs){
 
 
 
-/**
+/**Função que inicia o jogo para multiplayer
  *
- * @param colunas
- * @param linhas
+ * @param colunas - numero de colunas
+ * @param linhas - numero de linhas
  */
-function initMulti(colunas, linhas, bombs){
+function initMulti(linhas, colunas, bombs){
     jogoCurrente = jogoMp;
     jogoMp.table_player[0]  =  new Table(linhas,colunas,bombs);
     jogoMp.table_player[1] =  new Table(linhas,colunas,bombs);
@@ -517,6 +517,11 @@ function initMulti(colunas, linhas, bombs){
     verificacaoPontos = setInterval(updatePointsMP, 1000);
 }
 
+/**Função que lida com as acções do jogador no jogo e que por sua vez de acordo com a intenção manifestada pelo utilizador
+ * encaminha para o tabuleiro e acção correspondente
+ *
+ * @param e - evento do elemento clickado
+ */
 function clicado(e){
 
     // manda abrir o opencell e espera retorno, dependendo do retorno ira fazer uma acção no jogo
@@ -601,9 +606,7 @@ function clicadoMp(id,e){
 
 }
 
-function nexTurn(){
 
-}
 /** Mostra o tempo do jogo
  *
  * Função chamada pelo setinterval que atualiza o contador de tempo do jogo no sitio pretendido
@@ -613,6 +616,10 @@ function mostraTempoJogo() {
     var zeroPad = (num, places) => String(num).padStart(places, '0')
     document.getElementById(ID_SPAN_TEMPO_JOGO).innerHTML = zeroPad(Math.floor((Date.now()/1000)-jogoCurrente.inicio), 3);
 }
+
+/**Função que verifica se o jogo currente acabaou e caso isto se verifique remove e blooqueia o jogo até ser reniciado
+ *
+ */
 function isFinished() {
     if (jogoCurrente != null) {
         if (jogoCurrente.finished) {
@@ -632,6 +639,9 @@ function isFinished() {
     }
 }
 
+/**Função que atualiza os pontos do modo singlePlayer e coloca-os nas zonas designadas
+ *  //TO DO  colocar todos os getElementById já em uma var correspondente
+ */
 function updatePointsSP() {
     let pointElement = document.getElementById(ID_POINTS_SINGLEPLAYER);
     var zeroPad = (num, places) => String(num).padStart(places, '0')
@@ -641,8 +651,10 @@ function updatePointsSP() {
     bombsRemained.innerText= jogoSp.table_player.getBombsRemained();
 
 }
-// por  os document id fora desta função como variaveis globais
-//TO DO
+
+/**Função que atualiza os pontos do modo Multiplayer e coloca-os nas zonas designadas
+ *  //TO DO  colocar todos os getElementById já em uma var correspondente
+ */
 function updatePointsMP() {
     let pointElementP1 = document.getElementById(ID_POINTS_MULTIPLAYER_P1)
     let pointElementP2 = document.getElementById(ID_POINTS_MULTIPLAYER_P2)
@@ -655,8 +667,7 @@ function updatePointsMP() {
     bombsRemainedP2.innerText= jogoMp.table_player[1].getBombsRemained();
 }
 
-/**Classe que representa o tabuleiro do jogo que contem todos as celulas ou seja butões do Jogo
- * , é responsavel por manipular a lógica do jogo.
+/**Classe que representa cada tabuleiro de jogo , usada no modo singular e no modo multiplaye.
  *
  */
 class Table {
@@ -674,10 +685,10 @@ class Table {
     won;
 
 
-    /**
+    /**Construtor da classe Table , que inicia todas as celulas e estados corrrespondentes do jogo
      *
-     * @param row
-     * @param col
+     * @param row - numero de linhas
+     * @param col - numero de colunas
      */
     constructor(row,col,bombs){
         //acerto pois não usammos a fila ou coluna 0
@@ -692,35 +703,41 @@ class Table {
         this.won = false;
         this.scrambled = false;
         this.cells = new Array(this.row);
+        // inicia cada linha
         for(let i = 1 ; i<= this.row ; i++){
             this.cells[i] =new Array(this.col);
-        }
-
-        for(let i = 1 ; i <= this.row ; i++){
+            // ciclo para iniciar cada celula dessa linha
             for(let j = 1; j<= this.col; j++){
                 this.cells[i][j] =new Cell(i,j);
+            }
+        }
+        //ciclo para definir dentro de cada celula a sua adjacente
+        for(let i = 1 ; i <= this.row ; i++){
+            for(let j = 1; j<= this.col; j++){
+                this.setAdjCell(i,j);
             }
 
         }
         this.scrambled = false;
-        this.setAdjCell();
+
 
     }
 
-    /**
+    /**Método getter que retorna a pontuação atual
      *
-     * @returns {*}
+     * @returns {Number} pontuação atual
      */
     getPoints() {
         return this.points;
     }
 
-    /**
+    /**Método que distribui de forma random as bombas nas celulas do jogo excluindo a primeira célula selecionada
      *
-     * @param firsOpenedCol
-     * @param firsOpenedRow
+     * @param firsOpenedRow - linha da primeira celula aberta
+     * @param firsOpenedCol - coluna da primeira celula aberta
+     *
      */
-    scrambleBombs(firsOpenedCol,firsOpenedRow) {
+    scrambleBombs(firsOpenedRow,firsOpenedCol) {
         let bombsToPlace = this.bombs;
         while (bombsToPlace != 0) {
             let colRandom = Math.floor(Math.random() * (this.col  -1 )) + 1;
@@ -772,10 +789,10 @@ class Table {
         }
     }
 
-    /**
+    /**Método que responsavel pela lógica associada à abertura de celulas
      *
-     * @param row
-     * @param col
+     * @param row -linha da célula
+     * @param col - coluna da célula
      */
     open(row, col){
         let AdjCells = [];
@@ -902,95 +919,40 @@ class Table {
         return numBomb;
     }
 
-
-
-    /**Função que inicia a tablet, apesar de já estar funcional faltam uns retoques , na
-     * parte que inicia e põe uma referencia das celulas adjacentes de cada celula na propria celula
+    /**Método que obtem as celulas adjacentes a uma certa celula adicionando oss id´s deste à celula correspondente
      *
+     * @param currentRow - numero da linha da celula atual
+     * @param currentCol - numero da coluna da celula atual
      */
-    setAdjCell(){
-        if(this.cells != undefined){
+    setAdjCell(currentRow,currentCol) {
 
-            for(let i = 1 ; i<=this.row ; i++){
-                for(let j = 1 ; j<= this.col; j++){
-
-                    let AdjCells = [];
-                    if(i>1) {
-                        if (this.cells[i - 1] != undefined) {
-                            if (this.cells[i - 1][j] != undefined) {
-
-                                AdjCells.push(Number(i - 1) + "," + j);
-                            }
-                        }
+        if (this.cells != undefined) {
+            let AdjCells = [];
+            let thisCell = currentRow+','+currentCol;
+            for (let i = currentRow - 1; i <= currentRow + 1; i++) {
+                for (let j = currentCol - 1; j <= currentCol +1; j++) {
+                    if( (i >= 1 && i <= this.row) && (j >= 1 && j <= this.col)){
+                                AdjCells.push(Number(i) + "," + j);
                     }
-                    if(i>1 && j> 1) {
-                        if (this.cells[i - 1] != undefined) {
-                            if (this.cells[i - 1][j-1] != undefined) {
-
-                                AdjCells.push(Number(i - 1) + "," + Number(j-1));
-                            }
-                        }
-                    }
-                    if(i<this.row && j < this.col){
-
-                        if (this.cells[i + 1] != undefined) {
-                            if (this.cells[i + 1][j+1] != undefined) {
-
-                                AdjCells.push(Number(i + 1) + "," + Number(j+1));
-                            }
-                        }
-                    }
-                    if(i<this.row && j > 1){
-
-                        if (this.cells[i + 1] != undefined) {
-                            if (this.cells[i + 1][j-1] != undefined) {
-
-                                AdjCells.push(Number(i + 1) + "," + Number(j-1));
-                            }
-                        }
-                    }
-                    if(i>1 && j < this.col){
-
-                        if (this.cells[i - 1] != undefined) {
-                            if (this.cells[i - 1][j+1] != undefined) {
-
-                                AdjCells.push(Number(i - 1) + "," + Number(j+1));
-                            }
-                        }
-                    }
-                    if(i < this.row) {
-
-                        if (this.cells[i + 1] != undefined) {
-                            if (this.cells[i + 1][j] != undefined) {
-
-                                AdjCells.push(Number(i + 1) + "," + j);
-                            }
-
-                        }
-                    }
-                    if(j<this.col) {
-                        if (this.cells[i] != undefined) {
-                            if (this.cells[i][j + 1] != undefined) {
-                                AdjCells.push(i + "," + Number( 1 + j));
-                            }
-                        }
-                    }
-                    if(j> 1) {
-                        if (this.cells[i] != undefined) {
-                            if (this.cells[i][j - 1] != undefined) {
-                                AdjCells.push(i + "," + Number( j-1));
-                            }
-                        }
-                    }
-                    this.cells[i][j].addAjacentCells(AdjCells);
                 }
             }
+            AdjCells = AdjCells.filter(cell => cell !== thisCell);
+            this.cells[currentRow][currentCol].setAjacentCells(AdjCells);
         }
     }
+
+    /**Método que obtem o numero de bombas que faltam assinalar
+     *
+     * @returns {number} - numero de bombas não assinaladas
+     */
     getBombsRemained(){
         return Number(this.bombs - this.placedFlags);
     }
 
+    /**Método que verifica se o utilizador ganhou o jogo verificando o estado do jogo e se o numero de celulas por
+     * abrir é igual a 0, contando as celulas com flag como celulas a menos
+     *
+     */
     checkIfWon(){
         let cellsToGo = this.cellNumbers - ( this.openedCells + this.placedFlags);
         if(cellsToGo == 0){
@@ -999,7 +961,10 @@ class Table {
         }
     }
 
-
+    /**Método que renicia a tabela colocando todos os estados em estado inicial e fazendo reset do estado de cada
+     * celula desta table de jogo
+     *
+     */
     resetTable(){
         this.scrambled = false;
         this.won = false;
@@ -1049,15 +1014,16 @@ class Cell {
 
     }
 
-    /**
+    /**Método setter que coloca a referencia do elemento html referente a esta celula para manipulação  direta
+     * da celula a partir desta abstração de celula de jogo
      *
-     * @param cellButton
+     * @param cellButton elemento html referente a esta celula no jooo
      */
     setTdElement(cellButton){
         this.buttonTd = cellButton;
     }
 
-    /**
+    /** Método que abre a celula e consoante o estado da celula explode ou abre, mudando o visual da mesma no jogo
      *
      */
     openCell(){
@@ -1076,25 +1042,24 @@ class Cell {
         }
     }
 
-    /**
+    /**Método que verifica se esta celula têm uma bomba
      *
-     * @returns boolean
+     * @returns {boolean} se a celula tem bomba
      */
     hasBomb(){
         return this.isBombed;
     }
 
-    /**
+    /**Método setter que coloca esta celula como portadora de bomba
      *
-     * @returns {number}
      */
     setBomb(){
         this.isBombed =true;
     }
 
-    /**
+    /**Obtem lista de celulas adjacentes a esta celula
      *
-     * @returns {*}
+     * @returns {Array} array de id´s de celulas adjacentes
      */
     getAdj(){
         let Adjacent = this.adjCells;
@@ -1164,15 +1129,18 @@ class Cell {
         this.isOpen=true;
     }
 
-    /**
+    /**Método setter que guarda as celulas adjacentes a esta celula
      *
-     * @param AdjCells
+     * @param AdjCells - array de id´s de celulas adjacentes
      */
-    addAjacentCells(AdjCells){
+    setAjacentCells(AdjCells){
         this.adjCells = AdjCells;
 
     }
 
+    /**Método que faz reinicia os estados desta célula
+     *
+     */
     resetCell(){
 
             this.buttonTd.removeAttribute('class', 'flagCell')
