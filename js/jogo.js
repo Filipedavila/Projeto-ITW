@@ -8,6 +8,13 @@ const ID_SPAN_TEMPO_JOGO = "idScreenTempoJogo";
 /** Tempo do jogo SINGLE PLAYER e QuickGame */
 const ID_BOMBS_REMAINED = "idBombsRemained";
 
+/** Tempo do jogo SINGLE PLAYER e QuickGame */
+const ID_BOMBS_REMAINED_P1 = "idBombsRemained1";
+
+
+/** Tempo do jogo SINGLE PLAYER e QuickGame */
+const ID_BOMBS_REMAINED_P2 = "idBombsRemained2";
+
 
 /**  Times Won SINGLE PLAYER Information **/
 
@@ -155,6 +162,8 @@ const NOME_AVATAR_2 = 'nomeAvatar2';
 /** Identificador da imagem do avatar 2 no caso multiplayer */
 const IMAGEM_AVATAR_2 = 'imagemAvatar2';
 
+const ID_SPAN_PLAYER_TURN = "idTurnPlayer";
+
 
 const openedCellSound = new Audio('../audio/open.mp3');
 
@@ -170,20 +179,15 @@ var jogoSp = {
     col:0,
     row:0,
     finished:false,
-    resetGame: function(){
-        this.table_player= null;
-        console.log(this.bombs);
-        console.log(this.col);
-        init(this.row,this.col,this.bombs); },
-    addTimeWonP1: function(){  this.times_won_player1++;},
+    resetGame: null,
+    addTimeWonP1: function(){  this.times_won_player1++;}
 
 
 
 };
 /** Estado do jogo Multiplayer, que vai sendo preenchido no decorrer do jogo. */
 var jogoMp = {
-    table_player1:null,
-    table_player2:null,
+    table_player:[],
     name_player1:null,
     name_player2:null,
     inicio: null,
@@ -191,6 +195,10 @@ var jogoMp = {
     points_player2:0,
     times_won_player1:0,
     times_won_player2:0,
+    turn:0,
+    nextTurn: function (){
+        this.turn = (this.turn+1) % 2;
+    },
     difficulty:null,
     size:null,
     finished:false,
@@ -268,7 +276,7 @@ function recolheDadosConfiguracaoMultiplayer() {
         }
     }
 
-    // falta guardar a imagem do jogador
+
 
     localStorage.setItem(ITEM_CONFIGURACAO_M, JSON.stringify(configuracaoM));
 
@@ -292,13 +300,13 @@ function configuracaoSingleplayer() {
         } else if (tamanho == 'tamanhoMedium') {
             init(16, 16,BOMBS_GAME_MEDIUM);
         } else if (tamanho == 'tamanhoHard') {
-            init(30, 16,BOMBS_GAME_HARD);
+            init(16, 30,BOMBS_GAME_HARD);
         }
 
 
         document.getElementById(NOME_AVATAR_S).innerHTML = configuracao[0];
 
-        // Falta configurar a imagem
+
     }else{
         window.location.replace("index.html");
     }
@@ -364,11 +372,22 @@ function configuracaoMultiplayer() {
  */
 function init(linhas, colunas,bombs){
     jogoCurrente = jogoSp;
-
-    jogoSp.table_player  =  new Table(linhas,colunas,bombs);
+    let table = new Table(linhas,colunas,bombs);
+    jogoSp.table_player  =  table;
     jogoSp.row = Number(linhas);
     jogoSp.col = Number(colunas);
     jogoSp.bombs = Number(bombs);
+
+    document.getElementById(BTN_ID_RESET_GAME_SP).addEventListener("mouseup",function (){
+        table.resetTable();
+        jogoSp.finished =false;
+        jogoSp.inicio=Math.floor(Date.now() / 1000);
+        temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
+        verificarSeAcabou = setInterval(isFinished, 300);
+        verificacaoPontos = setInterval(updatePointsSP, 300);
+
+
+    },false);
 
     let localJogo = document.getElementById(ID_TABLE_SINGLEPLAYER);
 
@@ -406,7 +425,7 @@ function init(linhas, colunas,bombs){
 
     // Marca o inicio do tempo de jogo
     jogoSp.inicio = Math.floor(Date.now() / 1000);
-    document.getElementById(BTN_ID_RESET_GAME_SP).addEventListener("mouseup",jogoCurrente.resetGame, false);
+
     // Chama mostraTempoJogo() a cada segundo
     temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
     verificarSeAcabou = setInterval(isFinished, 300);
@@ -423,8 +442,8 @@ function init(linhas, colunas,bombs){
  */
 function initMulti(colunas, linhas, bombs){
     jogoCurrente = jogoMp;
-    jogoMp.table_player1  =  new Table(linhas,colunas,bombs);
-    jogoMp.table_player2 =  new Table(linhas,colunas,bombs);
+    jogoMp.table_player[0]  =  new Table(linhas,colunas,bombs);
+    jogoMp.table_player[1] =  new Table(linhas,colunas,bombs);
     console.log("criou table");
 
     var localJogo = document.getElementById(ID_TABLE_MULTIPLAYER_P1);
@@ -449,7 +468,7 @@ function initMulti(colunas, linhas, bombs){
             celulaMp1.setAttribute('alt','Player 1 Celula nº ' + "("+id+")");
             celulaMp1.addEventListener("mouseup",clicado,false);
             // por o elemento da celula diretamente na abstração da celula
-            jogoMp.table_player1.cells[i][j].setTdElement(celulaMp1);
+            jogoMp.table_player[0].cells[i][j].setTdElement(celulaMp1);
 
             linha.appendChild(celulaMp1);
 
@@ -479,7 +498,7 @@ function initMulti(colunas, linhas, bombs){
             celulaMp2.setAttribute('id',  id);
             celulaMp2.setAttribute('alt','Player 2 Celula nº '  + "("+id+")");
             celulaMp2.addEventListener("mouseup",clicado,false);
-            jogoMp.table_player2.cells[i][j].setTdElement(celulaMp2);
+            jogoMp.table_player[1].cells[i][j].setTdElement(celulaMp2);
 
             linha2.appendChild(celulaMp2);
 
@@ -493,6 +512,9 @@ function initMulti(colunas, linhas, bombs){
     // Chama mostraTempoJogo() a cada segundo
 
     temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
+
+    verificarSeAcabou = setInterval(isFinished, 300);
+    verificacaoPontos = setInterval(updatePointsMP, 1000);
 }
 
 function clicado(e){
@@ -549,32 +571,37 @@ function clicadoSp(id,e){
  * @param e
  */
 function clicadoMp(id,e){
-    var currentPlayer;
-
+    var currentPlayer = jogoMp.table_player[jogoMp.turn];
+    let turn = "P"+Number(jogoMp.turn + 1);
     // manda abrir o opencell e espera retorno, dependendo do retorno ira fazer uma acção no jogo
 
-    if(id[0] == "P1"){
-        console.log(id[0]);
-        currentPlayer = jogoMp.table_player1;
-    }else if(id[0] == "P2"){
+    if(id[0] == turn){
+        console.log("Jogou o jogador " + turn);
+        let row = id[1];
+        let col = id[2];
 
-        currentPlayer = jogoMp.table_player2;
+
+        if(e.button == 0) {
+            currentPlayer.open(row,col);
+        }
+        if(e.button ==2){
+            currentPlayer.placeFlag(row,col);
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        jogoMp.nextTurn();
+        document.getElementById(ID_SPAN_PLAYER_TURN).innerText = "P" + Number(jogoMp.turn+1);
+
+    }else {
+        console.log("Jogador errado, espere a sua vez, agora é a vez do jogador " + turn);
 
     }
-    let row = id[1];
-    let col = id[2];
 
+}
 
-    if(e.button == 0) {
-        currentPlayer.openCell(row,col);
-    }
-    if(e.button ==2){
-        currentPlayer.placeFlag(row,col);
-    }
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
-
+function nexTurn(){
 
 }
 /** Mostra o tempo do jogo
@@ -614,10 +641,18 @@ function updatePointsSP() {
     bombsRemained.innerText= jogoSp.table_player.getBombsRemained();
 
 }
-
+// por  os document id fora desta função como variaveis globais
+//TO DO
 function updatePointsMP() {
-    let pointElement = document.getElementById(ID_POINTS_SINGLEPLAYER)
-
+    let pointElementP1 = document.getElementById(ID_POINTS_MULTIPLAYER_P1)
+    let pointElementP2 = document.getElementById(ID_POINTS_MULTIPLAYER_P2)
+    var zeroPad = (num, places) => String(num).padStart(places, '0')
+    pointElementP1.innerText = zeroPad(jogoMp.table_player[0].getPoints(),3);
+    pointElementP2.innerText = zeroPad(jogoMp.table_player[1].getPoints(),3);
+    let bombsRemainedP1 = document.getElementById(ID_BOMBS_REMAINED_P1);
+    bombsRemainedP1.innerText= jogoMp.table_player[0].getBombsRemained();
+    let bombsRemainedP2 = document.getElementById(ID_BOMBS_REMAINED_P1);
+    bombsRemainedP2.innerText= jogoMp.table_player[1].getBombsRemained();
 }
 
 /**Classe que representa o tabuleiro do jogo que contem todos as celulas ou seja butões do Jogo
@@ -883,7 +918,7 @@ class Table {
                     if(i>1) {
                         if (this.cells[i - 1] != undefined) {
                             if (this.cells[i - 1][j] != undefined) {
-                                //console.log("Adj of " + i + " " + j + " =  " + Number(i - 1) + "," + j);
+
                                 AdjCells.push(Number(i - 1) + "," + j);
                             }
                         }
@@ -891,7 +926,7 @@ class Table {
                     if(i>1 && j> 1) {
                         if (this.cells[i - 1] != undefined) {
                             if (this.cells[i - 1][j-1] != undefined) {
-                                //console.log("Adj of " + i + " " + j + " =  " + Number(i - 1) + "," + j);
+
                                 AdjCells.push(Number(i - 1) + "," + Number(j-1));
                             }
                         }
@@ -900,7 +935,7 @@ class Table {
 
                         if (this.cells[i + 1] != undefined) {
                             if (this.cells[i + 1][j+1] != undefined) {
-                                //console.log("Adj of " + i + " " + j + " =  " + Number(i - 1) + "," + j);
+
                                 AdjCells.push(Number(i + 1) + "," + Number(j+1));
                             }
                         }
@@ -909,7 +944,7 @@ class Table {
 
                         if (this.cells[i + 1] != undefined) {
                             if (this.cells[i + 1][j-1] != undefined) {
-                                //console.log("Adj of " + i + " " + j + " =  " + Number(i - 1) + "," + j);
+
                                 AdjCells.push(Number(i + 1) + "," + Number(j-1));
                             }
                         }
@@ -918,7 +953,7 @@ class Table {
 
                         if (this.cells[i - 1] != undefined) {
                             if (this.cells[i - 1][j+1] != undefined) {
-                                //console.log("Adj of " + i + " " + j + " =  " + Number(i - 1) + "," + j);
+
                                 AdjCells.push(Number(i - 1) + "," + Number(j+1));
                             }
                         }
@@ -927,8 +962,7 @@ class Table {
 
                         if (this.cells[i + 1] != undefined) {
                             if (this.cells[i + 1][j] != undefined) {
-                                // this.cells.adjCells[1] = this.cells[i + 1][j];
-                                //console.log("Adj of " + i + " " + j + " =  " + Number(i + 1)+ "," + j);
+
                                 AdjCells.push(Number(i + 1) + "," + j);
                             }
 
@@ -937,26 +971,18 @@ class Table {
                     if(j<this.col) {
                         if (this.cells[i] != undefined) {
                             if (this.cells[i][j + 1] != undefined) {
-                               // this.cells.adjCells[2] = this.cells[i][j + 1];
-                                //console.log("Adj of " + i + " " + j + " =  " + i + "," + Number( 1 + j));
                                 AdjCells.push(i + "," + Number( 1 + j));
                             }
                         }
                     }
-
                     if(j> 1) {
                         if (this.cells[i] != undefined) {
                             if (this.cells[i][j - 1] != undefined) {
-                                //console.log("Adj of " + i + " " + j + " =  " + i +","+ Number( j-1));
                                 AdjCells.push(i + "," + Number( j-1));
-
-
                             }
                         }
                     }
-
                     this.cells[i][j].addAjacentCells(AdjCells);
-
                 }
             }
         }
@@ -974,7 +1000,20 @@ class Table {
     }
 
 
+    resetTable(){
+        this.scrambled = false;
+        this.won = false;
+        this.placedFlags = 0;
+        this.openedCells = 0;
+        this.lost = false;
+        this.points = 0;
+        for(let i = 1 ; i <= this.row ; i++){
+            for(let j = 1; j<= this.col; j++){
+                this.cells[i][j].resetCell();
+            }
 
+        }
+    }
 
 
 
@@ -1122,6 +1161,7 @@ class Cell {
 
         this.buttonTd.setAttribute('class','openedCell bombCell');
         this.buttonTd.removeEventListener("mouseup",clicado);
+        this.isOpen=true;
     }
 
     /**
@@ -1132,6 +1172,22 @@ class Cell {
         this.adjCells = AdjCells;
 
     }
+
+    resetCell(){
+
+            this.buttonTd.removeAttribute('class', 'flagCell')
+            this.buttonTd.setAttribute('class', 'celula ');
+            this.isFlagged = false;
+            this.isOpen = false;
+            this.isBombed = false;
+            this.buttonTd.removeAttribute('class', 'openedCell')
+            this.buttonTd.removeAttribute('class', 'bombCell')
+            this.buttonTd.removeAttribute('class', 'numberBombs')
+
+             this.buttonTd.addEventListener("mouseup",clicado,false);
+            this.buttonTd.setAttribute('class', 'celula ');
+            this.buttonTd.innerText ="";
+        }
 
 
 
