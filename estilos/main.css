@@ -376,6 +376,24 @@ box-shadow: 0 0  3px 3px  #6e7d89;
     justify-content: space-around;
     background-position: center;
 }
+
+
+.interrogation{
+    max-width: 40px;
+    max-height: 40px;
+    background-image: url("../img/interrogation.png");
+    z-index: 3;
+    background-repeat: no-repeat;
+
+    background-origin: content-box;
+    opacity: 0.8;
+
+    display: flex;
+    justify-content: space-around;
+    background-position: center;
+}
+
+
 .bombCell{
     max-width: 40px;
     max-height: 40px;

@@ -549,20 +549,13 @@ function clicadoSp(id,e){
 
 
     if(e.button == 0) {
-        if (!jogoSp.table_player.cells[row][col].hasFlag()){
-            openedCellSound.play();
-            jogoSp.table_player.open(row, col);
-    }
-    }
-    if(e.button ==2){
-        if (!jogoSp.table_player.cells[row][col].hasFlag()) {
-            openedCellSound.play();
-            jogoSp.table_player.placeFlag(row, col);
-        }else{
-            openedCellSound.play();
-            jogoSp.table_player.removeFlag(row,col)
+        jogoCurrente.table_player.open(row,col);
+    }else  if(e.button ==1) {
 
-        }
+        jogoCurrente.table_player.placeQuestion(row,col);
+
+    }  else if(e.button ==2){
+        jogoCurrente.table_player.placeFlag(row,col);
     }
     e.preventDefault();
     e.stopPropagation();
@@ -588,8 +581,13 @@ function clicadoMp(id,e){
 
         if(e.button == 0) {
             currentPlayer.open(row,col);
-        }
-        if(e.button ==2){
+        }else  if(e.button ==1) {
+
+
+            currentPlayer.placeQuestion(row,col);
+
+
+        }else if(e.button ==2){
             currentPlayer.placeFlag(row,col);
         }
         e.preventDefault();
@@ -755,6 +753,15 @@ class Table {
         }
         this.scrambled = true;
     }
+    placeQuestion(row,col){
+
+        if(!this.cells[row][col].hasFlag() && !this.cells[row][col].isQuestioned() ){
+            this.cells[row][col].placeQuestion();
+
+        }else if(!this.cells[row][col].hasFlag() && this.cells[row][col].isQuestioned() ){
+            this.cells[row][col].removeQuestion();
+        }
+    }
 
     /**Função responsavel por gerir a colocação e remoção de flags
      *
@@ -762,12 +769,12 @@ class Table {
      * @param col
      */
     placeFlag(row,col){
-            if(!this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened()){
+            if(!this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened() && !this.cells[row][col].isQuestioned()){
                 this.cells[row][col].placeFlag();
                 this.placedFlags++;
 
 
-            }else if (this.cells[row][col].isFlagged()){
+            }else if (this.cells[row][col].hasFlag()){
                 this.cells[row][col].removeFlag();
                 this.placedFlags++;
 
@@ -796,7 +803,7 @@ class Table {
      */
     open(row, col){
         let AdjCells = [];
-        if(this.scrambled) {
+        if(this.scrambled && !this.cells[row][col].hasFlag() && !this.cells[row][col].isQuestioned() ) {
             // numero de bombas adjacentes iniciado
 
             // caso esta celula tenha bomba ela explode
@@ -815,7 +822,7 @@ class Table {
                 // se array contiver adjacencias
 
             }
-        }else{
+        }else if(!this.cells[row][col].hasFlag() && !this.cells[row][col].isQuestioned()){
             // Em caso de ser a primeira jogada, abre a celula e depois invoca a função para distribuir as bombas
             this.openCell(row,col);
             this.scrambleBombs(row,col);
@@ -996,6 +1003,7 @@ class Cell {
     isBombed;
     isOpen;
     buttonTd;
+    suspect;
 
 
     /**Construtor de Celula do jogo
@@ -1010,6 +1018,7 @@ class Cell {
         this.isBombed=false;
         this.isFlagged = false;
         this.adjCells = [];
+        this.suspect=false;
 
 
     }
@@ -1136,6 +1145,24 @@ class Cell {
     setAjacentCells(AdjCells){
         this.adjCells = AdjCells;
 
+    }
+
+    isQuestioned(){
+        return this.suspect;
+    }
+
+    placeQuestion(){
+        this.buttonTd.setAttribute('class','celula interrogation');
+
+        this.suspect=true;
+
+    }
+
+    removeQuestion(){
+        this.buttonTd.removeAttribute('class',' interrogation');
+        this.buttonTd.setAttribute('class', 'celula ');
+
+        this.suspect=false;
     }
 
     /**Método que faz reinicia os estados desta célula
