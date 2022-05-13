@@ -536,6 +536,9 @@ border: 1px solid black;
 }
 
 
+#numeroJogosRanking, #tempoTotalRanking, #melhorTempoRanking, #tempoMedioRanking, #ganhouMultiplayerRanking, #melhorProporcaoRanking {
+    display: none;
+}
 
 
 
