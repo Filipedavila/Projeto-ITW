@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="estilos/layout.css" type="text/css">
     <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Tangerine">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="js/jogo.js" ></script>
     <script src="js/main.js"></script>
 
-    <link rel="stylesheet" href="estilos/jogo.css" type="text/css">
+    <link rel="stylesheet" href="esboços_ecras/jogo.css" type="text/css">
   <title>Minesweeper - Multiplayer Mode</title>
 </head>
-<body onload="configuracaoMultiplayer()">
+<body >
     <div class="container">
 
         <nav class="navigation"> 
@@ -27,7 +28,36 @@
                 <li class="right"><a id="username"></a></li>
             </ul>
         </nav>
+        <div id="rankingBox"></div>
+        <form class="login" id="frmMultiPlayerSettings" >
+            <div class="loginTittle">
+                <span> Modo Multiplayer </span>
+            </div>
+            <div class="MpPlayerName">
+                <label for="nomePlayer2">Jogador 2:</label>
+                <input id="nomePlayer2" type="text" name="player2"  maxlength="40" size="10" required>
 
+            </div>
+            <div class="radioDifficultyGame">
+                <label for="EasyDif">Easy</label>
+                <input type="radio" id="EasyDif" name="difficulty" value="dificuldadeEasy" required>
+
+
+                <label for="MediumDif">Medium</label>
+                <input type="radio" id="MediumDif"  name="difficulty" value="dificuldadeMedium">
+
+
+                <label for="hardDif">Hard</label>
+                <input type="radio" id="hardDif" name="difficulty" value="dificuldadeHard">
+
+
+            </div>
+            <div class="btnPlay">
+                <button class="myButton" type="button" id="btnJogarSinglePlayer" onclick="iniciarJogoMP()" >Jogar</button>
+            </div>
+
+
+        </form>
         <section class="game">
 
             <div  class="gridGame first">
@@ -50,6 +80,7 @@
                 <div id="idGameTableP1" class="tablePlace">
 
                 </div>
+                <div id="progressbar"></div>
 
             </div>
 

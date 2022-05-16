@@ -48,7 +48,7 @@ let jogadores = [];
 /*                                                INICIALIZAÇÃO DA APLICAÇÃO */
 /* ------------------------------------------------------------------------- */
 
-window.addEventListener("load", principal);
+window.addEventListener("DOMContentLoaded", principal);
 
 /* ------------------------------------------------------------------------- */
 
@@ -57,7 +57,7 @@ window.addEventListener("load", principal);
  * de toda a informação presente no documento HTML.
  */
 function principal() {
-
+    isLoggedIn();
     // Carrega o histórico de jogadores a partir do local storage do browser.
     carregaHistoricoJogadores();
 
@@ -105,7 +105,7 @@ function principal() {
  */
 function mostraDadosUtilizador() {
 
-    let user = JSON.parse(localStorage.getItem(ITEM_USER)) || 'Login';
+    let user = JSON.parse(sessionStorage.getItem(ITEM_USER)) || 'Login';
 
     for (let j of jogadores) {
         if (user == j.nome) {
@@ -132,10 +132,21 @@ function mostraDadosUtilizador() {
 
 function trataFazerLogout() {
 
-    localStorage.setItem(ITEM_USER, JSON.stringify('Login'));
+    sessionStorage.clear();
 
     mostraDadosUtilizador();
 
-    window.location = 'login.html';
+    window.location = 'index.html';
 
+}
+
+/**Function verifica se é utilizador autenticado e caso contrario redireciona para a
+ * pagina principal
+ *
+ */
+function isLoggedIn(){
+    if(sessionStorage.getItem("user") == undefined){
+        window.location.replace("index.html");
+
+    }
 }

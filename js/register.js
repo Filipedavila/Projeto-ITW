@@ -149,6 +149,7 @@ function principal() {
         gravaJogadorNoHistorico(jogador);
 
         formulario.reset();
+        window.location.replace("index.html");
 
     }
 }

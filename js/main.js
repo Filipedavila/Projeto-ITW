@@ -5,7 +5,7 @@
 /*                                                INICIALIZAÇÃO DA APLICAÇÃO */
 /* ------------------------------------------------------------------------- */
 
-window.addEventListener("load", principal);
+window.addEventListener("DOMContentLoaded", principal);
 
 /* ------------------------------------------------------------------------- */
 
@@ -14,13 +14,33 @@ window.addEventListener("load", principal);
  * de toda a informação presente no documento HTML.
  */
 function principal() {
+    if(isLoggedIn()){
+        $('#frmLogin').hide();
+        $('.caixa').show();
+    document.getElementById('username').innerHTML = JSON.parse(sessionStorage.getItem('user'));
+    document.getElementById('username').setAttribute('href', 'user.html');
 
-    document.getElementById('username').innerHTML = JSON.parse(localStorage.getItem('user')) || 'Login';
+    }else{
+        $(document).ready(function(){
 
-    if (document.getElementById('username').innerHTML != 'Login') {
-        document.getElementById('username').setAttribute('href', 'user.html');
-    } else {
-        document.getElementById('username').setAttribute('href', 'login.html');
+
+    });
+
+        document.getElementById('username').innerHTML = "Login";
+        document.getElementById('username').setAttribute('href', 'index.html');
+
+    }
+
+    /**Função que verifica se o utilizador está autenticado ou seja se existe registro no sessionStorage
+     *
+     * @returns {boolean}
+     */
+    function isLoggedIn(){
+        var response =  false;
+        if(!(sessionStorage.getItem("user") == undefined)){
+        response = true;
+        }
+        return response;
     }
 
 }

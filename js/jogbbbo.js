@@ -185,11 +185,35 @@ const openedCellSound = new Audio('../audio/open.mp3');
 /**Game Objects
  *
  */
+/* -------------------------------------------------------------------------
+var jogoCurrente;
+/** Estado do jogo, que vai sendo preenchido no decorrer do jogo.
+var jogoSp = {
+    table_player:null,
+    inicio: null,
+    times_won_player1:0,
+    bombs:0,
+    size:null,
+    col:0,
+    row:0,
+    finished:false,
+    resetGame: null,
+    score : {
+        time:0,
+        points:0,
 
+
+    },
+    addTimeWonP1: function(){  this.times_won_player1++;}
+
+
+
+};
 /** Estado do jogo Multiplayer, que vai sendo preenchido no decorrer do jogo. */
 const jogo = {
     table_player:[],
-    name_player:[],
+    name_player1:null,
+    name_player2:null,
     inicio: null,
     times_won_player1:0,
     times_won_player2:0,
@@ -203,41 +227,19 @@ const jogo = {
     size:null,
     finished:false,
     addTimeWonP1: function(){  this.times_won_player1++;
-
-    },
+                                this.document.getElementById(ID_TIMES_WON_MULTIPLAYER_P1).innerText= this.times_won_player1;
+                                },
     addTimeWonP2: function(){  this.times_won_player2++ ;
-
-    },
+        this.document.getElementById(ID_TIMES_WON_MULTIPLAYER_P2).innerText= this.times_won_player2;
+        },
     resetGame:function (){
-        jogo.table_player.forEach((table)=>{
-            table.resetTable();
-        })
-
-
-
-
-        jogo.won = false;
-        jogo.lost = false;
-        jogo.turns_played = 0;
-        jogo.finished =false;
-        jogo.inicio=Math.floor(Date.now() / 1000);
-        removeScore();
-        temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
-        verificarSeAcabou = setInterval(isFinished, 300);
-        verificacaoPontos = setInterval(updatePointsSP, 300);
-
-     }
+        this.points_player1 = 0;
+        this.points_player2= 0}
 
 };
 
-var  rankings = {
-    SpRankings:[],
-    MpRankings:[]
-}
-function Ranking(ranking,ranking2){
-    this.SpRankings =ranking;
-    this.MpRankings = ranking2;
-}
+var rankings = [];
+
 
 /**Construtor tipo objecto RankingSp que guarda informação sobre o ranking
  * de um jogo SinglePlayer
@@ -249,7 +251,7 @@ function Ranking(ranking,ranking2){
  */
 function RankingSP(nome,points,time){
     this.nomePlayer = nome;
-    this.points = points ;
+    this.pointss = points ;
     this.timeGame = time;
 }
 
@@ -282,26 +284,21 @@ function isLoggedIn(){
     }
 }
 
-function initRankings(){
-   let loadRankings = getRankings();
-    if(loadRankings == null){
-        rankings = new Ranking(new Array(),new Array());
-
-    }else {
-        rankings = JSON.parse(loadRankings);
-    }
-
-}
-
 /**Função que obtem os rankings atuais ou caso os mesmos não existam cria e devolve um
  *
  * @returns {string}
  */
 
 
-
 function getRankings(){
-    return localStorage.getItem("rankings");
+    rankings = JSON.parse(localStorage.getItem("rankings")) || [];
+    let allRankings;
+    if(rankings == []){
+        rankings = {
+            SpRankings:[],
+            MpRankings:[]
+        }
+    }
 
 }
 
@@ -312,18 +309,19 @@ function getRankings(){
  * @param time - time of game
  */
 function setRankingSP(nome,score,time){
+      getRankings();
 
-    let thisRanking = new RankingSP(nome, score, time);
+        if(rankings.SpRankings.length > 0){
+            let thisRanking = new RankingSP(nome,score,time);
+            rankings.SpRankings.push(thisRanking);
 
-        rankings.SpRankings.push(thisRanking);
+            rankings.SpRankings.sort((a,b)=>{
+                return a.time - b.time;
+            })
 
-        rankings.SpRankings.sort((a,b)=>{
-            return a.timeGame - b.timeGame ;
-        })
+            localStorage.setItem("rankings,",JSON.stringify(rankings));
 
-        localStorage.setItem("rankings",JSON.stringify(rankings));
-
-
+        }
 
 }
 
@@ -337,112 +335,117 @@ function setRankingSP(nome,score,time){
  * @param timeGame - time of game
  */
 function setRankingMP(winner,loser,pointsWinner,pointsLoser,timeGame){
+        getRankings();
 
-        let thisRanking = new RankingMP(winner, loser, pointsWinner,pointsLoser,timeGame);
+    if(rankings.MpRankings.length > 0){
+        let thisRanking = new RankingSP(winner,loser,pointsWinner,pointsLoser,timeGame);
+        rankings.SpRankings.push(thisRanking);
 
-        rankings.MpRankings.push(thisRanking);
-
-        rankings.MpRankings.sort((a,b)=>{
-            return a.timeGame - b.timeGame ;
+        rankings.SpRankings.sort((a,b)=>{
+            return a.timeGame - b.timeGame;
         })
 
-        localStorage.setItem("rankings",JSON.stringify(rankings));
-
-
+        localStorage.setItem("rankings,",JSON.stringify(rankings));
 
     }
 
-function showALLRankingSp(){
-
-
-
-    let tittleBox = document.createElement("div");
-    tittleBox.innerHTML = "<span> Ranking Top 10 SinglePlayer </span>";
-    let rankingTop = document.createElement("table");
-    rankingTop.setAttribute("class", "rankingTable");
-    rankingTop.innerHTML += " <tr><th>Nome Jogador</th><th>Pontos</th><th>Tempo Jogo</th>  </tr> ";
-    console.log(rankings);
-    rankings.SpRankings.forEach((score) =>{
-        rankingTop.innerHTML += "<tr><td>"+score.nomePlayer +" </td>" +
-            "<td>"+ score.points  +"</td><td>"+ score.timeGame  +"</td></tr>";
-    });
-    let divBox = document.getElementById("rankingBox");
-    divBox.setAttribute("class", "topRankingBox");
-    divBox.setAttribute("class", "centeredDialog");
-    divBox.appendChild(tittleBox);
-    divBox.appendChild(rankingTop);
-    divBox.appendChild(rankingTop);
 }
 
-function showTopRankingSp(){
-
-    let tittleBox = document.createElement("div");
-    tittleBox.innerHTML = "<span> Ranking Top 10 SinglePlayer </span>";
-    let rankingTop = document.createElement("table");
-    rankingTop.setAttribute("class", "rankingTable");
-    rankingTop.innerHTML += " <tr><th>Nome Jogador</th><th>Pontos</th><th>Tempo Jogo</th>  </tr> ";
-    console.log(rankings);
-    let limit = 10 ;
-    if(rankings.SpRankings.length<=10){
-        limit =rankings.SpRankings.length;
-    }
-    for(let i = 0;i < limit ; i++){
-        rankingTop.innerHTML += "<tr><td>"+rankings.SpRankings[i].nomePlayer +" </td>" +
-            "<td>"+ rankings.SpRankings[i].points  +"</td><td>"+ rankings.SpRankings[i].timeGame  +"</td></tr>";
-    }
-
-    let divBox = document.getElementById("rankingBox");
-    divBox.setAttribute("class", "topRankingBox");
-    divBox.setAttribute("class", "centeredDialog");
-    divBox.appendChild(tittleBox);
-    divBox.appendChild(rankingTop);
-    divBox.appendChild(rankingTop);
-}
-
-function removeScore(){
-    $("#rankingBox").empty();
-
-}
 
 function showTopRankingMp(){
-    let tittleBox = document.createElement("div");
-    tittleBox.innerHTML = "<span> Ranking Top 10 Multiplayer </span>";
-    let rankingTop = document.createElement("table");
-    rankingTop.setAttribute("class", "rankingTable");
-    rankingTop.innerHTML += " <tr><th>Winner</th><th>Loser</th><th>Pontos Winner</th> <th>Pontos Loser</th><th>Tempo de Jogo</th>  </tr> ";
-    console.log(rankings);
-    let limit = 10 ;
-    if(rankings.MpRankings.length<=10){
-        limit =rankings.MpRankings.length;
-    }
-    for(let i = 0;i < limit ; i++){
-        rankingTop.innerHTML += "<tr><td>"+rankings.MpRankings[i].winner +" </td>" +
-            "<td>"+ rankings.MpRankings[i].loser  +"</td><td>"+ rankings.MpRankings[i].pointsWinner  +"</td>"
-            +"<td>"+ rankings.MpRankings[i].pointsLoser  +"</td><td>" +  rankings.MpRankings[i].timeGame   +"</td></tr>";
-    }
+let rankingBox = document.createElement("div");
+rankingBox.setAttribute("class", "topRankingBox");
+let tittleBox = document.createElement("div");
 
-    let divBox = document.getElementById("rankingBox");
-    divBox.setAttribute("class", "topRankingBox");
-    divBox.setAttribute("class", "centeredDialog");
-    divBox.appendChild(tittleBox);
-    divBox.appendChild(rankingTop);
-    divBox.appendChild(rankingTop);
 
 }
 
 
 
+function showTopRankingSp(){
+let rankingBox = document.createElement("div");
+rankingBox.setAttribute("class", "topRankingBox")   ;
 
 
+
+
+
+}
+
+
+/* Recolhe os dados da configuração para um jogo singleplayer e guarda-os na
+ * local storage
+ *
+function recolheDadosConfiguracaoSingleplayer() {
+
+    let formulario = document.forms[FORMULARIO_SINGLEPLAYER];
+
+    let configuracao = [];
+
+    let nome = formulario.elements[NOME_JOGADOR_S].value;
+    configuracao.push(nome);
+
+    for (let t of formulario.elements[TAMANHO_JOGO_S]) {
+        if (t.checked) {
+            configuracao.push(t.value);
+        }
+    }
+
+    for (let d of formulario.elements[DIFICULDADE_JOGO_S]) {
+        if (d.checked) {
+            configuracao.push(d.value)
+        }
+    }
+
+    // falta guardar a imagem do jogador
+
+    localStorage.setItem(ITEM_CONFIGURACAO_S, JSON.stringify(configuracao));
+
+}
+
+ Recolhe os dados da configuração para um jogo multiplayer e guarda-os na
+ * local storage
+
+function recolheDadosConfiguracaoMultiplayer() {
+
+    let formulario = document.forms[FORMULARIO_MULTIPLAYER];
+
+    let configuracaoM = [];
+
+    let nome1 = formulario.elements[NOME_JOGADOR_1].value;
+    configuracaoM.push(nome1);
+
+    let nome2 = formulario.elements[NOME_JOGADOR_2].value;
+    configuracaoM.push(nome2);
+
+    console.log(configuracaoM);
+
+
+    for (let t of formulario.elements[TAMANHO_JOGO_M]) {
+        if (t.checked) {
+            configuracaoM.push(t.value);
+        }
+    }
+
+    for (let d of formulario.elements[DIFICULDADE_JOGO_M]) {
+        if (d.checked) {
+            configuracaoM.push(d.value)
+        }
+    }
+
+
+
+    localStorage.setItem(ITEM_CONFIGURACAO_M, JSON.stringify(configuracaoM));
+
+}
 /*
 /**Função responsavel por iniciar o jogo singleplayer e perguntar o nivel de dificuld
  *
  */
 function iniciarJogoRapido(){
     $(".game").css("visibility", "visible");
-    jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
 
-    init(9, 9,1);
+        init(9, 9,BOMBS_GAME_EASY);
 
 }
 
@@ -453,7 +456,6 @@ function iniciarJogoRapido(){
 function iniciarJogo(){
     $("#"+FORM_GAME_DIFFICULTY_SP).hide();
     $(".game").css("visibility", "visible");
-    jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
     var tamanho = $("input[type=radio][name=difficulty]:checked").val();
     if (tamanho == 'dificuldadeEasy') {
         init(9, 9,BOMBS_GAME_EASY);
@@ -470,11 +472,10 @@ function iniciarJogo(){
 function iniciarJogoMP(){
     $("#"+FORMULARIO_MULTIPLAYER).hide();
     $(".game").css("visibility", "visible");
-    var nomePlayer2 = $("#nomePlayer2").val();
+    var nomePlayer2 = $("input[type=text][name=player2]").val();
     var tamanho = $("input[type=radio][name=difficulty]:checked").val();
-    jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
-    jogo.name_player[1] = nomePlayer2;
-
+    jogoMp.name_player1 = sessionStorage.getItem("nome");
+    jogoMp.name_player2 = nomePlayer2;
 
     if (tamanho == 'dificuldadeEasy') {
         initMulti(9, 9,BOMBS_GAME_EASY);
@@ -485,6 +486,78 @@ function iniciarJogoMP(){
     }
 
 }
+/*
+
+function configuracaoSingleplayer() {
+
+    if(window.localStorage.getItem(ITEM_CONFIGURACAO_S) != null) {
+
+        let configuracao = JSON.parse(localStorage.getItem(ITEM_CONFIGURACAO_S)) || [];
+
+        let tamanho = configuracao[1];
+
+        if (tamanho == 'tamanhoEasy') {
+            init(9, 9,BOMBS_GAME_EASY);
+        } else if (tamanho == 'tamanhoMedium') {
+            init(16, 16,BOMBS_GAME_MEDIUM);
+        } else if (tamanho == 'tamanhoHard') {
+            init(16, 30,BOMBS_GAME_HARD);
+        }
+
+
+        document.getElementById(NOME_AVATAR_S).innerHTML = configuracao[0];
+
+
+    }else{
+        window.location.replace("index.html");
+    }
+
+
+}
+/*
+/* -------------------------------------------------------------------------
+function configuracaoMultiplayer() {
+
+    if(window.localStorage.getItem(ITEM_CONFIGURACAO_M) != null) {
+
+        let configuracaoM = JSON.parse(localStorage.getItem(ITEM_CONFIGURACAO_M)) || [];
+
+        let nomesAvatar1 = document.getElementsByClassName(NOME_AVATAR_1);
+
+        for (let i = 0; i < nomesAvatar1.length; i++) {
+            nomesAvatar1[i].innerHTML = configuracaoM[0];
+        }
+
+        let nomesAvatar2 = document.getElementsByClassName(NOME_AVATAR_2);
+
+        for (let i = 0; i < nomesAvatar2.length; i++) {
+            nomesAvatar2[i].innerHTML = configuracaoM[1];
+        }
+
+        let tamanho = configuracaoM[2];
+
+
+        if (tamanho == 'tamanhoEasy') {
+            initMulti(9, 9,BOMBS_GAME_EASY);
+        } else if (tamanho == 'tamanhoMedium') {
+            initMulti(16, 16,BOMBS_GAME_MEDIUM);
+        } else if (tamanho == 'tamanhoHard') {
+            initMulti(16, 30,BOMBS_GAME_HARD);
+        }
+
+
+
+    }else{
+        window.location.replace("index.html");
+    }
+}
+
+/* ------------------------------------------------------------------------- */
+
+
+
+
+
 
 
 /**Função que inicia o jogo Singular
@@ -495,12 +568,14 @@ function iniciarJogoMP(){
  * @param linhas  - numero de Linhas do jogo
  */
 function init(linhas, colunas,bombs){
-    initRankings();
+
     let table = new Table(linhas,colunas,bombs);
-    jogo.table_player.push(table);
+    jogo.table_player[0]  =  table;
     jogo.row = Number(linhas);
     jogo.col = Number(colunas);
     jogo.bombs = Number(bombs);
+
+
 
 
     let localJogo = document.getElementById(ID_TABLE_SINGLEPLAYER);
@@ -544,10 +619,6 @@ function init(linhas, colunas,bombs){
     temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
     verificarSeAcabou = setInterval(isFinished, 300);
     verificacaoPontos = setInterval(updatePointsSP, 1000);
-    document.getElementById(BTN_ID_RESET_GAME_SP).addEventListener("mouseup",function(){
-        jogo.resetGame();
-    },false);
-
 
 }
 
@@ -559,10 +630,9 @@ function init(linhas, colunas,bombs){
  * @param linhas - numero de linhas
  */
 function initMulti(linhas, colunas, bombs){
-    initRankings();
-    jogo.table_player.push(new Table(linhas,colunas,bombs));
-    jogo.table_player.push(new Table(linhas,colunas,bombs));
 
+    jogo.table_player[0]  =  new Table(linhas,colunas,bombs);
+    jogo.table_player[1] =  new Table(linhas,colunas,bombs);
     console.log("criou table");
 
     var localJogo = document.getElementById(ID_TABLE_MULTIPLAYER_P1);
@@ -634,8 +704,6 @@ function initMulti(linhas, colunas, bombs){
 
     verificarSeAcabou = setInterval(isFinished, 300);
     verificacaoPontos = setInterval(updatePointsMP, 1000);
-    document.getElementById(BTN_ID_RESET_GAME_MP_P1).addEventListener("mouseup",jogo.resetGame,false);
-    document.getElementById(BTN_ID_RESET_GAME_MP_P2).addEventListener("mouseup",jogo.resetGame,false);
 }
 
 /**Função que lida com as acções do jogador no jogo e que por sua vez de acordo com a intenção manifestada pelo utilizador
@@ -719,7 +787,7 @@ function clicadoMp(id,e){
         document.getElementById(ID_SPAN_PLAYER_TURN).innerText = "P" + Number(jogo.turn+1);
 
     }else {
-        console.log("Jogador errado, espere a sua vez, agora é a vez do jogador " + Number(jogo.turn +1) + " " +  jogo.name_player[jogo.turn] );
+        console.log("Jogador errado, espere a sua vez, agora é a vez do jogador " + turn);
 
     }
 
@@ -740,17 +808,13 @@ function mostraTempoJogo() {
  *
  */
 function isFinished() {
-
+    if (jogo != null) {
         if (jogo.finished) {
-            clearInterval(temporizadorTempoJogo);
-            clearInterval(verificacaoPontos);
-            clearInterval(verificarSeAcabou);
+
             if(jogo.won && (jogo.table_player[1] == undefined)){
-                let timePassed = Math.floor((Date.now()/1000)-jogo.inicio);
-                console.log(" "+ jogo.name_player[0] + " " +  jogo.table_player[0].points + " " +timePassed);
-                setRankingSP(jogo.name_player[0], jogo.table_player[0].points,timePassed);
-                jogo.addTimeWonP1();
-                showTopRankingSp();
+                setRankingSP(jogo.name_player1)
+            }else{
+
             }
 
             let celulas = document.getElementsByClassName("celula");
@@ -761,9 +825,11 @@ function isFinished() {
 
             }
 
-
+            clearInterval(temporizadorTempoJogo);
+            clearInterval(verificacaoPontos);
+            clearInterval(verificarSeAcabou);
         }
-
+    }
 }
 
 /**Função que atualiza os pontos do modo singlePlayer e coloca-os nas zonas designadas
@@ -789,9 +855,9 @@ function updatePointsMP() {
     pointElementP1.innerText = zeroPad(jogo.table_player[0].getPoints(),3);
     pointElementP2.innerText = zeroPad(jogo.table_player[1].getPoints(),3);
     let bombsRemainedP1 = document.getElementById(ID_BOMBS_REMAINED_P1);
-    bombsRemainedP1.innerText= zeroPad(jogo.table_player[0].getBombsRemained(),3);
-    let bombsRemainedP2 = document.getElementById(ID_BOMBS_REMAINED_P2);
-    bombsRemainedP2.innerText= zeroPad(jogo.table_player[1].getBombsRemained(),3);
+    bombsRemainedP1.innerText= jogo.table_player[0].getBombsRemained();
+    let bombsRemainedP2 = document.getElementById(ID_BOMBS_REMAINED_P1);
+    bombsRemainedP2.innerText= jogo.table_player[1].getBombsRemained();
 }
 
 /**Classe que representa cada tabuleiro de jogo , usada no modo singular e no modo multiplaye.
@@ -898,18 +964,18 @@ class Table {
      * @param col
      */
     placeFlag(row,col){
-        if(!this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened() && !this.cells[row][col].isQuestioned()){
-            this.cells[row][col].placeFlag();
-            this.placedFlags++;
+            if(!this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened() && !this.cells[row][col].isQuestioned()){
+                this.cells[row][col].placeFlag();
+                this.placedFlags++;
 
 
-        }else if (this.cells[row][col].hasFlag()){
-            this.cells[row][col].removeFlag();
-            this.placedFlags++;
+            }else if (this.cells[row][col].hasFlag()){
+                this.cells[row][col].removeFlag();
+                this.placedFlags++;
 
-        }
+            }
         this.checkIfWon();
-    }
+        }
 
     /**
      *
@@ -955,8 +1021,8 @@ class Table {
             // Em caso de ser a primeira jogada, abre a celula e depois invoca a função para distribuir as bombas
             this.openCell(row,col);
             this.scrambleBombs(row,col);
-            AdjCells = this.cells[row][col].getAdj();
-            // invoca a função para processar as adjacentes
+             AdjCells = this.cells[row][col].getAdj();
+             // invoca a função para processar as adjacentes
             this.processAdjacentCells(AdjCells, row, col);
 
         }
@@ -995,8 +1061,7 @@ class Table {
                 //obter linha e coluna do id
                 let rowAdj = id[0];
                 let colAdj = id[1];
-                if(!this.cells[rowAdj][colAdj].isOpen && !this.cells[rowAdj][colAdj].hasBomb() &&
-                        !this.cells[rowAdj][colAdj].hasFlag() && !this.cells[rowAdj][colAdj].isQuestioned()) {
+                if(!this.cells[rowAdj][colAdj].isOpen && !this.cells[rowAdj][colAdj].hasBomb()) {
                     let newAdjCell = [];
                     newAdjCell =this.cells[rowAdj][colAdj].getAdj();
 
@@ -1031,10 +1096,10 @@ class Table {
      */
     openCell(row,col){
 
-        this.cells[row][col].openCell();
-        this.points += POINTS_GIVEN_OPENED_CELL;
-        this.openedCells++;
-        this.checkIfWon();
+            this.cells[row][col].openCell();
+            this.points += POINTS_GIVEN_OPENED_CELL;
+            this.openedCells++;
+            this.checkIfWon();
 
 
     }
@@ -1071,7 +1136,7 @@ class Table {
             for (let i = currentRow - 1; i <= currentRow + 1; i++) {
                 for (let j = currentCol - 1; j <= currentCol +1; j++) {
                     if( (i >= 1 && i <= this.row) && (j >= 1 && j <= this.col)){
-                        AdjCells.push(Number(i) + "," + j);
+                                AdjCells.push(Number(i) + "," + j);
                     }
                 }
             }
@@ -1213,8 +1278,8 @@ class Cell {
      */
     placeFlag(){
         if(!this.isOpen){
-            this.isFlagged = true;
-            this.buttonTd.setAttribute('class','celula flagCell');
+        this.isFlagged = true;
+        this.buttonTd.setAttribute('class','celula flagCell');
         }
         ;
     }
@@ -1222,7 +1287,7 @@ class Cell {
      *
      */
     removeFlag(){
-        if(this.isFlagged) {
+      if(this.isFlagged) {
 
             this.isFlagged = false;
             this.buttonTd.removeAttribute('class','flagCell')
@@ -1237,13 +1302,13 @@ class Cell {
     hasFlag(){
         let flagged = this.isFlagged;
         return flagged;
-    }
+        }
 
 
     /**Metodo getter para o estado da celula em relação a estar aberta ou não
      *
      * @returns {opened} booleano que representa se a celula está aberta
-     */
+      */
     isOpened(){
         let opened = this.isOpen;
         return opened;
@@ -1302,19 +1367,19 @@ class Cell {
      */
     resetCell(){
 
-        this.buttonTd.removeAttribute('class', 'flagCell')
-        this.buttonTd.setAttribute('class', 'celula ');
-        this.isFlagged = false;
-        this.isOpen = false;
-        this.isBombed = false;
-        this.buttonTd.removeAttribute('class', 'openedCell')
-        this.buttonTd.removeAttribute('class', 'bombCell')
-        this.buttonTd.removeAttribute('class', 'numberBombs')
+            this.buttonTd.removeAttribute('class', 'flagCell')
+            this.buttonTd.setAttribute('class', 'celula ');
+            this.isFlagged = false;
+            this.isOpen = false;
+            this.isBombed = false;
+            this.buttonTd.removeAttribute('class', 'openedCell')
+            this.buttonTd.removeAttribute('class', 'bombCell')
+            this.buttonTd.removeAttribute('class', 'numberBombs')
 
-        this.buttonTd.addEventListener("mouseup",clicado,false);
-        this.buttonTd.setAttribute('class', 'celula ');
-        this.buttonTd.innerText ="";
-    }
+             this.buttonTd.addEventListener("mouseup",clicado,false);
+            this.buttonTd.setAttribute('class', 'celula ');
+            this.buttonTd.innerText ="";
+        }
 
 
 

@@ -124,7 +124,8 @@ function verificaLogin() {
             pInfoLogin.innerHTML = 'Sessão iniciada.';
             linkUsername.innerHTML = nomeLogin;
             linkUsername.setAttribute('href', 'user.html');
-            localStorage.setItem(ITEM_USER, JSON.stringify(nomeLogin));
+            sessionStorage.setItem(ITEM_USER, JSON.stringify(nomeLogin));
+            window.location.reload();
             break;
         } else if (nomeLogin == j.nome && passLogin != j.password) {
             pInfoLogin.innerHTML = 'Palavra passe errada.';

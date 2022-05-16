@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/main.css" type="text/css">
+    <link rel="stylesheet" href="estilos/layout.css" type="text/css">
+    <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Tangerine">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script src="js/jogo.js" ></script>
+    <script src="js/main.js"></script>
+
+    <link rel="stylesheet" href="esboços_ecras/jogo.css" type="text/css">
+  <title>Minesweeper - Multiplayer Mode</title>
+</head>
+<body onload="configuracaoMultiplayer()">
+    <div class="container">
+
+        <nav class="navigation"> 
+            <ul>
+                <li><a href="index.html">Minesweeper</a></li>
+                <li class="active"><a href="quickGame.html">Jogar</a></li>
+                <li><a href="tutorial.html">Tutorial</a></li>
+                <li><a href="ranking.html">Ranking</a></li>
+                <li><a href="sobrenos.html">Sobre Nós</a></li>
+                <li class="right"><a id="username"></a></li>
+            </ul>
+        </nav>
+        <form class="login" id="frmMultiPlayerSettings" >
+            <div class="loginTittle">
+                <span> Modo Multiplayer </span>
+            </div>
+            <div class="MpPlayerName">
+                <label for="nomeLogin">Jogador 2:</label>
+                <input id="nomeLogin" type="text" name="player2"  maxlength="40" size="10" required>
+
+            </div>
+            <div class="radioDifficultyGame">
+                <label for="EasyDif">Easy</label>
+                <input type="radio" id="EasyDif" name="difficulty" value="dificuldadeEasy" required>
+
+
+                <label for="MediumDif">Medium</label>
+                <input type="radio" id="MediumDif"  name="difficulty" value="dificuldadeMedium">
+
+
+                <label for="hardDif">Hard</label>
+                <input type="radio" id="hardDif" name="difficulty" value="dificuldadeHard">
+
+
+            </div>
+            <div class="btnPlay">
+                <button class="myButton" type="button" id="btnJogarSinglePlayer" onclick="iniciarJogoMP()" >Jogar</button>
+            </div>
+
+
+        </form>
+        <section class="game">
+
+            <div  class="gridGame first">
+
+                <div class="menu_jogo">
+                    <div class="jogador">
+                      <img src="./img/icons8-gamer-64-man.png" alt="avatar jogador 1" id="imagemAvatar1">
+                        <div class="nomeAvatar1"></div>
+                    </div>
+
+                    <img class="buttonStart" id="smileP1" src="./img/smile.png" alt="Smile para fazer restart do jogo">
+
+                    <div class="points" id="idPointsPlayer1">000</div>
+                    <div > Bombs <span id="idBombsRemained1" class="time">000</span></div>
+
+
+
+
+                </div>
+                <div id="idGameTableP1" class="tablePlace">
+
+                </div>
+                <div id="progressbar"></div>
+
+            </div>
+
+            <div class="gameStatus">
+
+                <span class="centrado" >Tempo</span>
+            <span class="timeMulti "id="idScreenTempoJogo">000</span>
+                <span class="centrado" >TURN</span>
+                <span class="timeMulti "id="idTurnPlayer">P1</span>
+
+                <span class="centrado nomeAvatar1"></span>
+                <span class="centrado"> <span Class="win" id="timesWonPlayer1">00</span>
+                    <img class="smallicon" src="img/icons8-troféu-20.png" alt="Trophy won"></span>
+
+
+
+
+                <span class="centrado nomeAvatar2"></span>
+
+                <span class="centrado"><span Class="win" id="timesWonPlayer2">00</span>
+                    <img class="smallicon"  src="img/icons8-troféu-20.png" alt="Trophy won">
+                </span>
+
+
+                <span class="centrado">Sound</span>
+                <img class="mute  centrado" src="img/sound-off.png" alt="desligar som" >
+
+            </div>
+            <div  class="gridGame third">
+
+                <div class="menu_jogo">
+                    <div class="jogador">
+                    <img src="./img/icons8-gamer-64-woman.png" alt="avatar jogador 2" id="imagemAvatar2">
+                        <div class="nomeAvatar2"></div>
+                    </div>
+                    <img class="buttonStart" id="smileP2" src="./img/smile.png" alt="Smile para fazer restart do jogo">
+
+                    <div class="points" id="idPointsPlayer2">000</div>
+                    <div > Bombs <span id="idBombsRemained2" class="time">000</span></div>
+                    <div class="third"><progress id="file" value="32" max="100"> 32% </progress></div>
+
+
+
+                </div>
+                <div id="idGameTableP2" class="tablePlace">
+
+                </div>
+
+        </div>
+            <p id="winMsg"></p>
+        </section>
+       
+
+
+        
+
+      
+   <footer>
+       <p> &copy; Cidália, Filipe, Rita</p>
+        </footer>  
+    </div>
+    <!-- <audio autoplay>
+            <source src="./audio/creative.mp3" type="audio/mpeg">
+            <p>O seu browser não suporta o elemento Audio.</p>
+        </audio>
+     -->
+</body>
+</html>

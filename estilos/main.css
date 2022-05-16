@@ -1,9 +1,15 @@
 /* Font importadada do google fonts     */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Ubuntu+Condensed&display=swap');
+
+
 /*  ------ Variaveis Globais--------------------------------------  */
 :root {
     --blue: #1e90ff;
     --white: #ffffff;
+    --background_Color: #FFF5EE;
+    --navBar_color:#0C2340;
+    --navBar_color_Bottom:#0396d6;
+    --navBar_text_color:#ffffff;
 }
 
 /*  ------ Regras Globais --------------------------------------  */
@@ -11,6 +17,131 @@
 
 
 }
+
+/* muda o aspeto do progress bar*/
+progress[value] {
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 250px;
+    height: 20px;
+}
+/*  -------------------------------- Regras Comuns ----------------------------------------- */
+
+/*Caixa login*/
+.login{
+
+    margin-top: 0;
+    padding-top: 0;
+    border: 3px solid #f1f1f1;
+    background-color:white;
+    -webkit-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
+     justify-items: center;
+
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 4px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+.myButton {
+    box-shadow:inset 0px 0px 0px 0px #97c4fe;
+    background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+    background-color:#3d94f6;
+    border-radius:5px;
+    border:1px solid #337fed;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:7px 22px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #1570cd;
+}
+.myButton:hover {
+    background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
+    background-color:#1e62d0;
+}
+.myButton:active {
+    position:relative;
+    top:1px;
+}
+
+
+
+
+
+.loginTittle{
+    font-size: larger;
+    text-align: center;
+    height: auto;
+
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: #0C2340;
+    order:0;
+
+
+}
+.loginTittle span{
+
+    color: white;
+}
+.loginName{
+    order:1;
+    height: 100%;
+
+}
+.radioDifficultyGame{
+
+    text-align: center;
+    order:2;
+}
+
+.MpPlayerName{
+    padding: 20px;
+    padding-bottom: 0;
+    order:1;
+
+
+}
+
+.loginPassword{
+order:2;
+    height: 100%;
+}
+
+
+.loginButtons{
+    align-self: center;
+    text-align: center;
+order:3;
+    height: 100%;
+    width: 100%;
+}
+
+.btnPlay{
+    text-align: center;
+    order:3;
+}
+
+
+
+
 /*  -------------------------------- Regras Comuns ----------------------------------------- */
 
 
@@ -23,7 +154,7 @@ a {
 
 /*  Regras Comuns  */
 body {
-    background-color: #FFF5EE;
+    background-color: var(--background_Color);
     margin:0;
 
 }
@@ -66,8 +197,8 @@ nav ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color:#0C2340;
-    border-bottom: 5px solid #0396d6;
+    background-color: var(--navBar_color);
+    border-bottom: 5px solid var(--navBar_color_Bottom);
 }
 
 /*Texto dos links do butão */
@@ -108,7 +239,7 @@ nav li :hover {
 /* texto dos botões da barra de navegação */
 nav li a{
     display: block;
-    color:white;
+    color: var(--navBar_text_color);
     text-align: center;
     text-decoration: none;
 }
@@ -199,6 +330,10 @@ nav li a{
 
 /* Caixa do jogo */
 .gridGame{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
     background-color: silver;
     border: 1px solid black;
     -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
@@ -218,9 +353,10 @@ nav li a{
     overflow: hidden;
     
 }
-/* */
-.menu_jogo{
-
+.menu_jogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .time{
@@ -288,7 +424,9 @@ nav li a{
 .first{
     order:1;
 }
-
+.game{
+    visibility: hidden;
+}
 .gameStatus{
     align-content: center;
     background-color: silver;
@@ -497,6 +635,41 @@ iframe {
 
 /*  --------------------------------   Ranking  ----------------------------------------- */
 
+.topRankingTitle{
+    font-size: larger;
+    text-align: center;
+    height: auto;
+
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    background: #0C2340;
+    order:0;
+
+
+}
+.loginTittle span {
+
+    color: white;
+}
+.topRankingBox {
+    margin-top: 0;
+    padding-top: 0;
+    border: 3px solid #f1f1f1;
+    background-color:white;
+    -webkit-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
+    justify-items: center;
+
+}
+. centeredDialog {
+    z-index: 99 !important;
+    display: flex;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+}
+
 .ranking table {
 padding:20px;
 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -558,10 +731,10 @@ border: 1px solid black;
 footer {
 
 
-    background-color: #0C2340;
+    background-color: var(--navBar_color);
 
     opacity: 1.0;
-    color: white;
+    color: var(--navBar_text_color);
     text-align: center;
 
 

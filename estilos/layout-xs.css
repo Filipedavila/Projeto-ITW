@@ -28,6 +28,10 @@
         grid-row-start: 1;
         width: 100%;
     }
+    .caixa{
+        display: none;
+    }
+
       /* Menu Escolha de tipo de jogo Grid position */ 
     .modos_jogo{
         grid-row-start: 2;
@@ -97,18 +101,18 @@
   }
      /* Caixa que contem o Jogo SinglePlayer Posição em grid  */ 
     .gridGame { 
-   
+        grid-column: 0/1;
         grid-row-start:2;
         align-self: center;
         padding: 4vw;
         margin: 10px auto;
-        width: fit-content;
+
        
-        max-width: fit-content;
+
         background-color: silver;
         border: 1px solid black;
-        display: inline-grid;
-        grid-template-rows: auto  auto auto;
+
+
         
 
     }

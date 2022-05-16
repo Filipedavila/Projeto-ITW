@@ -1,0 +1,35 @@
+
+
+
+
+#relogio, #bombas_falta {
+    color: white;
+    padding: 2%;
+    margin: 2.5%;
+    border: 2px solid black; 
+}
+
+#smile_container, #energy_icon_container {
+    margin: 2.5%;
+    width: 7.5%;
+}
+
+img {
+    max-width: 100%;
+}
+
+
+
+#energy_bar {
+    background-image: linear-gradient(45deg, yellow 25%, black 25%, black 50%, yellow 50%, yellow 75%, black 75%, black 100%);  /* https://stripesgenerator.com/ */
+
+}
+
+#energy_value {
+    padding: 3%;
+}
+
+audio {
+    width: 0%;
+    height: 0%;
+}
