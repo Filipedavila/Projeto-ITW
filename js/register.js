@@ -50,7 +50,7 @@ let jogadores = [];
 
 /** Construtor de um objeto de tipo Jogador. Cada jogador tem um
  * nome, um email, uma password, uma faixa etaria, e um genero.
- * 
+ *
  * @param {string} nome - Nome do jogador
  * @param {string} email - Email do jogador
  * @param {string} password - Password do jogador
@@ -100,21 +100,21 @@ function principal() {
  * Com esta abordagem, evitam-se atributos onclick ou similares, e faz-se uma
  * melhor separação entre conteúdo, em HTML, e comportamento, em JavaScript.
  */
- function defineEventHandlersParaElementosHTML() {
+function defineEventHandlersParaElementosHTML() {
 
     document.getElementById(BOTAO_FAZER_REGISTO).
-      addEventListener("click", trataRegistarJogador);
-  
+    addEventListener("click", trataRegistarJogador);
+
 }
-  
+
 /* ------------------------------------------------------------------------- */
 
 /**
  * Obtém os dados do jogador que constam no formulário de registo.
- * 
+ *
  * @returns {Jogador} Objeto com os dados do jogador.
  */
- function obtemDadosJogador() {
+function obtemDadosJogador() {
 
     let nome = formulario.elements[NOME_JOGADOR].value;
     let email = formulario.elements[EMAIL_JOGADOR].value;
@@ -122,7 +122,7 @@ function principal() {
     let faixaEtaria = formulario.elements[FAIXA_ETARIA_JOGADOR].value;
     let genero = null;
     for (let g of formulario.elements[GENERO_JOGADOR]) {
-        if(g.checked) {
+        if (g.checked) {
             genero = g.value;
         }
     }
@@ -135,7 +135,7 @@ function principal() {
 /**
  * Trata os dados do registo de um jogador, provenientes do formulário HTML.
  */
- function trataRegistarJogador() {
+function trataRegistarJogador() {
 
     let jogadorValido = formulario.reportValidity();
 
@@ -161,7 +161,7 @@ function principal() {
 /**
  * Carrega o histórico de encomendas guardado no local storage do browser.
  */
- function carregaHistoricoJogadores() {
+function carregaHistoricoJogadores() {
 
     jogadores = JSON.parse(localStorage.getItem(ITEM_JOGADORES)) || [];
 
@@ -172,20 +172,20 @@ function principal() {
 /**
  * Grava o histórico de jogadores no local storage do browser.
  */
- function gravaHistoricoJogadores() {
+function gravaHistoricoJogadores() {
 
     localStorage.setItem(ITEM_JOGADORES, JSON.stringify(jogadores));
-  
+
 }
 
 /* ------------------------------------------------------------------------- */
 
-/** 
+/**
  * Grava o jogador no histórico de jogadores.
- * 
+ *
  * @param {Jogador} jogador - Objeto com os dados do jogador.
  */
- function gravaJogadorNoHistorico(jogador) {
+function gravaJogadorNoHistorico(jogador) {
 
     jogadores.push(jogador);
     gravaHistoricoJogadores();

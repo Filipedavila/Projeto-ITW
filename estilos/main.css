@@ -17,7 +17,9 @@
 
 
 }
-
+#selEstatistica{
+    visibility: hidden;
+}
 /* muda o aspeto do progress bar*/
 progress[value] {
 
@@ -693,14 +695,14 @@ border: 1px solid black;
     color: white;
     background-color:darkblue;
 }
-.ranking tr:nth-child(even){
+.rankingTable tr:nth-child(even){
     background-color:lightgray;
 
 }
-.ranking tr:nth-child(odd){
+.rankingTable tr:nth-child(odd){
     background-color:blanchedalmond;
 }
-.ranking td {
+.rankingTable td {
 
     gap: 0;
     text-align: center;

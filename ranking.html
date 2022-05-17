@@ -9,376 +9,159 @@
     <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Tangerine">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/ranking.js"></script>
 
 
     <title>Minesweeper - Ranking</title>
 </head>
 <body>
-    <div class="container">
-        <nav class="navigation"> 
-            <ul>
-                <li ><a href="index.html">Minesweeper</a></li>
-                <li><a href="quickGame.html">Jogar</a></li>
-                <li><a href="tutorial.html">Tutorial</a></li>
-                <li class="active"><a href="ranking.html">Ranking</a></li>
-                <li><a href="sobrenos.html">Sobre Nós</a></li>
-                <li class="right"><a id="username"></a></li>
-            </ul>
-        </nav>   
-        <article>
-            <select name="opcaoEstatistica" id="selEstatistica">
-                <option id="nJogos">Número de jogos jogados</option>
-                <option id="tempoTotal">Tempo total a jogar</option>
-                <option id="melhorTempo">Melhor tempo</option>
-                <option id="tempoMedio">Tempo médio</option>
-                <option id="ganhouMultiplayer">Número de jogos ganhos no modo multiplayer</option>
-                <option id="melhorProporcao">Proporção número de jogos ganhos / número de jogos jogados</option>
-            </select>
+<div class="container">
+    <nav class="navigation">
+        <ul>
+            <li ><a href="index.html">Minesweeper</a></li>
+            <li><a href="quickGame.html">Jogar</a></li>
+            <li><a href="tutorial.html">Tutorial</a></li>
+            <li class="active"><a href="ranking.html">Ranking</a></li>
+            <li><a href="sobrenos.html">Sobre Nós</a></li>
+            <li class="right"><a id="username"></a></li>
+        </ul>
+    </nav>
+    <article>
+        <select name="opcaoEstatistica" id="selEstatistica">
+            <option>Número de jogos ganhos</option>
+            <option>Tempo total a jogar</option>
+            <option>Melhor tempo</option>
+            <option>Tempo médio</option>
+            <option>Número de jogos ganhos no modo SinglePlayer</option>
+            <option>Número de jogos ganhos no modo multiplayer</option>
+        </select>
+        <div id="rankingBox" class="ranking" >
 
-            <div id="numeroJogosRanking">
-                <h1>Número de jogos jogados</h1>
-                <div class="ranking">
 
-                    <table id="numeroJogosTable" class="rankingTable">
-                        <thead>
-                            <tr>
-                                <th>Jogador</th>
-                                <th>Nºjogos</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jog1</td>
-                                <td>40 jogos</td>
-                            </tr>
-                            <tr>
-                                <td>Jog2</td>
-                                <td>35 jogos</td>
-                            </tr>
-                            <tr>
-                                <td>Jog3</td>
-                                <td>30 jogos</td>
-                            </tr>
-                            <tr>
-                                <td>Jog4</td>
-                                <td>25 jogos</td>
-                            </tr>
-                            <tr>
-                                <td>Jog5</td>
-                                <td>20 jogos</td>
-                            </tr>
-                            <tr>
-                                <td>Jog6</td>
-                                <td>15 jogos</td>
-                            </tr>
-                            <tr>
-                                <td>Jog7</td>
-                                <td>10 jogos</td>
-                            </tr>
-                            <tr>
-                                <td>Jog8</td>
-                                <td>5 jogos</td>
-                            </tr>
-                            <tr>
-                                <td>Jog9</td>
-                                <td>4 jogos</td>
-                            </tr>
-                            <tr>
-                                <td>Jog10</td>
-                                <td>3 jogos</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        </div>
+
+        <div id="numeroJogosRanking">
+            <h1>Número de jogos ganhos</h1>
+            <div class="ranking">
+
+                <table id="numeroJogosTable" class="rankingTable">
+                    <thead>
+                    <tr>
+                        <th>Jogador</th>
+                        <th>Nºjogos</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
+        </div>
 
-            <div id="tempoTotalRanking">
-                <h1>Tempo total a jogar</h1>
-                <div class="ranking">
-                    <table id="tempoTotalTable" class="rankingTable">
-                        <thead>
-                            <tr>
-                                <th>Jogador</th>
-                                <th>Tempo total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jog1</td>
-                                <td>40 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog2</td>
-                                <td>35 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog3</td>
-                                <td>30 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog4</td>
-                                <td>25 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog5</td>
-                                <td>20 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog6</td>
-                                <td>15 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog7</td>
-                                <td>10 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog8</td>
-                                <td>5 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog9</td>
-                                <td>4 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog10</td>
-                                <td>3 seg</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div id="tempoTotalRanking">
+            <h1>Tempo total a jogar</h1>
+            <div class="ranking">
+                <table id="tempoTotalTable" class="rankingTable">
+                    <thead>
+                    <tr>
+                        <th>Jogador</th>
+                        <th>Tempo total (s)</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
+        </div>
 
-            <div id="melhorTempoRanking">
-                <h1>Melhor tempo</h1>
-                <div class="ranking">
-                    <table id="melhorTempoTable" class="rankingTable">
-                        <thead>
-                            <tr>
-                                <th>Jogador</th>
-                                <th>Melhor tempo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jog1</td>
-                                <td>5 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog2</td>
-                                <td>10 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog3</td>
-                                <td>15 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog4</td>
-                                <td>20 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog5</td>
-                                <td>25 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog6</td>
-                                <td>30 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog7</td>
-                                <td>35 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog8</td>
-                                <td>40 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog9</td>
-                                <td>45 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog10</td>
-                                <td>50 seg</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div id="melhorTempoRanking">
+            <h1>Melhor tempo</h1>
+            <div class="ranking">
+                <table id="melhorTempoTable" class="rankingTable">
+                    <thead>
+                    <tr>
+                        <th>Jogador</th>
+                        <th>Melhor tempo (s)</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
+        </div>
 
-            <div id="tempoMedioRanking">
-                <h1>Tempo Médio</h1>
-                <div class="ranking">
-                    <table id="tempoMedioTable" class="rankingTable">
-                        <thead>
-                            <tr>
-                                <th>Jogador</th>
-                                <th>Tempo médio</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jog1</td>
-                                <td>5 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog2</td>
-                                <td>10 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog3</td>
-                                <td>15 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog4</td>
-                                <td>20 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog5</td>
-                                <td>25 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog6</td>
-                                <td>30 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog7</td>
-                                <td>35 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog8</td>
-                                <td>40 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog9</td>
-                                <td>45 seg</td>
-                            </tr>
-                            <tr>
-                                <td>Jog10</td>
-                                <td>50 seg</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div id="tempoMedioRanking">
+            <h1>Tempo Médio</h1>
+            <div class="ranking">
+                <table id="tempoMedioTable" class="rankingTable">
+                    <thead>
+                    <tr>
+                        <th>Jogador</th>
+                        <th>Tempo médio (s)</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
+        </div>
 
-            <div id="ganhouMultiplayerRanking">
-                <h1>Número de vezes que ganhou no modo multiplayer</h1>
-                <div class="ranking">
-                    <table id="ganhouMultiplayerTable" class="rankingTable">
-                        <thead>
-                            <tr>
-                                <th>Jogador</th>
-                                <th>Vezes que ganhou</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jog1</td>
-                                <td>100</td>
-                            </tr>
-                            <tr>
-                                <td>Jog2</td>
-                                <td>90</td>
-                            </tr>
-                            <tr>
-                                <td>Jog3</td>
-                                <td>80</td>
-                            </tr>
-                            <tr>
-                                <td>Jog4</td>
-                                <td>70</td>
-                            </tr>
-                            <tr>
-                                <td>Jog5</td>
-                                <td>60</td>
-                            </tr>
-                            <tr>
-                                <td>Jog6</td>
-                                <td>50</td>
-                            </tr>
-                            <tr>
-                                <td>Jog7</td>
-                                <td>40</td>
-                            </tr>
-                            <tr>
-                                <td>Jog8</td>
-                                <td>30</td>
-                            </tr>
-                            <tr>
-                                <td>Jog9</td>
-                                <td>20</td>
-                            </tr>
-                            <tr>
-                                <td>Jog10</td>
-                                <td>10</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div id="ganhouMultiplayerRanking">
+            <h1>Número de vezes que ganhou no modo multiplayer</h1>
+            <div class="ranking">
+                <table id="ganhouMultiplayerTable" class="rankingTable">
+                    <thead>
+                    <tr>
+                        <th>Jogador</th>
+                        <th>Vezes que ganhou</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Jog1</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>Jog2</td>
+                        <td>90</td>
+                    </tr>
+                    <tr>
+                        <td>Jog3</td>
+                        <td>80</td>
+                    </tr>
+                    <tr>
+                        <td>Jog4</td>
+                        <td>70</td>
+                    </tr>
+                    <tr>
+                        <td>Jog5</td>
+                        <td>60</td>
+                    </tr>
+                    <tr>
+                        <td>Jog6</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>Jog7</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>Jog8</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>Jog9</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>Jog10</td>
+                        <td>10</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
+        </div>
 
-            <div id="melhorProporcaoRanking">
-                <h1>Proporção número de jogos ganhos / número de jogos jogados</h1>
-                <div class="ranking">
-                    <table id="melhorProporcaoTable" class="rankingTable">
-                        <thead>
-                            <tr>
-                                <th>Jogador</th>
-                                <th>Melhor Proporção</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jog1</td>
-                                <td>90%</td>
-                            </tr>
-                            <tr>
-                                <td>Jog2</td>
-                                <td>80%</td>
-                            </tr>
-                            <tr>
-                                <td>Jog3</td>
-                                <td>70%</td>
-                            </tr>
-                            <tr>
-                                <td>Jog4</td>
-                                <td>60%</td>
-                            </tr>
-                            <tr>
-                                <td>Jog5</td>
-                                <td>50%</td>
-                            </tr>
-                            <tr>
-                                <td>Jog6</td>
-                                <td>40%</td>
-                            </tr>
-                            <tr>
-                                <td>Jog7</td>
-                                <td>30%</td>
-                            </tr>
-                            <tr>
-                                <td>Jog8</td>
-                                <td>20%</td>
-                            </tr>
-                            <tr>
-                                <td>Jog9</td>
-                                <td>15%</td>
-                            </tr>
-                            <tr>
-                                <td>Jog10</td>
-                                <td>10%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </article>
+
+    </article>
 
 
 
-   <footer>
-       <p> &copy; Cidália, Filipe, Rita</p>
+    <footer>
+        <p> &copy; Cidália, Filipe, Rita</p>
     </footer>
-    </div>
+</div>
 
 </body>
 </html>

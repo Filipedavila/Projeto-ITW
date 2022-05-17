@@ -34,7 +34,7 @@
                 <span> Modo Multiplayer </span>
             </div>
             <div class="MpPlayerName">
-                <label for="nomePlayer2">Jogador 2:</label>
+                <label for="nomePlayer2">Jogador 2:<span id="aviso"></span></label>
                 <input id="nomePlayer2" type="text" name="player2"  maxlength="40" size="10" required>
 
             </div>
@@ -44,11 +44,11 @@
 
 
                 <label for="MediumDif">Medium</label>
-                <input type="radio" id="MediumDif"  name="difficulty" value="dificuldadeMedium">
+                <input type="radio" id="MediumDif"  name="difficulty" value="dificuldadeMedium" required>
 
 
                 <label for="hardDif">Hard</label>
-                <input type="radio" id="hardDif" name="difficulty" value="dificuldadeHard">
+                <input type="radio" id="hardDif" name="difficulty" value="dificuldadeHard" required>
 
 
             </div>
@@ -64,8 +64,7 @@
 
                 <div class="menu_jogo">
                     <div class="jogador">
-                      <img src="./img/icons8-gamer-64-man.png" alt="avatar jogador 1" id="imagemAvatar1">
-                        <div class="nomeAvatar1"></div>
+                        <span id="player1"> </span>
                     </div>
 
                     <img class="buttonStart" id="smileP1" src="./img/smile.png" alt="Smile para fazer restart do jogo">
@@ -113,8 +112,7 @@
 
                 <div class="menu_jogo">
                     <div class="jogador">
-                    <img src="./img/icons8-gamer-64-woman.png" alt="avatar jogador 2" id="imagemAvatar2">
-                        <div class="nomeAvatar2"></div>
+                    <span id="player2"> </span>
                     </div>
                     <img class="buttonStart" id="smileP2" src="./img/smile.png" alt="Smile para fazer restart do jogo">
 

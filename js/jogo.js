@@ -2,7 +2,7 @@
 "use strict";
 /* ------------------------Game Screens IDS--------------------------- */
 /**  Current page */
-const PAGE_NAME  = window.location.pathname.split("/").pop();
+const PAGE_NAME = window.location.pathname.split("/").pop();
 
 window.addEventListener("DOMContentLoaded", isLoggedIn);
 /** Tempo do jogo SINGLE PLAYER e QuickGame */
@@ -21,37 +21,37 @@ const ID_BOMBS_REMAINED_P2 = "idBombsRemained2";
 
 /**  Times Won SINGLE PLAYER Information **/
 
-const ID_TIMES_WON_SINGLE_PLAYER= "timesWonPlayer";
+const ID_TIMES_WON_SINGLE_PLAYER = "timesWonPlayer";
 
 /**  Times Won MULTIPLAYER P1 Information **/
 
-const ID_TIMES_WON_MULTIPLAYER_P1= "timesWonPlayer1";
+const ID_TIMES_WON_MULTIPLAYER_P1 = "timesWonPlayer1";
 
 /**  Times Won MULTIPLAYER P2 Information **/
 
-const ID_TIMES_WON_MULTIPLAYER_P2= "timesWonPlayer2";
+const ID_TIMES_WON_MULTIPLAYER_P2 = "timesWonPlayer2";
 
 /**  ID points game SinglePlayer **/
 
-const ID_POINTS_SINGLEPLAYER= "idPointsSinglePlayer";
+const ID_POINTS_SINGLEPLAYER = "idPointsSinglePlayer";
 
 /**  ID points game Multiplayer P1 **/
 
-const ID_POINTS_MULTIPLAYER_P1= "idPointsPlayer1";
+const ID_POINTS_MULTIPLAYER_P1 = "idPointsPlayer1";
 
 /**  ID points game Multiplayer P2 **/
 
-const ID_POINTS_MULTIPLAYER_P2= "idPointsPlayer2";
+const ID_POINTS_MULTIPLAYER_P2 = "idPointsPlayer2";
 
 /**  id Sound Control Game **/
 
-const ID_SOUND_CONTROL ="soundControl";
+const ID_SOUND_CONTROL = "soundControl";
 
 /**  choose dificulty SinglePlayer */
 
 const BTN_CHOOSE_GAME_TYPE_SP = "btnJogarSinglePlayer";
 
-const RADIO_BUTTON_GAMETYPE_SP ="radioTipoDeJogo";
+const RADIO_BUTTON_GAMETYPE_SP = "radioTipoDeJogo";
 
 const FORM_GAME_DIFFICULTY_SP = "formGameTypeSp";
 
@@ -97,23 +97,37 @@ const ID_TABLE_MULTIPLAYER_P1 = "idGameTableP1";
 
 /** Game Table SINGLE PLAYER */
 
-const ID_TABLE_MULTIPLAYER_P2  = "idGameTableP2";
+const ID_TABLE_MULTIPLAYER_P2 = "idGameTableP2";
 
 /* ------------------------Game OPTIONS--------------------------- */
 
 /** Numero de bombas modo EASY */
-const BOMBS_GAME_EASY  = 10;
+const BOMBS_GAME_EASY = 10;
 
 /** Numero de bombas modo MEDIUM */
-const BOMBS_GAME_MEDIUM  = 40;
+const BOMBS_GAME_MEDIUM = 40;
 
 /** Numero de bombas modo HARD */
-const BOMBS_GAME_HARD  = 99;
+const BOMBS_GAME_HARD = 99;
 
 /** Pontuação ganha por cada Celula Aberta */
 
 const POINTS_GIVEN_OPENED_CELL = 1;
 
+
+/* ------------------------Game MSG--------------------------- */
+
+/** Mensagem Jogo Ganho */
+const MSG_WIN_SP = "Ganhou o Jogo";
+
+/** Mensagem Jogo Perdido */
+const MSG_LOSE_SP = "Perdeu! Tenta Outra vez!";
+
+/** Mensagem Jogo Ganho */
+const MSG_WIN_MP = "Ganhou o Jogo contra";
+
+/** Mensagem Jogo Perdido */
+const MSG_LOSE_MP = "Perdeu !Não há vencedores";
 
 
 
@@ -177,66 +191,95 @@ const IMAGEM_AVATAR_2 = 'imagemAvatar2';
 
 const ID_SPAN_PLAYER_TURN = "idTurnPlayer";
 
+/** Item de local storage que guarda os dados dos jogadores. */
+const ITEM_JOGADORES = 'jogadores';
 /* --------------------------Rankings------------------------------ */
-const LOCALSTORAGE_KEY_RANKINGS ="rankings";
+const LOCALSTORAGE_KEY_RANKINGS = "rankings";
 
+const MSG_NO_SCORES_AVAILABLE = "Ainda Não existem Registos";
 
 const openedCellSound = new Audio('../audio/open.mp3');
+
+
+var zeroPad = (num, places) =>{
+    if(num>=0) {
+       return String(num).padStart(places, '0');
+    }else{
+        num = Math.abs(num);
+        return String(num).padStart(places, '-0');
+    }
+};
 /**Game Objects
  *
  */
 
 /** Estado do jogo Multiplayer, que vai sendo preenchido no decorrer do jogo. */
 const jogo = {
-    table_player:[],
-    name_player:[],
+    table_player: [],
+    name_player: [],
     inicio: null,
-    times_won_player1:0,
-    times_won_player2:0,
-    turn:0,
-    turns_played:0,
-    nextTurn: function (){
-        this.turn = (this.turn+1) % 2;
+    times_won_player1: 0,
+    times_won_player2: 0,
+    times_won_player: [],
+    turn: 0,
+    turns_played: 0,
+    nextTurn: function() {
+        this.turn = (this.turn + 1) % this.name_player.length;
         this.turns_played++;
     },
-    difficulty:null,
-    size:null,
-    finished:false,
-    addTimeWonP1: function(){  this.times_won_player1++;
+    difficulty: null,
+    size: null,
+    finished: false,
+    addTimeWonP1: function() {
+        this.times_won_player1++;
+        document.getElementById(ID_TIMES_WON_MULTIPLAYER_P1).innerText = zeroPad(this.times_won_player1, 2);
 
     },
-    addTimeWonP2: function(){  this.times_won_player2++ ;
+    addTimeWonP2: function() {
+        this.times_won_player2++;
+        document.getElementById(ID_TIMES_WON_MULTIPLAYER_P2).innerText = zeroPad(this.times_won_player2, 2);
 
     },
-    resetGame:function (){
-        jogo.table_player.forEach((table)=>{
-            table.resetTable();
-        })
+    resetGameSp: function() {
+        verificacaoPontos = setInterval(updatePointsSP, 300);
+        jogo.table_player[0].resetTable();
+        jogo.resetData();
 
-
-
-
+    },
+    resetData: function() {
+        temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
+        verificarSeAcabou = setInterval(isFinished, 300);
         jogo.won = false;
         jogo.lost = false;
         jogo.turns_played = 0;
-        jogo.finished =false;
-        jogo.inicio=Math.floor(Date.now() / 1000);
+        jogo.finished = false;
+        jogo.inicio = Math.floor(Date.now() / 1000);
         removeScore();
-        temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
-        verificarSeAcabou = setInterval(isFinished, 300);
-        verificacaoPontos = setInterval(updatePointsSP, 300);
 
-     }
+    },
+    resetGameMp: function() {
+        jogo.table_player.forEach((table) => {
+            table.resetTable();
+        })
+        jogo.resetData();
+        verificacaoPontos = setInterval(updatePointsMP, 300);
+
+    }
 
 };
+let jogadores = [];
 
-var  rankings = {
-    SpRankings:[],
-    MpRankings:[]
+var rankings = {
+    SpRankings: [],
+    MpRankings: [],
+    LostGames: []
 }
-function Ranking(ranking,ranking2){
-    this.SpRankings =ranking;
-    this.MpRankings = ranking2;
+
+function Ranking(rankingSp, rankingMp, lostGames) {
+    this.SpRankings = rankingSp;
+    this.MpRankings = rankingMp;
+    this.LostGames = lostGames;
+
 }
 
 /**Construtor tipo objecto RankingSp que guarda informação sobre o ranking
@@ -245,12 +288,14 @@ function Ranking(ranking,ranking2){
  * @param nome - nome do jogador
  * @param points - pontos do jogo
  * @param time - tempo decorrido para ganhar
+ * @param gameType - tipo de jogo
  * @constructor
  */
-function RankingSP(nome,points,time){
+function RankingSP(nome, points, time, gameType) {
     this.nomePlayer = nome;
-    this.points = points ;
+    this.points = points;
     this.timeGame = time;
+    this.gameType = gameType;
 }
 
 /**Construtor tipo objecto RankingMp que guarda informação sobre o ranking
@@ -260,34 +305,40 @@ function RankingSP(nome,points,time){
  * @param pointsWinner - Pontos do jogador que ganhou
  * @param pointsLoser - Pontos do jogador que perdeu
  * @param timeGame - tempo do jogo decorrido
+ * @param gameType - tipo de jogo
  * @constructor
  */
-function RankingMP(winner,loser,pointsWinner,pointsLoser,timeGame){
+function RankingMP(winner, loser, pointsWinner, pointsLoser, timeGame, gameType) {
     this.winner = winner;
-    this.loser = loser ;
+    this.loser = loser;
     this.pointsWinner = pointsWinner;
     this.pointsLoser = pointsLoser;
     this.timeGame = timeGame;
+    this.gameType = gameType;
 }
 
+function LostGame(name, time) {
+    this.nomePlayer = name;
+    this.timeGame = time;
+}
 /* ------------------------------------------------------------------------- */
 /**Function verifica se é utilizador autenticado e caso contrario redireciona para a
  * pagina principal
  *
  */
-function isLoggedIn(){
-    if(sessionStorage.getItem("user") == undefined){
+function isLoggedIn() {
+    if (sessionStorage.getItem("user") == undefined) {
         window.location.replace("index.html");
 
     }
 }
 
-function initRankings(){
-   let loadRankings = getRankings();
-    if(loadRankings == null){
-        rankings = new Ranking(new Array(),new Array());
+function initRankings() {
+    let loadRankings = getRankings();
+    if (loadRankings == null) {
+        rankings = new Ranking(new Array(), new Array(), new Array());
 
-    }else {
+    } else {
         rankings = JSON.parse(loadRankings);
     }
 
@@ -300,7 +351,7 @@ function initRankings(){
 
 
 
-function getRankings(){
+function getRankings() {
     return localStorage.getItem("rankings");
 
 }
@@ -311,22 +362,38 @@ function getRankings(){
  * @param score - score of player
  * @param time - time of game
  */
-function setRankingSP(nome,score,time){
+function setRankingSP(nome, score, time, gametype) {
 
-    let thisRanking = new RankingSP(nome, score, time);
+    let thisRanking = new RankingSP(nome, score, time, gametype);
 
-        rankings.SpRankings.push(thisRanking);
+    rankings.SpRankings.push(thisRanking);
 
-        rankings.SpRankings.sort((a,b)=>{
-            return a.timeGame - b.timeGame ;
-        })
+    rankings.SpRankings.sort((a, b) => {
+        return a.timeGame - b.timeGame;
+    })
 
-        localStorage.setItem("rankings",JSON.stringify(rankings));
+    localStorage.setItem("rankings", JSON.stringify(rankings));
 
 
 
 }
+/**Function to set Lost Games in local Storage
+ *
+ * @param nome - name of player
+ * @param score - score of player
+ * @param time - time of game
+ */
+function setLostGame(nome, time) {
+    console.log(rankings);
+    let thisRanking = new LostGame(nome, Number(time));
 
+    rankings.LostGames.push(thisRanking);
+
+    localStorage.setItem("rankings", JSON.stringify(rankings));
+
+
+
+}
 
 /**Function to set Rankings of multiplayer in localstorage
  *
@@ -336,94 +403,110 @@ function setRankingSP(nome,score,time){
  * @param pointsLoser - points of loser
  * @param timeGame - time of game
  */
-function setRankingMP(winner,loser,pointsWinner,pointsLoser,timeGame){
+function setRankingMP(winner, loser, pointsWinner, pointsLoser, timeGame, gametype) {
 
-        let thisRanking = new RankingMP(winner, loser, pointsWinner,pointsLoser,timeGame);
+    let thisRanking = new RankingMP(winner, loser, pointsWinner, pointsLoser, Number(timeGame), gametype);
 
-        rankings.MpRankings.push(thisRanking);
+    rankings.MpRankings.push(thisRanking);
 
-        rankings.MpRankings.sort((a,b)=>{
-            return a.timeGame - b.timeGame ;
-        })
+    rankings.MpRankings.sort((a, b) => {
+        return a.timeGame - b.timeGame;
+    })
 
-        localStorage.setItem("rankings",JSON.stringify(rankings));
-
-
-
-    }
-
-function showALLRankingSp(){
+    localStorage.setItem("rankings", JSON.stringify(rankings));
 
 
 
+}
+
+function showTopRankingSp(msgGame) {
+    let gameResult = document.createElement("div");
+    gameResult.innerHTML = "<span> " + msgGame + " </span>";
     let tittleBox = document.createElement("div");
     tittleBox.innerHTML = "<span> Ranking Top 10 SinglePlayer </span>";
     let rankingTop = document.createElement("table");
     rankingTop.setAttribute("class", "rankingTable");
-    rankingTop.innerHTML += " <tr><th>Nome Jogador</th><th>Pontos</th><th>Tempo Jogo</th>  </tr> ";
-    console.log(rankings);
-    rankings.SpRankings.forEach((score) =>{
-        rankingTop.innerHTML += "<tr><td>"+score.nomePlayer +" </td>" +
-            "<td>"+ score.points  +"</td><td>"+ score.timeGame  +"</td></tr>";
+    rankingTop.innerHTML += " <tr><th>Nome Jogador</th><th>Pontos</th><th>Tempo Jogo</th><th>Difficulty</th>   </tr> ";
+    let rankingNumber = 0;
+    console.log(jogo.difficulty);
+
+    rankings.SpRankings.forEach((ranking) => {
+        if (ranking.gameType === jogo.difficulty) {
+            rankingNumber++;
+        }
+
     });
+
+
+
+    if (!(rankingNumber == 0)) {
+        for (let i = 0, j = 0; j < rankingNumber; i++) {
+            if (rankings.SpRankings[i].gameType === jogo.difficulty) {
+
+                rankingTop.innerHTML += "<tr><td>" + rankings.SpRankings[i].nomePlayer + " </td>" +
+                    "<td>" + rankings.SpRankings[i].points + "</td><td>" + rankings.SpRankings[i].timeGame + "</td>" +
+                    "<td>" + rankings.SpRankings[i].gameType + "</td></tr>";
+                j++;
+            }
+        }
+    } else {
+        rankingTop.innerHTML += "<tr><td colspan='3'>" + MSG_NO_SCORES_AVAILABLE + "</td></tr>";
+    }
+
     let divBox = document.getElementById("rankingBox");
-    divBox.setAttribute("class", "topRankingBox");
-    divBox.setAttribute("class", "centeredDialog");
+    divBox.setAttribute("class", "ranking centeredDialog");
+
+    divBox.appendChild(gameResult);
     divBox.appendChild(tittleBox);
     divBox.appendChild(rankingTop);
     divBox.appendChild(rankingTop);
 }
 
-function showTopRankingSp(){
-
-    let tittleBox = document.createElement("div");
-    tittleBox.innerHTML = "<span> Ranking Top 10 SinglePlayer </span>";
-    let rankingTop = document.createElement("table");
-    rankingTop.setAttribute("class", "rankingTable");
-    rankingTop.innerHTML += " <tr><th>Nome Jogador</th><th>Pontos</th><th>Tempo Jogo</th>  </tr> ";
-    console.log(rankings);
-    let limit = 10 ;
-    if(rankings.SpRankings.length<=10){
-        limit =rankings.SpRankings.length;
-    }
-    for(let i = 0;i < limit ; i++){
-        rankingTop.innerHTML += "<tr><td>"+rankings.SpRankings[i].nomePlayer +" </td>" +
-            "<td>"+ rankings.SpRankings[i].points  +"</td><td>"+ rankings.SpRankings[i].timeGame  +"</td></tr>";
-    }
-
-    let divBox = document.getElementById("rankingBox");
-    divBox.setAttribute("class", "topRankingBox");
-    divBox.setAttribute("class", "centeredDialog");
-    divBox.appendChild(tittleBox);
-    divBox.appendChild(rankingTop);
-    divBox.appendChild(rankingTop);
-}
-
-function removeScore(){
+function removeScore() {
     $("#rankingBox").empty();
 
 }
 
-function showTopRankingMp(){
+function showTopRankingMp(msgGame) {
+    let gameResult = document.createElement("div");
+    gameResult.innerHTML = "<span> " + msgGame + " </span>";
     let tittleBox = document.createElement("div");
     tittleBox.innerHTML = "<span> Ranking Top 10 Multiplayer </span>";
     let rankingTop = document.createElement("table");
     rankingTop.setAttribute("class", "rankingTable");
-    rankingTop.innerHTML += " <tr><th>Winner</th><th>Loser</th><th>Pontos Winner</th> <th>Pontos Loser</th><th>Tempo de Jogo</th>  </tr> ";
-    console.log(rankings);
-    let limit = 10 ;
-    if(rankings.MpRankings.length<=10){
-        limit =rankings.MpRankings.length;
-    }
-    for(let i = 0;i < limit ; i++){
-        rankingTop.innerHTML += "<tr><td>"+rankings.MpRankings[i].winner +" </td>" +
-            "<td>"+ rankings.MpRankings[i].loser  +"</td><td>"+ rankings.MpRankings[i].pointsWinner  +"</td>"
-            +"<td>"+ rankings.MpRankings[i].pointsLoser  +"</td><td>" +  rankings.MpRankings[i].timeGame   +"</td></tr>";
-    }
+    rankingTop.innerHTML += " <tr><th>Winner</th><th>Loser</th><th>Pontos Winner</th> <th>Pontos Loser</th><th>Tempo de Jogo</th><th>Difficuldade</th>  </tr> ";
+    let rankingNumber = 0;
+    console.log(jogo.difficulty);
 
+    rankings.MpRankings.forEach((ranking) => {
+        if (ranking.gameType === jogo.difficulty) {
+            rankingNumber++;
+        }
+
+    });
+
+    let limit = 10;
+    if (rankings.MpRankings.length <= 10) {
+        limit = rankings.MpRankings.length;
+    }
+    if (!(rankingNumber == 0)) {
+
+        for (let i = 0, j = 0; j < rankingNumber; i++) {
+            if(rankings.MpRankings[i].gameType == jogo.difficulty){
+            rankingTop.innerHTML += "<tr><td>" + rankings.MpRankings[i].winner + " </td>" +
+                "<td>" + rankings.MpRankings[i].loser + "</td><td>" + rankings.MpRankings[i].pointsWinner + "</td>" +
+                "<td>" + rankings.MpRankings[i].pointsLoser + "</td><td>" + rankings.MpRankings[i].timeGame + "</td><td>"
+                + rankings.MpRankings[i].gameType + "</td></tr>";
+
+                j++;
+            }}
+    } else {
+        rankingTop.innerHTML += "<tr><td colspan='6'>" + MSG_NO_SCORES_AVAILABLE + "</td></tr>";
+    }
     let divBox = document.getElementById("rankingBox");
     divBox.setAttribute("class", "topRankingBox");
     divBox.setAttribute("class", "centeredDialog");
+    divBox.appendChild(gameResult);
     divBox.appendChild(tittleBox);
     divBox.appendChild(rankingTop);
     divBox.appendChild(rankingTop);
@@ -438,11 +521,11 @@ function showTopRankingMp(){
 /**Função responsavel por iniciar o jogo singleplayer e perguntar o nivel de dificuld
  *
  */
-function iniciarJogoRapido(){
+function iniciarJogoRapido() {
     $(".game").css("visibility", "visible");
     jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
-
-    init(9, 9,1);
+    jogo.difficulty = "EASY";
+    init(9, 9, 1);
 
 }
 
@@ -450,42 +533,72 @@ function iniciarJogoRapido(){
 /**Função responsavel por iniciar o jogo singleplayer e perguntar o nivel de dificuld
  *
  */
-function iniciarJogo(){
-    $("#"+FORM_GAME_DIFFICULTY_SP).hide();
-    $(".game").css("visibility", "visible");
-    jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
+function iniciarJogo() {
     var tamanho = $("input[type=radio][name=difficulty]:checked").val();
-    if (tamanho == 'dificuldadeEasy') {
-        init(9, 9,BOMBS_GAME_EASY);
-    } else if (tamanho == 'dificuldadeMedium') {
-        init(16, 16,BOMBS_GAME_MEDIUM);
-    } else if (tamanho == 'dificuldadeHard') {
-        init(16, 30,BOMBS_GAME_HARD);
-    }
+    if (tamanho != null) {
+        $("#" + FORM_GAME_DIFFICULTY_SP).hide();
+        $(".game").css("visibility", "visible");
+        jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
 
+        if (tamanho == 'dificuldadeEasy') {
+            jogo.difficulty = "EASY";
+            init(9, 9, BOMBS_GAME_EASY);
+        } else if (tamanho == 'dificuldadeMedium') {
+            jogo.difficulty = "MEDIUM";
+            init(16, 16, BOMBS_GAME_MEDIUM);
+        } else if (tamanho == 'dificuldadeHard') {
+            jogo.difficulty = "HARD";
+            init(16, 30, BOMBS_GAME_HARD);
+        }
+    }
 }
 /**Função responsavel por iniciar o jogo singleplayer e perguntar o nivel de dificuld
  *
  */
-function iniciarJogoMP(){
-    $("#"+FORMULARIO_MULTIPLAYER).hide();
-    $(".game").css("visibility", "visible");
-    var nomePlayer2 = $("#nomePlayer2").val();
+function iniciarJogoMP() {
     var tamanho = $("input[type=radio][name=difficulty]:checked").val();
-    jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
-    jogo.name_player[1] = nomePlayer2;
+    var nomePlayer2 = $("#nomePlayer2").val();
+    var exists = existsPlayer(nomePlayer2);
+
+    if (tamanho != null && exists) {
+        $("#" + FORMULARIO_MULTIPLAYER).hide();
+        $(".game").css("visibility", "visible");
 
 
-    if (tamanho == 'dificuldadeEasy') {
-        initMulti(9, 9,BOMBS_GAME_EASY);
-    } else if (tamanho == 'dificuldadeMedium') {
-        initMulti(16, 16,BOMBS_GAME_MEDIUM);
-    } else if (tamanho == 'dificuldadeHard') {
-        initMulti(16, 30,BOMBS_GAME_HARD);
+        jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
+        jogo.name_player[1] = nomePlayer2;
+        document.getElementById("player1").innerText = jogo.name_player[0];
+        document.getElementById("player2").innerText = jogo.name_player[1];
+
+
+        if (tamanho == 'dificuldadeEasy') {
+            jogo.difficulty = "EASY";
+            initMulti(9, 9, BOMBS_GAME_EASY);
+        } else if (tamanho == 'dificuldadeMedium') {
+            jogo.difficulty = "MEDIUM";
+            initMulti(16, 16, BOMBS_GAME_MEDIUM);
+        } else if (tamanho == 'dificuldadeHard') {
+            jogo.difficulty = "HARD";
+            initMulti(16, 30, BOMBS_GAME_HARD);
+        }
+
+    } else if (!(exists)) {
+
+
     }
-
+    $("#aviso").text("Utilizador não Existe");
 }
 
+function existsPlayer(user) {
+    jogadores = JSON.parse(localStorage.getItem("jogadores")) || [];
+    var exists = false;
+    for (let j of jogadores) {
+        if (user == j.nome) {
+            exists = true;
+        }
+    }
+    return exists;
+}
 
 /**Função que inicia o jogo Singular
  *
@@ -494,9 +607,9 @@ function iniciarJogoMP(){
  * @param colunas - numero de colunas do jogo
  * @param linhas  - numero de Linhas do jogo
  */
-function init(linhas, colunas,bombs){
+function init(linhas, colunas, bombs) {
     initRankings();
-    let table = new Table(linhas,colunas,bombs);
+    let table = new Table(linhas, colunas, 1);
     jogo.table_player.push(table);
     jogo.row = Number(linhas);
     jogo.col = Number(colunas);
@@ -505,26 +618,26 @@ function init(linhas, colunas,bombs){
 
     let localJogo = document.getElementById(ID_TABLE_SINGLEPLAYER);
 
-// criar table
+    // criar table
     let tabela = document.createElement('table');
-    tabela.setAttribute('class' ,'gameTable');
-    tabela.setAttribute('alt','Janela do Jogo');
+    tabela.setAttribute('class', 'gameTable');
+    tabela.setAttribute('alt', 'Janela do Jogo');
 
-// faz cada linha
-    for(let i=1;i<=linhas; i++ ){
-        let linha =document.createElement('tr');
-        linha.setAttribute('class' ,'gameRow');
+    // faz cada linha
+    for (let i = 1; i <= linhas; i++) {
+        let linha = document.createElement('tr');
+        linha.setAttribute('class', 'gameRow');
 
         //Criar Celulas do jogo
-        for(let j = 1 ; j <= colunas;j++){
+        for (let j = 1; j <= colunas; j++) {
             let celula = document.createElement('td');
             let row = String(i);
             let col = String(j);
-            let id = row +","+ col ;
-            celula.setAttribute('class','celula');
+            let id = row + "," + col;
+            celula.setAttribute('class', 'celula');
             celula.setAttribute('id', id);
-            celula.setAttribute('alt','Celula nº '  + "("+id+")");
-            celula.addEventListener("mouseup",clicado,false);
+            celula.setAttribute('alt', 'Celula nº ' + "(" + id + ")");
+            celula.addEventListener("mouseup", clicado, false);
 
             jogo.table_player[0].cells[i][j].buttonTd = celula;
             linha.appendChild(celula);
@@ -544,9 +657,7 @@ function init(linhas, colunas,bombs){
     temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
     verificarSeAcabou = setInterval(isFinished, 300);
     verificacaoPontos = setInterval(updatePointsSP, 1000);
-    document.getElementById(BTN_ID_RESET_GAME_SP).addEventListener("mouseup",function(){
-        jogo.resetGame();
-    },false);
+    document.getElementById(BTN_ID_RESET_GAME_SP).addEventListener("mouseup", jogo.resetGameSp, false);
 
 
 }
@@ -556,12 +667,12 @@ function init(linhas, colunas,bombs){
 /**Função que inicia o jogo para multiplayer
  *
  * @param colunas - numero de colunas
- * @param linhas - numero de linhas
+ * @param linhas - numero de linhas                                 //TODO VOLTAR A POR AS BOMBAS A bombs
  */
-function initMulti(linhas, colunas, bombs){
+function initMulti(linhas, colunas, bombs) {
     initRankings();
-    jogo.table_player.push(new Table(linhas,colunas,bombs));
-    jogo.table_player.push(new Table(linhas,colunas,bombs));
+    jogo.table_player.push(new Table(linhas, colunas, 1));
+    jogo.table_player.push(new Table(linhas, colunas, 1));
 
     console.log("criou table");
 
@@ -569,23 +680,23 @@ function initMulti(linhas, colunas, bombs){
     var localJogo2 = document.getElementById(ID_TABLE_MULTIPLAYER_P2);
 
     let tabela = document.createElement('table');
-    tabela.setAttribute('class' ,'gameTable');
-    tabela.setAttribute('alt','Jogador 1');
+    tabela.setAttribute('class', 'gameTable');
+    tabela.setAttribute('alt', 'Jogador 1');
 
     // faz cada linha
-    for(let i=1;i<=linhas; i++ ){
-        let linha =document.createElement('tr');
-        linha.setAttribute('class' ,'gameRow');
+    for (let i = 1; i <= linhas; i++) {
+        let linha = document.createElement('tr');
+        linha.setAttribute('class', 'gameRow');
         //faz cada celula
-        for(let j = 1 ; j <= colunas;j++){
+        for (let j = 1; j <= colunas; j++) {
             var celulaMp1 = document.createElement('td');
             let row = String(i);
             let col = String(j);
-            let id ="P1," +row +","+ col ;
-            celulaMp1.setAttribute('class','celula');
+            let id = "P1," + row + "," + col;
+            celulaMp1.setAttribute('class', 'celula');
             celulaMp1.setAttribute('id', id);
-            celulaMp1.setAttribute('alt','Player 1 Celula nº ' + "("+id+")");
-            celulaMp1.addEventListener("mouseup",clicado,false);
+            celulaMp1.setAttribute('alt', 'Player 1 Celula nº ' + "(" + id + ")");
+            celulaMp1.addEventListener("mouseup", clicado, false);
             // por o elemento da celula diretamente na abstração da celula
             jogo.table_player[0].cells[i][j].setTdElement(celulaMp1);
 
@@ -599,24 +710,24 @@ function initMulti(linhas, colunas, bombs){
     localJogo.appendChild(tabela);
 
     var tabela2 = document.createElement('table');
-    tabela2.setAttribute('class' ,'gameTable');
-    tabela2.setAttribute('alt','Jogador 2');
+    tabela2.setAttribute('class', 'gameTable');
+    tabela2.setAttribute('alt', 'Jogador 2');
 
     // faz cada linha
-    for(let i=1;i<=linhas; i++){
-        var linha2 =document.createElement('tr');
-        linha2.setAttribute('class' ,'gameRow');
-        linha2.setAttribute('alt','Linha ' + i);
+    for (let i = 1; i <= linhas; i++) {
+        var linha2 = document.createElement('tr');
+        linha2.setAttribute('class', 'gameRow');
+        linha2.setAttribute('alt', 'Linha ' + i);
         //faz cada celula
-        for(let j = 1 ; j <= colunas;j++){
+        for (let j = 1; j <= colunas; j++) {
             var celulaMp2 = document.createElement('td');
             let row = String(i);
             let col = String(j);
-            let id ="P2," + row +","+ col ;
-            celulaMp2.setAttribute('class','celula');
-            celulaMp2.setAttribute('id',  id);
-            celulaMp2.setAttribute('alt','Player 2 Celula nº '  + "("+id+")");
-            celulaMp2.addEventListener("mouseup",clicado,false);
+            let id = "P2," + row + "," + col;
+            celulaMp2.setAttribute('class', 'celula');
+            celulaMp2.setAttribute('id', id);
+            celulaMp2.setAttribute('alt', 'Player 2 Celula nº ' + "(" + id + ")");
+            celulaMp2.addEventListener("mouseup", clicado, false);
             jogo.table_player[1].cells[i][j].setTdElement(celulaMp2);
 
             linha2.appendChild(celulaMp2);
@@ -634,8 +745,8 @@ function initMulti(linhas, colunas, bombs){
 
     verificarSeAcabou = setInterval(isFinished, 300);
     verificacaoPontos = setInterval(updatePointsMP, 1000);
-    document.getElementById(BTN_ID_RESET_GAME_MP_P1).addEventListener("mouseup",jogo.resetGame,false);
-    document.getElementById(BTN_ID_RESET_GAME_MP_P2).addEventListener("mouseup",jogo.resetGame,false);
+    document.getElementById(BTN_ID_RESET_GAME_MP_P1).addEventListener("mouseup", jogo.resetGameMp, false);
+    document.getElementById(BTN_ID_RESET_GAME_MP_P2).addEventListener("mouseup", jogo.resetGameMp, false);
 }
 
 /**Função que lida com as acções do jogador no jogo e que por sua vez de acordo com a intenção manifestada pelo utilizador
@@ -643,16 +754,16 @@ function initMulti(linhas, colunas, bombs){
  *
  * @param e - evento do elemento clickado
  */
-function clicado(e){
+function clicado(e) {
 
     // manda abrir o opencell e espera retorno, dependendo do retorno ira fazer uma acção no jogo
     let t = e.target;
 
     let id = t.id.split(",");
-    if(id[0]== "P1" || id[0]== "P2"){
-        clicadoMp(id,e);
-    }else {
-        clicadoSp(id,e);
+    if (id[0] == "P1" || id[0] == "P2") {
+        clicadoMp(id, e);
+    } else {
+        clicadoSp(id, e);
     }
 
 }
@@ -660,7 +771,7 @@ function clicado(e){
  *
  * @param e
  */
-function clicadoSp(id,e){
+function clicadoSp(id, e) {
 
 
     // manda abrir o opencell e espera retorno, dependendo do retorno ira fazer uma acção no jogo
@@ -669,14 +780,14 @@ function clicadoSp(id,e){
     let col = id[1];
 
 
-    if(e.button == 0) {
-        jogo.table_player[0].open(row,col);
-    }else  if(e.button ==1) {
+    if (e.button == 0) {
+        jogo.table_player[0].open(row, col);
+    } else if (e.button == 1) {
 
-        jogo.table_player[0].placeQuestion(row,col);
+        jogo.table_player[0].placeQuestion(row, col);
 
-    }  else if(e.button ==2){
-        jogo.table_player[0].placeFlag(row,col);
+    } else if (e.button == 2) {
+        jogo.table_player[0].placeFlag(row, col);
     }
     e.preventDefault();
     e.stopPropagation();
@@ -689,37 +800,37 @@ function clicadoSp(id,e){
  *
  * @param e
  */
-function clicadoMp(id,e){
+function clicadoMp(id, e) {
     var currentPlayer = jogo.table_player[jogo.turn];
-    let turn = "P"+Number(jogo.turn + 1);
+    let turn = "P" + Number(jogo.turn + 1);
     // manda abrir o opencell e espera retorno, dependendo do retorno ira fazer uma acção no jogo
 
-    if(id[0] == turn){
+    if (id[0] == turn) {
         console.log("Jogou o jogador " + turn);
         let row = id[1];
         let col = id[2];
 
 
-        if(e.button == 0) {
-            currentPlayer.open(row,col);
-        }else  if(e.button ==1) {
+        if (e.button == 0) {
+            currentPlayer.open(row, col);
+        } else if (e.button == 1) {
 
 
-            currentPlayer.placeQuestion(row,col);
+            currentPlayer.placeQuestion(row, col);
 
 
-        }else if(e.button ==2){
-            currentPlayer.placeFlag(row,col);
+        } else if (e.button == 2) {
+            currentPlayer.placeFlag(row, col);
         }
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
 
         jogo.nextTurn();
-        document.getElementById(ID_SPAN_PLAYER_TURN).innerText = "P" + Number(jogo.turn+1);
+        document.getElementById(ID_SPAN_PLAYER_TURN).innerText = "P" + Number(jogo.turn + 1);
 
-    }else {
-        console.log("Jogador errado, espere a sua vez, agora é a vez do jogador " + Number(jogo.turn +1) + " " +  jogo.name_player[jogo.turn] );
+    } else {
+        console.log("Jogador errado, espere a sua vez, agora é a vez do jogador " + Number(jogo.turn + 1) + " " + jogo.name_player[jogo.turn]);
 
     }
 
@@ -732,8 +843,7 @@ function clicadoMp(id,e){
  *
  */
 function mostraTempoJogo() {
-    var zeroPad = (num, places) => String(num).padStart(places, '0')
-    document.getElementById(ID_SPAN_TEMPO_JOGO).innerHTML = zeroPad(Math.floor((Date.now()/1000)-jogo.inicio), 3);
+    document.getElementById(ID_SPAN_TEMPO_JOGO).innerHTML = zeroPad(Math.floor((Date.now() / 1000) - jogo.inicio), 3);
 }
 
 /**Função que verifica se o jogo currente acabaou e caso isto se verifique remove e blooqueia o jogo até ser reniciado
@@ -741,28 +851,81 @@ function mostraTempoJogo() {
  */
 function isFinished() {
 
-        if (jogo.finished) {
-            clearInterval(temporizadorTempoJogo);
-            clearInterval(verificacaoPontos);
-            clearInterval(verificarSeAcabou);
-            if(jogo.won && (jogo.table_player[1] == undefined)){
-                let timePassed = Math.floor((Date.now()/1000)-jogo.inicio);
-                console.log(" "+ jogo.name_player[0] + " " +  jogo.table_player[0].points + " " +timePassed);
-                setRankingSP(jogo.name_player[0], jogo.table_player[0].points,timePassed);
+    // se o Jogo acabou
+    if (jogo.finished) {
+        clearInterval(verificarSeAcabou);
+        let time_played = Math.floor((Date.now() / 1000) - jogo.inicio);
+        // Parar todos os timmers
+
+        clearInterval(temporizadorTempoJogo);
+        clearInterval(verificacaoPontos);
+
+        let celulas = document.getElementsByClassName("celula");
+        for (let i = 0; i < celulas.length; i++) {
+            celulas[i].removeEventListener("mouseup", clicado);
+        }
+        //se foi um jogo ganho
+
+        if (jogo.won) {
+
+            // se o segundo jogador não está definido sabemos ser um singlePlayer game
+            if (jogo.table_player[1] === undefined) {
+
+                setRankingSP(jogo.name_player[0], jogo.table_player[0].points, time_played, jogo.difficulty);
                 jogo.addTimeWonP1();
-                showTopRankingSp();
+                showTopRankingSp(jogo.name_player[0] + " " + MSG_WIN_SP);
+
+
+                //caso contrario sabemos que é um multiplayer game
+            } else {
+                let winner;
+                let loser;
+                let pointsWinner;
+                let pointsLoser;
+                if (jogo.table_player[0].won) {
+                    jogo.addTimeWonP1();
+                    winner = jogo.name_player[0];
+                    loser = jogo.name_player[1];
+                    pointsWinner = jogo.table_player[0].getPoints();
+                    pointsLoser = jogo.table_player[1].getPoints();
+                    setRankingMP(winner, loser, pointsWinner, pointsLoser, time_played, jogo.difficulty);
+                    console.log("ganhou jogador 1");
+                    showTopRankingMp(winner + " " + MSG_WIN_MP + " " + loser);
+                } else {
+                    jogo.addTimeWonP2();
+                    winner = jogo.name_player[1];
+                    loser = jogo.name_player[0];
+                    pointsWinner = jogo.table_player[1].getPoints();
+                    pointsLoser = jogo.table_player[0].getPoints();
+                    setRankingMP(winner, loser, pointsWinner, pointsLoser, time_played, jogo.difficulty);
+                    showTopRankingMp(winner + " " + MSG_WIN_MP + " " + loser);
+                }
+
+
             }
 
-            let celulas = document.getElementsByClassName("celula");
-            for (let i = 0; i < celulas.length; i++) {
-                celulas[i].removeEventListener("mouseup", clicado);
+            // se foi um jogo perdido
+        } else {
+            if (jogo.table_player[1] === undefined) {
 
+                setLostGame(jogo.name_player[0], time_played);
+                showTopRankingSp(jogo.name_player[0] + " " + MSG_LOSE_SP);
 
+            } else {
 
+                if (jogo.table_player[0].lost) {
+                    setLostGame(jogo.name_player[0], time_played);
+                    showTopRankingMp(jogo.name_player[0] + " " + MSG_LOSE_MP);
+                } else {
+                    setLostGame(jogo.name_player[1], time_played);
+                    showTopRankingMp(jogo.name_player[1] + " " + MSG_LOSE_MP);
+                }
             }
+
 
 
         }
+    }
 
 }
 
@@ -771,11 +934,10 @@ function isFinished() {
  */
 function updatePointsSP() {
     let pointElement = document.getElementById(ID_POINTS_SINGLEPLAYER);
-    var zeroPad = (num, places) => String(num).padStart(places, '0')
-    pointElement.innerText = zeroPad(jogo.table_player[0].getPoints(),3);
+    pointElement.innerText = zeroPad(jogo.table_player[0].getPoints(), 3);
 
     let bombsRemained = document.getElementById(ID_BOMBS_REMAINED);
-    bombsRemained.innerText= zeroPad(jogo.table_player[0].getBombsRemained(),3);
+    bombsRemained.innerText = zeroPad(jogo.table_player[0].getBombsRemained(), 3);
 
 }
 
@@ -785,13 +947,13 @@ function updatePointsSP() {
 function updatePointsMP() {
     let pointElementP1 = document.getElementById(ID_POINTS_MULTIPLAYER_P1)
     let pointElementP2 = document.getElementById(ID_POINTS_MULTIPLAYER_P2)
-    var zeroPad = (num, places) => String(num).padStart(places, '0')
-    pointElementP1.innerText = zeroPad(jogo.table_player[0].getPoints(),3);
-    pointElementP2.innerText = zeroPad(jogo.table_player[1].getPoints(),3);
+
+    pointElementP1.innerText = zeroPad(jogo.table_player[0].getPoints(), 3);
+    pointElementP2.innerText = zeroPad(jogo.table_player[1].getPoints(), 3);
     let bombsRemainedP1 = document.getElementById(ID_BOMBS_REMAINED_P1);
-    bombsRemainedP1.innerText= zeroPad(jogo.table_player[0].getBombsRemained(),3);
+    bombsRemainedP1.innerText = zeroPad(jogo.table_player[0].getBombsRemained(), 3);
     let bombsRemainedP2 = document.getElementById(ID_BOMBS_REMAINED_P2);
-    bombsRemainedP2.innerText= zeroPad(jogo.table_player[1].getBombsRemained(),3);
+    bombsRemainedP2.innerText = zeroPad(jogo.table_player[1].getBombsRemained(), 3);
 }
 
 /**Classe que representa cada tabuleiro de jogo , usada no modo singular e no modo multiplaye.
@@ -802,7 +964,7 @@ class Table {
     cells;
     cellNumbers;
     openedCells;
-    col ;
+    col;
     row;
     difficulty;
     bombs;
@@ -817,10 +979,10 @@ class Table {
      * @param row - numero de linhas
      * @param col - numero de colunas
      */
-    constructor(row,col,bombs){
+    constructor(row, col, bombs) {
         //acerto pois não usammos a fila ou coluna 0
         this.cellNumbers = row * col;
-        this.openedCells=0;
+        this.openedCells = 0;
         this.col = col;
         this.row = row;
         this.points = 0;
@@ -831,17 +993,17 @@ class Table {
         this.scrambled = false;
         this.cells = new Array(this.row);
         // inicia cada linha
-        for(let i = 1 ; i<= this.row ; i++){
-            this.cells[i] =new Array(this.col);
+        for (let i = 1; i <= this.row; i++) {
+            this.cells[i] = new Array(this.col);
             // ciclo para iniciar cada celula dessa linha
-            for(let j = 1; j<= this.col; j++){
-                this.cells[i][j] =new Cell(i,j);
+            for (let j = 1; j <= this.col; j++) {
+                this.cells[i][j] = new Cell(i, j);
             }
         }
         //ciclo para definir dentro de cada celula a sua adjacente
-        for(let i = 1 ; i <= this.row ; i++){
-            for(let j = 1; j<= this.col; j++){
-                this.setAdjCell(i,j);
+        for (let i = 1; i <= this.row; i++) {
+            for (let j = 1; j <= this.col; j++) {
+                this.setAdjCell(i, j);
             }
 
         }
@@ -864,12 +1026,12 @@ class Table {
      * @param firsOpenedCol - coluna da primeira celula aberta
      *
      */
-    scrambleBombs(firsOpenedRow,firsOpenedCol) {
+    scrambleBombs(firsOpenedRow, firsOpenedCol) {
         let bombsToPlace = this.bombs;
         while (bombsToPlace != 0) {
-            let colRandom = Math.floor(Math.random() * (this.col  -1 )) + 1;
-            let rowRandom = Math.floor(Math.random() * (this.row - 1  )) + 1;
-            if(colRandom == firsOpenedCol && rowRandom ==firsOpenedRow ) continue;
+            let colRandom = Math.floor(Math.random() * (this.col - 1)) + 1;
+            let rowRandom = Math.floor(Math.random() * (this.row - 1)) + 1;
+            if (colRandom == firsOpenedCol && rowRandom == firsOpenedRow) continue;
             console.log(colRandom);
             console.log(rowRandom);
             console.log(this.col);
@@ -882,12 +1044,12 @@ class Table {
         }
         this.scrambled = true;
     }
-    placeQuestion(row,col){
+    placeQuestion(row, col) {
 
-        if(!this.cells[row][col].hasFlag() && !this.cells[row][col].isQuestioned() ){
+        if (!this.cells[row][col].hasFlag() && !this.cells[row][col].isQuestioned()) {
             this.cells[row][col].placeQuestion();
 
-        }else if(!this.cells[row][col].hasFlag() && this.cells[row][col].isQuestioned() ){
+        } else if (!this.cells[row][col].hasFlag() && this.cells[row][col].isQuestioned()) {
             this.cells[row][col].removeQuestion();
         }
     }
@@ -897,25 +1059,21 @@ class Table {
      * @param row
      * @param col
      */
-    placeFlag(row,col){
-        if(!this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened() && !this.cells[row][col].isQuestioned()){
+    placeFlag(row, col) {
+        if (!this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened() && !this.cells[row][col].isQuestioned()) {
             this.cells[row][col].placeFlag();
             this.placedFlags++;
 
 
-        }else if (this.cells[row][col].hasFlag()){
+        } else if (this.cells[row][col].hasFlag()) {
             this.cells[row][col].removeFlag();
-            this.placedFlags++;
+            this.placedFlags--;
 
         }
         this.checkIfWon();
     }
 
-    /**
-     *
-     * @param row
-     * @param col
-     */
+    /*penso que esta função não é necessaria
     removeFlag(row,col){
         if(this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened()){
             this.cells[row][col].removeFlag();
@@ -923,38 +1081,39 @@ class Table {
 
 
         }
-    }
+    }/**/
 
     /**Método que responsavel pela lógica associada à abertura de celulas
      *
      * @param row -linha da célula
      * @param col - coluna da célula
      */
-    open(row, col){
+    open(row, col) {
         let AdjCells = [];
-        if(this.scrambled && !this.cells[row][col].hasFlag() && !this.cells[row][col].isQuestioned() ) {
+        if (this.scrambled && !this.cells[row][col].hasFlag() && !this.cells[row][col].isQuestioned()) {
             // numero de bombas adjacentes iniciado
 
             // caso esta celula tenha bomba ela explode
             if (this.cells[row][col].hasBomb()) {
                 this.cells[row][col].explode();
                 //é posto como verdadeiro o estado jogoCurrente finished
+                this.lost = true;
                 jogo.finished = true;
                 jogo.lost = true;
                 // caso contrario se não estiver aberto
             } else if (!this.cells[row][col].isOpened()) {
                 // abrir celula
-                this.openCell(row,col);
+                this.openCell(row, col);
 
                 AdjCells = this.cells[row][col].getAdj();
                 this.processAdjacentCells(AdjCells, row, col);
                 // se array contiver adjacencias
 
             }
-        }else if(!this.cells[row][col].hasFlag() && !this.cells[row][col].isQuestioned()){
+        } else if (!this.cells[row][col].hasFlag() && !this.cells[row][col].isQuestioned()) {
             // Em caso de ser a primeira jogada, abre a celula e depois invoca a função para distribuir as bombas
-            this.openCell(row,col);
-            this.scrambleBombs(row,col);
+            this.openCell(row, col);
+            this.scrambleBombs(row, col);
             AdjCells = this.cells[row][col].getAdj();
             // invoca a função para processar as adjacentes
             this.processAdjacentCells(AdjCells, row, col);
@@ -983,26 +1142,26 @@ class Table {
      *
      * @param AdjCells
      */
-    openAdjCells(AdjCells){
+    openAdjCells(AdjCells) {
 
 
-        if(AdjCells.length > 0){
+        if (AdjCells.length > 0) {
 
             // fazer um loop nas adjacencias
-            for(let i = 0; i< AdjCells.length;i++){
+            for (let i = 0; i < AdjCells.length; i++) {
                 // obter o id
                 let id = AdjCells[i].split(",");
                 //obter linha e coluna do id
                 let rowAdj = id[0];
                 let colAdj = id[1];
-                if(!this.cells[rowAdj][colAdj].isOpen && !this.cells[rowAdj][colAdj].hasBomb() &&
-                        !this.cells[rowAdj][colAdj].hasFlag() && !this.cells[rowAdj][colAdj].isQuestioned()) {
+                if (!this.cells[rowAdj][colAdj].isOpen && !this.cells[rowAdj][colAdj].hasBomb() &&
+                    !this.cells[rowAdj][colAdj].hasFlag() && !this.cells[rowAdj][colAdj].isQuestioned()) {
                     let newAdjCell = [];
-                    newAdjCell =this.cells[rowAdj][colAdj].getAdj();
+                    newAdjCell = this.cells[rowAdj][colAdj].getAdj();
 
                     newAdjCell.filter(cell => cell !== AdjCells[i])
                     let numBombs = this.countAdjBombs(newAdjCell);
-                    this.openCell(rowAdj,colAdj);
+                    this.openCell(rowAdj, colAdj);
                     if (numBombs != 0) {
                         this.cells[rowAdj][colAdj].placeNumber(numBombs);
 
@@ -1016,7 +1175,7 @@ class Table {
             }
 
 
-        }else {
+        } else {
             return;
         }
 
@@ -1029,7 +1188,7 @@ class Table {
      * @param col - numero da Coluna
      * @requires !this.cells[row][col].isOpened() &&  !this.cells[row][col].hasBomb()
      */
-    openCell(row,col){
+    openCell(row, col) {
 
         this.cells[row][col].openCell();
         this.points += POINTS_GIVEN_OPENED_CELL;
@@ -1044,14 +1203,14 @@ class Table {
      * @param Adj - array que contem os ids das celulas adjacentes
      * @returns {number} numero de celulas adjacentes
      */
-    countAdjBombs(Adj){
+    countAdjBombs(Adj) {
         let numBomb = 0;
-        for(let i = 0 ; i< Adj.length ; i++){
+        for (let i = 0; i < Adj.length; i++) {
             let id = Adj[i].split(",");
             //obter linha e coluna do id
             let rowAdj = id[0];
             let colAdj = id[1];
-            if( this.cells[rowAdj][colAdj].hasBomb()){
+            if (this.cells[rowAdj][colAdj].hasBomb()) {
                 numBomb++
             }
         }
@@ -1063,14 +1222,14 @@ class Table {
      * @param currentRow - numero da linha da celula atual
      * @param currentCol - numero da coluna da celula atual
      */
-    setAdjCell(currentRow,currentCol) {
+    setAdjCell(currentRow, currentCol) {
 
         if (this.cells != undefined) {
             let AdjCells = [];
-            let thisCell = currentRow+','+currentCol;
+            let thisCell = currentRow + ',' + currentCol;
             for (let i = currentRow - 1; i <= currentRow + 1; i++) {
-                for (let j = currentCol - 1; j <= currentCol +1; j++) {
-                    if( (i >= 1 && i <= this.row) && (j >= 1 && j <= this.col)){
+                for (let j = currentCol - 1; j <= currentCol + 1; j++) {
+                    if ((i >= 1 && i <= this.row) && (j >= 1 && j <= this.col)) {
                         AdjCells.push(Number(i) + "," + j);
                     }
                 }
@@ -1084,7 +1243,7 @@ class Table {
      *
      * @returns {number} - numero de bombas não assinaladas
      */
-    getBombsRemained(){
+    getBombsRemained() {
         return Number(this.bombs - this.placedFlags);
     }
 
@@ -1092,27 +1251,34 @@ class Table {
      * abrir é igual a 0, contando as celulas com flag como celulas a menos
      *
      */
-    checkIfWon(){
-        let cellsToGo = this.cellNumbers - ( this.openedCells + this.placedFlags);
-        if(cellsToGo == 0){
+    checkIfWon() {
+        // condições para ganhar
+        // não existir mais nenhuma celula por abrir
+        // estarem exatamente tantas bandeiras quanto o numero de bombas existentes
+
+        var allBombsFlagged = (this.placedFlags == this.bombs);
+        let cellsToGo = (this.cellNumbers - (this.openedCells + this.placedFlags));
+        if ((cellsToGo == 0) && allBombsFlagged) {
             jogo.finished = true;
             jogo.won = true;
+            this.won = true;
         }
+
     }
 
     /**Método que renicia a tabela colocando todos os estados em estado inicial e fazendo reset do estado de cada
      * celula desta table de jogo
      *
      */
-    resetTable(){
+    resetTable() {
         this.scrambled = false;
         this.won = false;
         this.placedFlags = 0;
         this.openedCells = 0;
         this.lost = false;
         this.points = 0;
-        for(let i = 1 ; i <= this.row ; i++){
-            for(let j = 1; j<= this.col; j++){
+        for (let i = 1; i <= this.row; i++) {
+            for (let j = 1; j <= this.col; j++) {
                 this.cells[i][j].resetCell();
             }
 
@@ -1129,7 +1295,7 @@ class Table {
  */
 class Cell {
     adjCells;
-    col ;
+    col;
     row;
     isFlagged;
     isBombed;
@@ -1143,14 +1309,14 @@ class Cell {
      * @param row - recebe a linha do jogo
      * @param col - recebe a coluna do jogo
      */
-    constructor(row,col){
+    constructor(row, col) {
         this.row = Number(row);
         this.col = Number(col);
         this.buttonTd = null;
-        this.isBombed=false;
+        this.isBombed = false;
         this.isFlagged = false;
         this.adjCells = [];
-        this.suspect=false;
+        this.suspect = false;
 
 
     }
@@ -1160,25 +1326,26 @@ class Cell {
      *
      * @param cellButton elemento html referente a esta celula no jooo
      */
-    setTdElement(cellButton){
+    setTdElement(cellButton) {
         this.buttonTd = cellButton;
     }
 
     /** Método que abre a celula e consoante o estado da celula explode ou abre, mudando o visual da mesma no jogo
      *
      */
-    openCell(){
-        if(this.isBombed){
+    openCell() {
+        if (this.isBombed) {
             this.explode();
-            jogo.finished;
-            this.buttonTd.removeEventListener("mouseup",clicado);
-        }else {
+            jogo.finished = true;
+            jogo.lost = true;
+            this.buttonTd.removeEventListener("mouseup", clicado);
+        } else {
 
             console.log("Aberta Celula [" + this.row + "," + this.col + "]");
 
             this.buttonTd.setAttribute('class', 'openedCell');
-            this.buttonTd.removeEventListener("mouseup",clicado);
-            this.isOpen=true;
+            this.buttonTd.removeEventListener("mouseup", clicado);
+            this.isOpen = true;
 
         }
     }
@@ -1187,22 +1354,22 @@ class Cell {
      *
      * @returns {boolean} se a celula tem bomba
      */
-    hasBomb(){
+    hasBomb() {
         return this.isBombed;
     }
 
     /**Método setter que coloca esta celula como portadora de bomba
      *
      */
-    setBomb(){
-        this.isBombed =true;
+    setBomb() {
+        this.isBombed = true;
     }
 
     /**Obtem lista de celulas adjacentes a esta celula
      *
      * @returns {Array} array de id´s de celulas adjacentes
      */
-    getAdj(){
+    getAdj() {
         let Adjacent = this.adjCells;
         return Adjacent;
 
@@ -1211,21 +1378,20 @@ class Cell {
     /**M etodo que coloca a flag mudando o estado da celula e coloca as classes css associadas a celula com flag
      *
      */
-    placeFlag(){
-        if(!this.isOpen){
+    placeFlag() {
+        if (!this.isOpen) {
             this.isFlagged = true;
-            this.buttonTd.setAttribute('class','celula flagCell');
-        }
-        ;
+            this.buttonTd.setAttribute('class', 'celula flagCell');
+        };
     }
     /**Metodo que remove a flag mudando o estado da celula e coloca as classes css associadas a celula normal
      *
      */
-    removeFlag(){
-        if(this.isFlagged) {
+    removeFlag() {
+        if (this.isFlagged) {
 
             this.isFlagged = false;
-            this.buttonTd.removeAttribute('class','flagCell')
+            this.buttonTd.removeAttribute('class', 'flagCell')
             this.buttonTd.setAttribute('class', 'celula ');
         }
     }
@@ -1234,7 +1400,7 @@ class Cell {
      *
      * @returns {flagged} booleano que representa se a celula tem flag
      */
-    hasFlag(){
+    hasFlag() {
         let flagged = this.isFlagged;
         return flagged;
     }
@@ -1244,7 +1410,7 @@ class Cell {
      *
      * @returns {opened} booleano que representa se a celula está aberta
      */
-    isOpened(){
+    isOpened() {
         let opened = this.isOpen;
         return opened;
     }
@@ -1253,8 +1419,8 @@ class Cell {
      *
      * @param numberBomb
      */
-    placeNumber(numberBomb){
-        if(numberBomb > 0) {
+    placeNumber(numberBomb) {
+        if (numberBomb > 0) {
             this.buttonTd.setAttribute('class', 'openedCell numberBombs');
             this.buttonTd.innerText = numberBomb;
         }
@@ -1263,44 +1429,44 @@ class Cell {
     /**Método responsavel por mudar a classe da celula associada para estado aberto e de bomba explodida
      *
      */
-    explode(){
+    explode() {
 
-        this.buttonTd.setAttribute('class','openedCell bombCell');
-        this.buttonTd.removeEventListener("mouseup",clicado);
-        this.isOpen=true;
+        this.buttonTd.setAttribute('class', 'openedCell bombCell');
+        this.buttonTd.removeEventListener("mouseup", clicado);
+        this.isOpen = true;
     }
 
     /**Método setter que guarda as celulas adjacentes a esta celula
      *
      * @param AdjCells - array de id´s de celulas adjacentes
      */
-    setAjacentCells(AdjCells){
+    setAjacentCells(AdjCells) {
         this.adjCells = AdjCells;
 
     }
 
-    isQuestioned(){
+    isQuestioned() {
         return this.suspect;
     }
 
-    placeQuestion(){
-        this.buttonTd.setAttribute('class','celula interrogation');
+    placeQuestion() {
+        this.buttonTd.setAttribute('class', 'celula interrogation');
 
-        this.suspect=true;
+        this.suspect = true;
 
     }
 
-    removeQuestion(){
-        this.buttonTd.removeAttribute('class',' interrogation');
+    removeQuestion() {
+        this.buttonTd.removeAttribute('class', ' interrogation');
         this.buttonTd.setAttribute('class', 'celula ');
 
-        this.suspect=false;
+        this.suspect = false;
     }
 
     /**Método que faz reinicia os estados desta célula
      *
      */
-    resetCell(){
+    resetCell() {
 
         this.buttonTd.removeAttribute('class', 'flagCell')
         this.buttonTd.setAttribute('class', 'celula ');
@@ -1311,35 +1477,42 @@ class Cell {
         this.buttonTd.removeAttribute('class', 'bombCell')
         this.buttonTd.removeAttribute('class', 'numberBombs')
 
-        this.buttonTd.addEventListener("mouseup",clicado,false);
+        this.buttonTd.addEventListener("mouseup", clicado, false);
         this.buttonTd.setAttribute('class', 'celula ');
-        this.buttonTd.innerText ="";
+        this.buttonTd.innerText = "";
     }
 
 
 
 }
 
-function putRanking(time, score){
-    //put at localstorage ranking this game , and organize new top 10 scores
-
-}
-function showRanking(){
-    // get from localstorage best rankings at singleplayer
-}
-
-
 /**Código que impossibilita que quando clickemos com o botão direito apareça o menu de opções,
  * Util para conseguirmos meter bandeiras nas celulas
  *
  * @type {string}
  */
-var message ="";
-function clickIE() {if (document.all) {(message);return false;}}
-function clickNS(e) {if
-(document.layers||(document.getElementById&&!document.all)) {
-    if (e.which==2||e.which==3) {(message);return false;}}}
-if (document.layers)
-{document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
-else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
-document.oncontextmenu=new Function("return false")
+var message = "";
+
+function clickIE() {
+    if (document.all) {
+        (message);
+        return false;
+    }
+}
+
+function clickNS(e) {
+    if (document.layers || (document.getElementById && !document.all)) {
+        if (e.which == 2 || e.which == 3) {
+            (message);
+            return false;
+        }
+    }
+}
+if (document.layers) {
+    document.captureEvents(Event.MOUSEDOWN);
+    document.onmousedown = clickNS;
+} else {
+    document.onmouseup = clickNS;
+    document.oncontextmenu = clickIE;
+}
+document.oncontextmenu = new Function("return false")
