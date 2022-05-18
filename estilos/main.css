@@ -6,12 +6,81 @@
 :root {
     --blue: #1e90ff;
     --white: #ffffff;
+    /*  ------ Variaveis relacionadas com componentes estaticos do site website --------------------------------------  */
     --background_Color: #FFF5EE;
     --navBar_color:#0C2340;
     --navBar_color_Bottom:#0396d6;
+    --divBox_background_color:white;
+    --divBox_border_color:black;
+    --divBox_tittle_color:white;
+    --navBar_button_hover_backg_color:#0C2340;
+    --navBar_button_hover_text_color:yellow;
+    --navBar_button_currentPage_color:#0396d6;
+    --navBar_button_currentPage_text_color_hover:black;
     --navBar_text_color:#ffffff;
-}
+    --navBar_settings_user_image:url("../img/profile.png");
 
+
+
+    /*  ------ Variaveis relacionadas com a escolha do tipo de jogo --------------------------------------  */
+    --game_menu_background_image:url("../img/mine.png");
+    --game_menu_background_image_Active:url("../img/explosion.png");
+    --game_menu_background_color:rgba(0, 0, 0, 0.9);
+    --game_menu_text_color:#FFF5EE;
+
+
+    /*  ------ Variaveis relacionadas com o jogo em si  --------------------------------------  */
+    --game_table_background_color:silver;
+    --game_table_border_color:black;
+    --game_zone_border_color:black;
+    --game_button_reset_background_image:url("../img/smile.png");
+    --game_button_reset_background_color:silver;
+    --game_button_reset_background_color_active:dimgrey;
+    --game_display_info_background_color:black;
+    --game_display_info_text_color:red;
+    --game_display_font:Consolas;
+
+
+    /*  ------ Variaveis dos butões das celulas do jogo --------------------------------------  */
+    --game_cells_background_color :#e7e7e78e;
+    --game_cells_background_color_hover :rgba(128, 128, 128, 0.678);
+    --game_cells_background_color_active:#e7e7e78e;
+    --game_cells_border_color:black;
+    --game_cells_background_color_opened:silver;
+    --game_cells_explode_image:url("../img/explosionCell2.png");
+    --game_cells_flag_image: url("../img/portuguese-flag.png");
+    --game_cells_question_image:url("../img/interrogation.png");
+    --game_image_trophy:url("../img/icons8-troféu-20.png");
+    --game_adjacent_bomb_1:blue;
+    --game_adjacent_bomb_2:green;
+    --game_adjacent_bomb_3:red;
+    --game_adjacent_bomb_4:darkblue;
+    --game_adjacent_bomb_5:purple;
+    --game_adjacent_bomb_6:lightgreen;
+    --game_adjacent_bomb_7:OrangeRed;
+    --game_adjacent_bomb_8:Yellow;
+
+    /*  ------ Variaveis do efeito de explosão das minas --------------------------------------  */
+    --game_cell_explosion_effect1:url("../img/mineCell.png");
+    --game_cell_explosion_effect2:url("../img/explosionCell.png");
+    --game_cell_explosion_effect_Background_color2: rgb(227, 17, 17);
+    --game_cell_explosion_effect3:url("../img/explosionCell2.png");
+    --game_cell_explosion_effect_Background_color3:rgb(223, 254, 136);
+    --game_cell_explosion_effect4:url("../img/explosionCell2.png");
+
+
+    /*  ------ Variaveis relacionada com os rankings do jogo --------------------------------------  */
+
+    --ranking_table_background_color:silver;
+    --ranking_table_border_color:black;
+    --ranking_th_background_color:darkblue;
+    --ranking_th_text_color:white;
+    --ranking_tr_background_color_odd:blanchedalmond;
+    --ranking_tr_background_color_even:lightgray;
+    --ranking_tr_text_color_odd:black;
+    --ranking_tr_text_color_even:black;
+
+}
 /*  ------ Regras Globais --------------------------------------  */
 * {
 
@@ -36,14 +105,31 @@ progress[value] {
 
     margin-top: 0;
     padding-top: 0;
-    border: 3px solid #f1f1f1;
-    background-color:white;
+    border: 1px solid lightgray;
+    background-color:var(--divBox_background_color);
     -webkit-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
      justify-items: center;
 
 }
+
+.profile{
+    background-image: var(--navBar_settings_user_image);
+    width: fit-content;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    background-origin: border-box;
+    opacity: 0.8;
+    padding: 32px;
+    display: flex;
+    justify-content: space-around;
+    background-position: center;
+    color: black;
+}
+
 
 button:hover {
     opacity: 0.8;
@@ -101,7 +187,7 @@ input[type=text], input[type=password] {
 }
 .loginTittle span{
 
-    color: white;
+    color: var(--divBox_tittle_color);
 }
 .loginName{
     order:1;
@@ -218,19 +304,19 @@ nav li {
 
 /* Comportamento on hover botão da pagina atual */
 .active {
-    background-color:#0396d6;
+    background-color:var(--navBar_button_currentPage_color);
 }
 
 
 /* Comportamento on hover botão da pagina atual */
 .active :hover {
-    color:black;
+    color:var(--navBar_button_currentPage_text_color_hover);
 }
 
 
 /* Comportamento on hover botões da barra de navegação * */
 nav li :hover {
-    color: yellow;
+    color: var(--navBar_button_hover_text_color);
 
 }
 /* botão user para a direita */
@@ -253,7 +339,7 @@ nav li a{
 /* Texto do botão  */
 .gamelabel {
     font-family: 'Fredoka One', cursive;
-    color: #FFF5EE;
+    color: var(--game_menu_text_color);
     font-size: 2vw;
     z-index: 1;
 
@@ -261,7 +347,7 @@ nav li a{
 
 /* imagem do botão  */
 .mine {
-    background-image: url("../img/mine.png");
+    background-image: var(--game_menu_background_image);
     background-repeat: no-repeat;
     background-size: cover;
 
@@ -271,7 +357,7 @@ nav li a{
     display: flex;
     justify-content: space-around;
     background-position: center;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: var(--game_menu_background_color);
 
 }
 
@@ -289,7 +375,7 @@ nav li a{
 
 /* Comportamento de click do botão     */
 .mine:active {
-    background-image: url("../img/explosion.png");
+    background-image: var(--game_menu_background_image_Active);
     background-repeat: no-repeat;
     transform: scale(0.99);
     background-origin: content-box;
@@ -336,8 +422,8 @@ nav li a{
     text-align: center;
     justify-content: center;
     flex-direction: column;
-    background-color: silver;
-    border: 1px solid black;
+    background-color: var(--game_table_background_color);
+    border: 1px solid var(--game_table_border_color);
     -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
     -moz-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
     box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
@@ -351,7 +437,7 @@ nav li a{
     width: auto;
     height: auto;
     border-style: solid;
-    border-color: black;
+    border-color: var(--game_zone_border_color);
     overflow: hidden;
     
 }
@@ -361,51 +447,56 @@ nav li a{
     align-items: center;
 }
 
-.time{
+.gameDisplayInfo{
 
     width: fit-content;
     border: 1px solid grey;
-    color: red;
-    font-family: Consolas;
-    background-color: black;
+    color: var(--game_display_info_text_color);
+    font-family: var(--game_display_font);
+    background-color: var(--game_display_info_background_color);
 
     text-align: center;
     font-size:medium;
     width: fit-content;
 
 }
+
+
+.display_info_label{
+    font-size: medium;
+}
+
 .timeMulti{
     width: fit-content;
     border: 1px solid grey;
-    color: red;
-    font-family: Consolas;
-    background-color: black;
+    color: var(--game_display_info_text_color);
+    font-family: var(--game_display_font);
+    background-color: var(--game_display_info_background_color);
     margin: 0 auto;
     text-align: center;
     font-size:medium;
     width: fit-content;
 
 }
-.smallicon{
-    height: 10px;
-    width: 10px;
-}
-.normalicon{
-    height: 20px;
-    width: 20px;
-}
 
 .centrado {
     margin:0 auto;
 }
 .buttonStart{
-    padding: 1px;
-    border: 1px solid black;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    background-color: var(--game_button_reset_background_color);
+    background-image: var(--game_button_reset_background_image);
+    margin: 10px;
+    border: 2px solid black;
+    background-position: center;
+    padding: 5px;
+    padding-right: 0;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+
 
 }
 .buttonStart:active {
-    background-color: dimgrey;
+    background-color: var(--game_button_reset_background_color_active);
     border: 1px solid grey;
 
 }
@@ -446,15 +537,24 @@ nav li a{
 .third{
     order:3;
 }
+.trophy{
+    background-image: var(--game_image_trophy);
+    background-position: center;
+    padding: 25px;
+    padding-right: 0;
+    background-origin: content-box;
+    background-repeat: no-repeat;
+
+}
 .win{
     width: fit-content;
     border: 1px solid grey;
-    color: red;
-    font-family: Consolas;
-    background-color: black;
+    color: var(--game_display_info_text_color);
+    font-family: var(--game_display_font);
+    background-color: var(--game_display_info_background_color);
 
     text-align: center;
-    font-size:5vh;
+
     width: fit-content;
 
 
@@ -468,11 +568,10 @@ nav li a{
 
 /* Cada Celula do Jogo */
 .celula{
-    max-width: 40px;
-    max-height: 40px;
-    background-color:#e7e7e78e;
+
+    background-color:var(--game_cells_background_color);
     border: 2px;
-    border: 1px solid black;
+    border: 1px solid var(--game_cells_border_color);
 -webkit-box-shadow:  0 0  3px 3px  #6e7d89;
 -moz-box-shadow: 0 0 3px 3px  #6e7d89;
 box-shadow: 0 0  3px 3px  #6e7d89;
@@ -480,7 +579,7 @@ box-shadow: 0 0  3px 3px  #6e7d89;
 
 /* Cada Celula do Jogo */
 .celula:hover{
-    background-color: rgba(128, 128, 128, 0.678);
+    background-color: var(--game_cells_background_color_hover);
         
     } 
 /* Cada Celula do Jogo */
@@ -489,29 +588,23 @@ box-shadow: 0 0  3px 3px  #6e7d89;
     -moz-box-shadow: 0 0 1px  1px   #6e7d89;
     box-shadow: 0 0  1px  1px   #6e7d89;
     transform: scale(0.90);
-    background-color:#e7e7e78e;
+    background-color:var(--game_cells_background_color_active);
         
     }
 
 .openedCell{
-    max-width: 40px;
-    max-height: 40px;
 
     border: 2px;
-    border: 1px solid black;
-    background-color: silver;
+    border: 1px solid var(--game_cells_border_color);
+    background-color: var(--game_cells_background_color_opened);
 }
 
 .flagCell{
-    max-width: 40px;
-    max-height: 40px;
-    background-image: url("../img/portuguese-flag.png");
+    background-image: var(--game_cells_flag_image);
     z-index: 3;
     background-repeat: no-repeat;
-
     background-origin: content-box;
     opacity: 0.8;
-
     display: flex;
     justify-content: space-around;
     background-position: center;
@@ -519,9 +612,7 @@ box-shadow: 0 0  3px 3px  #6e7d89;
 
 
 .interrogation{
-    max-width: 40px;
-    max-height: 40px;
-    background-image: url("../img/interrogation.png");
+    background-image: var(--game_cells_question_image);
     z-index: 3;
     background-repeat: no-repeat;
 
@@ -535,9 +626,7 @@ box-shadow: 0 0  3px 3px  #6e7d89;
 
 
 .bombCell{
-    max-width: 40px;
-    max-height: 40px;
-    background-image: url("../img/explosionCell2.png");
+    background-image: var(--game_cells_explode_image);
     z-index: 3;
     background-repeat: no-repeat;
 
@@ -550,28 +639,60 @@ box-shadow: 0 0  3px 3px  #6e7d89;
     animation: explosion 500ms ease-in ;
 }
 .numberBombs{
-    font-family: Consolas;
+    font-family: var(--game_display_font);
     z-index: 3;
+    font-weight: bold;
     text-align: center;
     display: flex;
     justify-content: space-around;
 }
+.adj_Bombs_1{
+    color:var(--game_adjacent_bomb_1);
+}
+.adj_Bombs_2{
+    color:var(--game_adjacent_bomb_2);
+}
+
+.adj_Bombs_3{
+    color:var(--game_adjacent_bomb_3);
+}
+
+.adj_Bombs_4{
+    color:var(--game_adjacent_bomb_4);
+}
+
+.adj_Bombs_5{
+    color:var(--game_adjacent_bomb_5);
+}
+
+.adj_Bombs_6{
+    color:var(--game_adjacent_bomb_6);
+}
+.adj_Bombs_7{
+    color:var(--game_adjacent_bomb_7);
+}
+.adj_Bombs_8{
+    color:var(--game_adjacent_bomb_8);
+}
+
 /* efeito do mina celula  */
 @keyframes explosion {
     0%   {
-        background-image: url("../img/mineCell.png");
+        background-image: var(--game_cell_explosion_effect1);
 
     }
     98%  {
-        background-color: rgb(227, 17, 17);
-        background-image: url("../img/explosionCell.png");
+
+        background-image:var(--game_cell_explosion_effect2);
+        background-color: var(--game_cell_explosion_effect_Background_color2);
+
     }
     99%  {
-        background-image: url("../img/explosionCell2.png");
-        background-color: rgb(223, 254, 136);
+        background-image: var(--game_cell_explosion_effect3);
+        background-color: var(--game_cell_explosion_effect_Background_color3);
     }
     100% {
-        background-image: url("../img/explosionCell2.png");}
+        background-image:var(--game_cell_explosion_effect4);}
 }
 
 
@@ -585,40 +706,11 @@ box-shadow: 0 0  3px 3px  #6e7d89;
 }
 
 
-/*  ---------------##################   custom Game SinglePlayer  ##############-------------------------------- */
-
-.customContainer table {
-    background-color: silver;
-    border: 1px solid black;
-    padding: 4px;
-
-    -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
-    box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
-    height: fit-content;
-
-}
-
-.customContainer th {
-    color:midnightblue;
-    font-family: 'Ubuntu Condensed', sans-serif;
-    font-size: 4vh;
-    margin: 0 auto;
-}
-
-.customContainer tr {
-    margin: 0 auto;
-    font-size: 4vh;
-    text-align: center;
-}
-.customContainer td {
-   margin: 0 auto;
-    font-size: 4vh;
-    text-align: center;
-}
-
-
 /*  ---------------##################   Tutorial  ##############-------------------------------- */
+.headingTutorial{
+    background-color: dodgerblue;
+
+}
 .regras {
     height: fit-content;
     padding-right: 20px;
@@ -652,13 +744,13 @@ iframe {
 }
 .loginTittle span {
 
-    color: white;
+    color: var(--divBox_tittle_color);
 }
 .topRankingBox {
     margin-top: 0;
     padding-top: 0;
     border: 3px solid #f1f1f1;
-    background-color:white;
+    background-color:var(--divBox_background_color);
     -webkit-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 5px -7px rgba(0,0,0,0.75);
@@ -673,15 +765,18 @@ iframe {
 }
 
 .ranking table {
-padding:20px;
+    padding: 4px;
 box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 border: 1px solid black;
-
+    -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    height: fit-content;
 }
 
 .rankingTable{
-    background-color: silver;
-    border: 1px solid black;
+    background-color: var(--ranking_table_background_color);
+    border: 1px solid var(--ranking_table_border_color);
     padding: 4px;
 
     -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
@@ -692,15 +787,16 @@ border: 1px solid black;
 .rankingTable th{
     gap: 0;
     border: 0;
-    color: white;
-    background-color:darkblue;
+    color: var(--ranking_th_text_color);
+    background-color:var(--ranking_th_background_color);
 }
-.rankingTable tr:nth-child(even){
-    background-color:lightgray;
+.rankingTable  tr:nth-child(even){
+    background-color:var(--ranking_tr_background_color_even);
 
 }
-.rankingTable tr:nth-child(odd){
-    background-color:blanchedalmond;
+.rankingTable  tr:nth-child(odd){
+    background-color:var(--ranking_tr_background_color_odd);
+    color:var(--ranking_tr_text_color_odd)
 }
 .rankingTable td {
 
@@ -710,10 +806,6 @@ border: 1px solid black;
 
 }
 
-
-#numeroJogosRanking, #tempoTotalRanking, #melhorTempoRanking, #tempoMedioRanking, #ganhouMultiplayerRanking, #melhorProporcaoRanking {
-    display: none;
-}
 
 
 

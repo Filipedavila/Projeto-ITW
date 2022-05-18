@@ -199,6 +199,7 @@ const LOCALSTORAGE_KEY_RANKINGS = "rankings";
 const MSG_NO_SCORES_AVAILABLE = "Ainda Não existem Registos";
 
 const openedCellSound = new Audio('../audio/open.mp3');
+const cellExplodedSound = new Audio('../audio/explode.mp3');
 
 
 var zeroPad = (num, places) =>{
@@ -213,7 +214,7 @@ var zeroPad = (num, places) =>{
  *
  */
 
-/** Estado do jogo Multiplayer, que vai sendo preenchido no decorrer do jogo. */
+/** Estado do jogo, que vai sendo preenchido no decorrer do jogo. */
 const jogo = {
     table_player: [],
     name_player: [],
@@ -274,7 +275,7 @@ var rankings = {
     MpRankings: [],
     LostGames: []
 }
-
+//TODO ver se é necessario e apagar se não for o rankings object em principio ja faz isto
 function Ranking(rankingSp, rankingMp, lostGames) {
     this.SpRankings = rankingSp;
     this.MpRankings = rankingMp;
@@ -352,7 +353,7 @@ function initRankings() {
 
 
 function getRankings() {
-    return localStorage.getItem("rankings");
+    return localStorage.getItem(LOCALSTORAGE_KEY_RANKINGS);
 
 }
 
@@ -372,7 +373,7 @@ function setRankingSP(nome, score, time, gametype) {
         return a.timeGame - b.timeGame;
     })
 
-    localStorage.setItem("rankings", JSON.stringify(rankings));
+    localStorage.setItem(LOCALSTORAGE_KEY_RANKINGS, JSON.stringify(rankings));
 
 
 
@@ -389,7 +390,7 @@ function setLostGame(nome, time) {
 
     rankings.LostGames.push(thisRanking);
 
-    localStorage.setItem("rankings", JSON.stringify(rankings));
+    localStorage.setItem(LOCALSTORAGE_KEY_RANKINGS, JSON.stringify(rankings));
 
 
 
@@ -413,7 +414,7 @@ function setRankingMP(winner, loser, pointsWinner, pointsLoser, timeGame, gamety
         return a.timeGame - b.timeGame;
     })
 
-    localStorage.setItem("rankings", JSON.stringify(rankings));
+    localStorage.setItem(LOCALSTORAGE_KEY_RANKINGS, JSON.stringify(rankings));
 
 
 
@@ -440,7 +441,7 @@ function showTopRankingSp(msgGame) {
 
 
     if (!(rankingNumber == 0)) {
-        for (let i = 0, j = 0; j < rankingNumber; i++) {
+        for (let i = 0, j = 0; j < rankingNumber && j < 10; i++) {
             if (rankings.SpRankings[i].gameType === jogo.difficulty) {
 
                 rankingTop.innerHTML += "<tr><td>" + rankings.SpRankings[i].nomePlayer + " </td>" +
@@ -491,7 +492,7 @@ function showTopRankingMp(msgGame) {
     }
     if (!(rankingNumber == 0)) {
 
-        for (let i = 0, j = 0; j < rankingNumber; i++) {
+        for (let i = 0, j = 0; j < rankingNumber && j < 10; i++) {
             if(rankings.MpRankings[i].gameType == jogo.difficulty){
             rankingTop.innerHTML += "<tr><td>" + rankings.MpRankings[i].winner + " </td>" +
                 "<td>" + rankings.MpRankings[i].loser + "</td><td>" + rankings.MpRankings[i].pointsWinner + "</td>" +
@@ -781,6 +782,7 @@ function clicadoSp(id, e) {
 
 
     if (e.button == 0) {
+        openedCellSound.play();
         jogo.table_player[0].open(row, col);
     } else if (e.button == 1) {
 
@@ -812,6 +814,7 @@ function clicadoMp(id, e) {
 
 
         if (e.button == 0) {
+            openedCellSound.play();
             currentPlayer.open(row, col);
         } else if (e.button == 1) {
 
@@ -1095,6 +1098,7 @@ class Table {
 
             // caso esta celula tenha bomba ela explode
             if (this.cells[row][col].hasBomb()) {
+                cellExplodedSound.play();
                 this.cells[row][col].explode();
                 //é posto como verdadeiro o estado jogoCurrente finished
                 this.lost = true;
@@ -1421,7 +1425,8 @@ class Cell {
      */
     placeNumber(numberBomb) {
         if (numberBomb > 0) {
-            this.buttonTd.setAttribute('class', 'openedCell numberBombs');
+
+            this.buttonTd.setAttribute('class', 'openedCell numberBombs adj_Bombs_'+numberBomb );
             this.buttonTd.innerText = numberBomb;
         }
     }

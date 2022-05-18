@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="estilos/main.css" type="text/css">
     <link rel="stylesheet" href="estilos/layout.css" type="text/css">
     <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Tangerine">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/login.js"></script>
@@ -14,19 +15,18 @@
 
     <title>Minesweeper - Start Page</title>
 </head>
-<body >
+<body >    <nav class="navigation">
+    <ul>
+        <li class="active"><a href="index.html">Minesweeper</a></li>
+        <li><a href="quickGame.html">Jogar</a></li>
+        <li><a href="tutorial.html">Tutorial</a></li>
+        <li><a href="ranking.html">Ranking</a></li>
+        <li><a href="sobrenos.html">Sobre Nós</a></li>
+        <li class="right"><div class="user"><a id="username"></a><span class="profile"></span></div></li>
+    </ul>
+</nav>
     <div class="container">
 
-        <nav class="navigation">
-            <ul>
-                <li class="active"><a href="index.html">Minesweeper</a></li>
-                <li><a href="quickGame.html">Jogar</a></li>
-                <li><a href="tutorial.html">Tutorial</a></li>
-                <li><a href="ranking.html">Ranking</a></li>
-                <li><a href="sobrenos.html">Sobre Nós</a></li>
-                <li class="right"><a id="username"></a></li>
-            </ul>
-        </nav>
         <form  class="login" id="frmLogin">
             <div class="loginTittle">
                 <span> Login </span>
@@ -61,7 +61,7 @@
 
         <div class="modos_jogo">
             <a class="mine " href="quickGame.html">
-               <span class="gamelabel"> Quick <br/> Game </span>
+               <span class="gamelabel"> Quick Game </span>
 
             </a>
             <a class="mine " href="./singlePlayer.html">
@@ -81,10 +81,11 @@
             </a>
         </div>   
     </div>
-        <footer  >
-            <p> &copy; Cidália, Filipe, Rita</p>
-        </footer>
+
 
     </div>
+<footer  >
+    <p> &copy; Filipe, Rita</p>
+</footer>
 </body>
 </html>

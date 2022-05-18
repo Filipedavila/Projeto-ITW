@@ -18,7 +18,6 @@
 </head>
 <body onload='iniciarJogoRapido()'>
 
-<div class="container">
 
         <nav class="navigation"> 
             <ul>
@@ -27,33 +26,37 @@
                 <li><a href="tutorial.html">Tutorial</a></li>
                 <li><a href="ranking.html">Ranking</a></li>
                 <li><a href="sobrenos.html">Sobre Nós</a></li>
-                <li class="right"><a id="username"></a></li>
+                <li class="right"><div class="user"><a id="username"></a><span class="profile"></span></div></li>
             </ul>
         </nav>
+    <section class="container">
         <div id="rankingBox"></div>
-        <section class="game">
+
   
             <div  class="gridGame">
         
                 <div class="menu_jogo">
 
-                    <div >Points<span class="points" id="idPointsSinglePlayer">000</span></div>
+                    <div class="divPoints" ><span class="display_info_label">Points</span><span class="gameDisplayInfo " id="idPointsSinglePlayer">000</span></div>
 
 
 
-                    <div >Time<span id="idScreenTempoJogo" class="time" >000</span></div>
-                    <div><img class="buttonStart centrado" id="idResetGame" src="./img/smile.png" alt="Smile para fazer restart do jogo"></div>
-                    <div > Bombs <span id="idBombsRemained" class="time">000</span></div>
+                    <div class="divTime" ><span class="display_info_label">Time</span><span id="idScreenTempoJogo" class="gameDisplayInfo" >000</span></div>
+                    <div id="idResetGame" class="buttonStart "></div>
+                    <div class="divBombs" ><span class="display_info_label"> Bombs </span><span id="idBombsRemained" class="gameDisplayInfo">000</span></div>
 
                 </div>
                   <div id="idGameTable" class="tablePlace">
             
                 </div>
                 <div class="downbar">
-                        <span class="centrado"><span Class="win " id="timesWonPlayer1">00</span>
-                <img class="smallicon" src="img/icons8-troféu-20.png" alt="Trophy won"></span>
-                    <img class="normalicon  centrado" src="img/sound-off.png" alt="desligar som" >
+
+                    <div></span><span class="trophy"><span Class="win " id="timesWonPlayer1">00</span></span></div>
+
+                    <div><img class="normalicon  centrado" src="img/sound-off.png" alt="desligar som" ></div>
                 </div>
+            </div>
+
                    
                     
 
@@ -61,7 +64,7 @@
 
               
              
-</div>
+
 
        
 
@@ -74,14 +77,15 @@
         </audio>
 
         </section>
-   <footer >
-       <p> &copy; Cidália, Filipe, Rita</p>
-        </footer>  
-    </div>
-<!-- <audio autoplay>
-        <source src="./audio/creative.mp3" type="audio/mpeg">
-        <p>O seu browser não suporta o elemento Audio.</p>
-    </audio>
- -->
+
+
+        <footer >
+            <p> &copy; Filipe, Rita</p>
+        </footer>
+        <!-- <audio autoplay>
+                <source src="./audio/creative.mp3" type="audio/mpeg">
+                <p>O seu browser não suporta o elemento Audio.</p>
+            </audio>
+         -->
 </body>
 </html>

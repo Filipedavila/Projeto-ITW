@@ -1,146 +1,5 @@
 "use strict";
 
-var currentUser;
-
-var  rankings = {
-    SpRankings:[],
-    MpRankings:[]
-}
-
-
-
-function initRankings(){
-    let loadRankings = getRankings();
-    if(loadRankings == null){
-        rankings = new Ranking(new Array(),new Array());
-
-    }else {
-        rankings = JSON.parse(loadRankings);
-
-    }
-
-}
-
-/**Função que obtem os rankings atuais ou caso os mesmos não existam cria e devolve um
- *
- * @returns {string}
- */
-
-
-
-function getRankings(){
-    return localStorage.getItem("rankings");
-
-}
-
-
-
-function showALLRankingSp(){
-    $("#rankingBox").empty();
-
-
-    let tittleBox = document.createElement("div");
-    tittleBox.innerHTML = "<span> Ranking Top 10 SinglePlayer </span>";
-    let rankingTop = document.createElement("table");
-    rankingTop.setAttribute("class", "rankingTable");
-    rankingTop.innerHTML += " <tr><th>Nome Jogador</th><th>Pontos</th><th>Tempo Jogo</th><th>Difficulty</th>   </tr> ";
-    rankings.SpRankings.forEach((score) =>{
-        rankingTop.innerHTML += "<tr><td>"+score.nomePlayer +" </td>" +
-            "<td>"+ score.points  +"</td><td>"+ score.timeGame  +"</td></tr>";
-    });
-    let divBox = document.getElementById("rankingBox");
-    divBox.setAttribute("class", "topRankingBox");
-    divBox.setAttribute("class", "centeredDialog");
-    divBox.appendChild(tittleBox);
-    divBox.appendChild(rankingTop);
-    divBox.appendChild(rankingTop);
-}
-
-function showTopRankingSp(){
-    $("#rankingBox").empty();
-    let divBox = document.getElementById("rankingBox");
-
-
-
-    let rankingTop = document.createElement("table");
-    rankingTop.setAttribute("class", "rankingTable");
-    rankingTop.innerHTML += " <tr><th>Nome Jogador</th><th>Pontos</th><th>Tempo Jogo</th> <th>Difficulty</th> </tr> ";
-
-    let limit = 10 ;
-    if(rankings.SpRankings.length<=10){
-        limit =rankings.SpRankings.length;
-    }
-    for(let i = 0;i < limit ; i++){
-        if(rankings.SpRankings[i].nomePlayer== currentUser){
-        rankingTop.innerHTML += "<tr><td>"+rankings.SpRankings[i].nomePlayer +" </td>" +
-            "<td>"+ rankings.SpRankings[i].points  +"</td><td>"+ rankings.SpRankings[i].timeGame  +"</td> <td>" + rankings.SpRankings[i].gameType + "</td></tr>";
-    }}
-
-
-    divBox.setAttribute("class", "ranking centeredDialog");
-
-    divBox.appendChild(rankingTop);
-    divBox.appendChild(rankingTop);
-}
-
-
-
-
-function showTopRankingMp(){
-    initRankings();
-    $("#rankingBox").empty();
-
-    let rankingTop = document.createElement("table");
-    rankingTop.setAttribute("class", "rankingTable");
-    rankingTop.innerHTML += " <tr><th>Winner</th><th>Loser</th><th>Pontos Winner</th> <th>Pontos Loser</th><th>Tempo de Jogo</th>  </tr> ";
-    console.log(rankings);
-    let limit = 10 ;
-    if(rankings.MpRankings.length<=10){
-        limit =rankings.MpRankings.length;
-    }
-    for(let i = 0;i < limit ; i++) {
-        console.log(currentUser);
-        console.log(rankings.MpRankings[i].winner);
-        if (rankings.MpRankings[i].winner == currentUser) {
-            rankingTop.innerHTML += "<tr><td>" + rankings.MpRankings[i].winner + " </td>" +
-                "<td>" + rankings.MpRankings[i].loser + "</td><td>" + rankings.MpRankings[i].pointsWinner + "</td>"
-                + "<td>" + rankings.MpRankings[i].pointsLoser + "</td><td>" + rankings.MpRankings[i].timeGame + "</td></tr>";
-        }
-    }
-
-    let divBox = document.getElementById("rankingBox");
-
-    divBox.setAttribute("class", "ranking centeredDialog");
-
-    divBox.appendChild(rankingTop);
-    divBox.appendChild(rankingTop);
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-function removeScore(){
-    $("#rankingBox").empty();
-
-}
-
-
-
-
-
-
-
-
-
 /* ------------------------------------------------------------------------- */
 /*                                                                CONSTANTES */
 /* ------------------------------------------------------------------------- */
@@ -172,6 +31,25 @@ const RANKING_GANHOU_MULTIPLAYER = 'ganhouMultiplayerRanking';
 window.addEventListener("load", principal);
 
 /* ------------------------------------------------------------------------- */
+
+/* ------------------------------------------------------------------------- */
+
+/* ------------------------------------------------------------------------- */
+/*                                                OBJETOS  DA APLICAÇÃO */
+/* ------------------------------------------------------------------------- */
+
+/** Utilizador autenticado */
+var currentUser;
+
+/** Rankings  */
+var rankings = {
+    SpRankings: [],
+    MpRankings: [],
+    LostGames: []
+}
+
+
+
 
 /**
  * Primeira função a ser executada após o browser completar o carregamento
@@ -211,21 +89,22 @@ function defineEventHandlersParaElementosHTML() {
  */
 function mostraEstatistica() {
     $("#rankingBox").empty();
+    $("#titleBox").empty();
     let elems = document.querySelectorAll('#numeroJogosRanking, #tempoTotalRanking, #melhorTempoRanking, #tempoMedioRanking, #ganhouMultiplayerRanking, #melhorProporcaoRanking');
     for (let i=0; i<elems.length; i++) {
         elems[i].style.display = 'none';
     }
     if (this.selectedIndex === 0) {
-        document.getElementById(RANKING_NUMERO_JOGOS).style.display = 'block';
+
         mostraNumeroJogos();
     } else if (this.selectedIndex === 1) {
-        document.getElementById(RANKING_TEMPO_TOTAL).style.display = 'block';
+
         mostraTempoTotal();
     } else if (this.selectedIndex === 2) {
-        document.getElementById(RANKING_MELHOR_TEMPO).style.display = 'block';
-        mostraMelhorTempo();
+
+        mostraTempoMédio();
     } else if (this.selectedIndex === 3) {
-        document.getElementById(RANKING_TEMPO_MEDIO).style.display = 'block';
+
         mostraTempoMédio()
     } else if (this.selectedIndex === 4) {
         showTopRankingSp()
@@ -244,7 +123,7 @@ function mostraEstatistica() {
 
 /** Mostra o top10 do número de jogos ganhos */
 
-function mostraNumeroJogos() {
+function mostraNumeroJogo22s() {
 
     initRankings();
 
@@ -294,73 +173,178 @@ function mostraNumeroJogos() {
     }
 }
 
+
+/** Mostra o top10 do número de jogos ganhos */
+
+function mostraNumeroJogos() {
+
+    initRankings();
+    let rankingTop = document.createElement("table");
+    rankingTop.setAttribute("class", "rankingTable");
+    rankingTop.innerHTML += " <tr><th>Jogador</th><th>Jogos SP</th><th>Jogos MP</th> <th>Jogos Perdidos</th><th>Total</th>  </tr> ";
+
+    let numPlayedGames = 0;
+    let numSpGames = 0;
+    let numMpGames = 0;
+    let numLostGames = 0;
+
+    let spGames = rankings.SpRankings;
+    let mpGames = rankings.MpRankings;
+    let lostGames = rankings.LostGames;
+
+
+    spGames.forEach((game)=>{
+        if(game.nomePlayer == currentUser){
+            numSpGames++;
+    };
+    });
+    mpGames.forEach((game)=>{
+        if(game.winner == currentUser){
+            numMpGames++;
+        };
+        if(game.loser == currentUser){
+            lostGames++;
+        }
+    });
+
+    rankings.LostGames.forEach((game)=>{
+        if(game.nomePlayer === currentUser){
+            numLostGames++;
+        };
+
+    });
+    numPlayedGames = numSpGames + numMpGames + numLostGames;
+
+
+
+            rankingTop.innerHTML += "<tr><td>" + currentUser + " </td>" +
+                "<td>" + numSpGames+ "</td><td>" + numMpGames + "</td>"
+                + "<td>" + numLostGames + "</td><td>" + numPlayedGames + "</td></tr>";
+
+
+
+    let divBox = document.getElementById("rankingBox");
+
+
+    document.getElementById("titleBox").innerHTML+= "<h1 className=''>Número de jogos ganhos</h1>";
+    divBox.setAttribute("class", "ranking centeredDialog");
+
+    divBox.appendChild(rankingTop);
+    divBox.appendChild(rankingTop);
+
+}
+
+
+
 /* ------------------------------------------------------------------------- */
 
 /** Mostra o top10 do tempo total a jogar */
 
+/** Mostra o top10 do número de jogos ganhos */
+
 function mostraTempoTotal() {
 
     initRankings();
+    let rankingTop = document.createElement("table");
+    rankingTop.setAttribute("class", "rankingTable");
+    rankingTop.innerHTML += " <tr><th>Jogador</th><th>Tempo SP</th><th>Tempo MP</th> <th>Tempo Jogos Perdidos</th><th>Tempo Total</th>  </tr> ";
 
-    let table = document.getElementById('tempoTotalTable');
+    let timePlayedGames = 0;
+    let timeSpGames = 0;
+    let timeMpGames = 0;
+    let timeLostGames = 0;
 
-    let tableSize = $('#tempoTotalTable tbody tr').length
+    let spGames = rankings.SpRankings;
+    let mpGames = rankings.MpRankings;
+    let lostGames = rankings.LostGames;
 
-    if (tableSize === 0) {
-        table.innerHTML += '<tbody>';
 
-        let ranking = rankings.SpRankings;
-
-        let jogadores = [];
-
-        for (let i = 0; i < ranking.length ; i++) {
-            if (!(jogadores.includes(ranking[i].nomePlayer))) {
-                jogadores.push(ranking[i].nomePlayer);
-            }
+    spGames.forEach((game)=>{
+        if(game.nomePlayer == currentUser){
+            timeSpGames+=game.timeGame;
+        };
+    });
+    mpGames.forEach((game)=>{
+        if(game.winner == currentUser){
+            timeMpGames+= game.timeGame;
+        };
+        if(game.loser == currentUser){
+            timeLostGames+= game.timeGame;
         }
+    });
 
-        let tempoTotalJogadores = [];
+    rankings.LostGames.forEach((game)=>{
+        if(game.nomePlayer === currentUser){
+            timeLostGames+= game.timeGame;
+        };
 
-        for (let j of jogadores) {
-
-            let tt = 0;
-
-            for (let i = 0; i < ranking.length; i++) {
-                if (ranking[i].nomePlayer == j){
-                    tt += ranking[i].timeGame;
-                }
-            }
-
-            let result = {}
-            result['nomePlayer'] = j;
-            result['tempoTotal'] = tt;
-            tempoTotalJogadores.push(result);
-        }
-
-        tempoTotalJogadores.sort(function(a,b) {
-            return b.tempoTotal - a.tempoTotal;
-        });
-
-        let limit = 10;
-
-        if (tempoTotalJogadores.length <= 10) {
-            limit = tempoTotalJogadores.length;
-        }
-
-        for(let i = 0; i < limit ; i++){
-            table.innerHTML += "<tr><td>" + tempoTotalJogadores[i].nomePlayer + "</td>" +
-                "<td>" + tempoTotalJogadores[i].tempoTotal + "</td></tr>";
-        }
-
-        table.innerHTML += '</tbody>';
+    });
+    timePlayedGames = timeSpGames + timeMpGames + timeLostGames;
 
 
-    }
+
+    rankingTop.innerHTML += "<tr><td>" + currentUser + " </td>" +
+        "<td>" + timeSpGames+ " sec" + "</td><td>" + timeMpGames + " sec" +"</td>"
+        + "<td>" + timeLostGames +" sec" + "</td><td>" + timePlayedGames +" sec"+ "</td></tr>";
+
+
+
+    let divBox = document.getElementById("rankingBox");
+
+
+    document.getElementById("titleBox").innerHTML+= "<h1 className=''>Tempo Total de Jogo </h1>";
+    divBox.setAttribute("class", "ranking centeredDialog");
+
+    divBox.appendChild(rankingTop);
+    divBox.appendChild(rankingTop);
 }
 
-/* ------------------------------------------------------------------------- */
+function mostraTempoMédio() {
 
-/** Mostra o top10 do melhor tempo por jogador */
+
+    initRankings();
+    let rankingTop = document.createElement("table");
+    rankingTop.setAttribute("class", "rankingTable");
+    rankingTop.innerHTML += " <tr><th></th><th colspan='3'>Single Player Mode</th><th colspan='3'>Multiplayer Mode</th> </tr> ";
+    rankingTop.innerHTML += " <tr><th>Jogador</th><th>EASY</th><th>MEDIUM</th> <th>HARD</th><th>EASY</th><th>MEDIUM</th> <th>HARD</th>  </tr> ";
+
+
+
+    let spGames = rankings.SpRankings;
+    let mpGames = rankings.MpRankings;
+
+
+    let easySp = spGames.find((game)=> ((game.nomePlayer == currentUser) && (game.gameType == "EASY")));
+    let mediumSp = spGames.find((game)=> ((game.nomePlayer == currentUser) && (game.gameType == "MEDIUM")));
+    let hardSp = spGames.find((game)=> ((game.nomePlayer == currentUser) && (game.gameType == "HARD"))) ;
+    let easyMp = mpGames.find((game)=> ((game.winner == currentUser) && (game.gameType == "EASY")));
+    let mediumMp = mpGames.find((game)=> ((game.winner == currentUser) && (game.gameType == "MEDIUM")));
+    let hardMp = mpGames.find((game)=> ((game.winner == currentUser) && (game.gameType == "HARD")));
+    easySp = (easySp == undefined)? "n/a" : easySp.timeGame+" sec";
+    mediumSp = (mediumSp == undefined)? "n/a" : mediumSp.timeGame+" sec";
+    hardSp = (hardSp == undefined)? "n/a" : hardSp.timeGame+" sec" ;
+    easyMp = (easyMp == undefined)? "n/a" : easyMp.timeGame +" sec";
+    mediumMp = (mediumMp == undefined)? "n/a" : mediumMp.timeGame+" sec";
+    hardMp = (hardMp == undefined)? "n/a" : hardMp.timeGame+" sec";
+
+    rankingTop.innerHTML += "<tr><td>" + currentUser + " </td>" +
+        "<td>" + easySp+ "</td><td>" + mediumSp  +"</td><td>" + hardSp + "</td><td>"
+        + easyMp + "</td>"+ "<td>" + mediumMp+ "</td><td>" + hardMp + "</td></tr>";
+
+
+
+    let divBox = document.getElementById("rankingBox");
+
+
+    document.getElementById("titleBox").innerHTML+= "<h1 className=''>Meus Melhores Tempos </h1>";
+    divBox.setAttribute("class", "ranking centeredDialog");
+
+    divBox.appendChild(rankingTop);
+    divBox.appendChild(rankingTop);
+
+}
+
+/*
 
 function mostraMelhorTempo() {
 
@@ -422,9 +406,6 @@ function mostraMelhorTempo() {
     }
 }
 
-/* ------------------------------------------------------------------------- */
-
-/** Mostra o top10 do tempo médio por jogador */
 
 function mostraTempoMédio() {
 
@@ -501,3 +482,132 @@ function isLoggedIn() {
     return logged;
 
 }
+
+
+/**Função que obtem os rankings atuais ou caso os mesmos não existam cria e devolve um
+ *
+ * @returns {string}
+ */
+
+function initRankings(){
+    let loadRankings = getRankings();
+    if(loadRankings == null){
+        rankings = new Ranking(new Array(),new Array());
+
+    }else {
+        rankings = JSON.parse(loadRankings);
+
+    }
+
+}
+
+
+/**
+ *
+ * @returns {string}
+ */
+function getRankings(){
+    return localStorage.getItem("rankings");
+
+}
+
+
+/**
+ *
+ */
+function showALLRankingSp(){
+    $("#rankingBox").empty();
+
+
+    let tittleBox = document.createElement("div");
+    tittleBox.innerHTML = "<span> Ranking Top 10 SinglePlayer </span>";
+    let rankingTop = document.createElement("table");
+    rankingTop.setAttribute("class", "rankingTable");
+    rankingTop.innerHTML += " <tr><th>Nome Jogador</th><th>Pontos</th><th>Tempo Jogo</th><th>Difficulty</th>   </tr> ";
+    rankings.SpRankings.forEach((score) =>{
+        rankingTop.innerHTML += "<tr><td>"+score.nomePlayer +" </td>" +
+            "<td>"+ score.points  +"</td><td>"+ score.timeGame  +"</td></tr>";
+    });
+    let divBox = document.getElementById("rankingBox");
+    divBox.setAttribute("class", "topRankingBox");
+    divBox.setAttribute("class", "centeredDialog");
+    divBox.appendChild(tittleBox);
+    divBox.appendChild(rankingTop);
+    divBox.appendChild(rankingTop);
+}
+
+
+/**
+ *
+ */
+function showTopRankingSp(){
+    $("#rankingBox").empty();
+    let divBox = document.getElementById("rankingBox");
+
+
+
+    let rankingTop = document.createElement("table");
+    rankingTop.setAttribute("class", "rankingTable");
+    rankingTop.innerHTML += " <tr><th>Nome Jogador</th><th>Pontos</th><th>Tempo Jogo</th> <th>Difficulty</th> </tr> ";
+
+    let limit = 10 ;
+    if(rankings.SpRankings.length<=10){
+        limit =rankings.SpRankings.length;
+    }
+    for(let i = 0;i < limit ; i++){
+        if(rankings.SpRankings[i].nomePlayer== currentUser){
+            rankingTop.innerHTML += "<tr><td>"+rankings.SpRankings[i].nomePlayer +" </td>" +
+                "<td>"+ rankings.SpRankings[i].points  +"</td><td>"+ rankings.SpRankings[i].timeGame  +"</td> <td>" + rankings.SpRankings[i].gameType + "</td></tr>";
+        }}
+
+
+    divBox.setAttribute("class", "ranking centeredDialog");
+
+    divBox.appendChild(rankingTop);
+    divBox.appendChild(rankingTop);
+}
+
+
+/**
+ *
+ */
+function showTopRankingMp(){
+    initRankings();
+    $("#rankingBox").empty();
+
+    let rankingTop = document.createElement("table");
+    rankingTop.setAttribute("class", "rankingTable");
+    rankingTop.innerHTML += " <tr><th>Winner</th><th>Loser</th><th>Pontos Winner</th> <th>Pontos Loser</th><th>Tempo de Jogo</th>  </tr> ";
+    console.log(rankings);
+    let limit = 10 ;
+    if(rankings.MpRankings.length<=10){
+        limit =rankings.MpRankings.length;
+    }
+    for(let i = 0;i < limit ; i++) {
+        console.log(currentUser);
+        console.log(rankings.MpRankings[i].winner);
+        if (rankings.MpRankings[i].winner == currentUser) {
+            rankingTop.innerHTML += "<tr><td>" + rankings.MpRankings[i].winner + " </td>" +
+                "<td>" + rankings.MpRankings[i].loser + "</td><td>" + rankings.MpRankings[i].pointsWinner + "</td>"
+                + "<td>" + rankings.MpRankings[i].pointsLoser + "</td><td>" + rankings.MpRankings[i].timeGame + "</td></tr>";
+        }
+    }
+
+    let divBox = document.getElementById("rankingBox");
+
+    divBox.setAttribute("class", "ranking centeredDialog");
+
+    divBox.appendChild(rankingTop);
+    divBox.appendChild(rankingTop);
+
+}
+
+
+
+function removeScore(){
+    $("#rankingBox").empty();
+
+}
+
+
+

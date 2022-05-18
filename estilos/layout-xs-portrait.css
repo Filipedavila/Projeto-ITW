@@ -1,0 +1,506 @@
+:root {
+
+    --game_button_reset_background_image:url("../img/smile32px.png");
+
+    --game_cell_explosion_effect1:url("../img/mine24px.png");
+    --game_menu_background_image_Active:url("../img/explosion24px.png");
+    --game_cells_flag_image: url("../img/portugal24px.png");
+    --game_cells_question_image:url("../img/question24px.png");
+}
+
+
+.right{
+    display: flex;
+    justify-content: end;
+
+}
+.user{
+display: flex;
+    flex-direction: row;
+}
+#username {
+    padding-right: 2vw;
+    font-size: 10vw;
+    color: white;
+}
+.profile{
+
+    background-image: url("../img/profile.png");
+    padding: 32px;
+    z-index: 5;
+}
+/* Contentor principal Grid */
+.container{
+    width: 100vw;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 55vh;
+
+}
+#rankingBox{
+ order:0;
+
+}
+#frmLogin{
+    order: 0;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+#frmLogin span {
+    font-size: large;
+}
+article{
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: fit-content;
+}
+nav{
+    width: 100vw;
+    order: 0;
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+article h1, article h2{
+    font-size: large;
+}
+/* Menu principal Grid position */
+nav ul {
+
+display: flex;
+    flex-direction: column;
+
+
+
+}
+
+/* Menu principal Grid position */
+nav li {
+    height: 5vh;
+    font-size: 10vw;
+}
+
+
+.caixa{
+    order:1;
+    padding: 0;
+    margin:0;
+    width: 100vw;
+    display: none;
+}
+
+/* Menu Escolha de tipo de jogo Grid position */
+.modos_jogo{
+
+    align-self: center;
+    justify-self: center;
+    width: 100vw;
+    height: 80%;
+}
+
+/* ######## Escolha Tipo de Jogo  ################# */
+
+/* Botão Mina */
+
+.mine{
+
+    font-size: 7vw;
+    background-size: auto;
+    padding: 55px;
+    background-origin: content-box;
+    box-shadow: inset hsla(0,0%,15%,  1) 0  0px 0px 1px, /* border */
+    inset hsla(0,0%,15%, .8) 0 -1px 5px 2px, /* soft SD */
+    inset hsla(0,0%,0%, .25) 0 -1px 0px 3px, /* bottom SD */
+    inset hsla(0,0%,100%,.7) 0  2px 1px 3px, /* top HL */
+
+    hsla(0,0%, 0%,.15) 0 -2px 3px 2px, /* outer SD */
+    hsla(0,0%,100%,.5) 0  2px 3px 2px; /* outer HL */
+}
+
+
+.mine:active {
+    background-image: url("../img/explosion.png");
+    background-repeat: no-repeat;
+    transform: scale(0.99);
+    background-origin: content-box;
+    opacity: 0.8;
+    padding: 55px;
+    display: flex;
+    justify-content: space-around;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.9);
+
+
+
+}
+.gameTable,game,gridGame{
+
+
+}
+.gamelabel {
+    font-size: larger;
+}
+/* Tamanho de Celulas do Jogo */
+.celula{
+    width: 8vw;
+    height: 8vw;
+}
+.openedCell{
+    width: 8vw;
+    height: 8vw;
+}
+
+.game {
+
+
+}
+/* -------------------------------------------------------------------------------------
+
+--------------------- Css Responsividade JOGO -----------------
+
+-----------------------------------------------------------------------------------*/
+
+
+/* Caixa que contem o Jogo SinglePlayer Posição em grid  */
+.gridGame {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4vw;
+    margin: 10px auto;
+}
+
+.menu_jogo{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+
+}
+.display_info_label{
+    padding: 1vw;
+
+}
+.gameDisplayInfo {
+    font-size: 6vw;
+
+}
+.mute{
+    height: 40px;
+    width: 40px;
+
+
+}
+
+.time {
+    order: 0;
+
+
+}
+
+.divPoints{
+ order:0;
+}
+.buttonStart{
+     order:1;
+     padding: 0;
+ }
+.divTime{
+
+    order:3
+
+}
+.divBombs{
+    order:2;
+}
+.bombCell {
+    background-size: cover;
+}
+
+.buttonStart{
+    width: 5vh;
+    height: 5vh;
+    margin-bottom: 5px;
+    order: 1;
+
+}
+.points{
+    order: 2;
+    margin-left: 10vh;
+
+    margin-bottom: 5px;
+
+
+    font-size: 6vh;
+}
+.gameStatus{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+
+
+
+}
+.downbar {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+
+
+    width: 100%;
+
+
+
+}
+.win{
+    margin-left: 10vh;
+
+    margin-bottom: 5px;
+
+
+    font-size: 6vw;
+}
+
+.numberBombs {
+font-size: large;
+}
+
+
+
+
+/*  ---------------##################   custom Game SinglePlayer  ##############-------------------------------- */
+.customContainer {
+    grid-column-start:1 ;
+    grid-column-end:2 ;
+    grid-row-start: 2;
+    display: flex;
+
+    align-content: center;
+
+}
+.customContainer table {
+    font-size: large;
+    border-spacing:5vh;
+    margin:8px;
+}
+.customContainer td{
+
+    font-family: 'Ubuntu Condensed', sans-serif;
+
+}
+/* ----------------- Tutorial ---------------------*/
+
+.tutorial{
+
+    justify-content: center;
+    text-align: justify;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: fit-content;
+    grid-row-start: 2;
+    margin: 0 auto;
+
+
+
+
+}
+
+
+.regras{
+    justify-content: center;
+    text-align: justify;
+
+    width: fit-content;
+    padding: 20px;
+    margin: 0 auto;
+    grid-row-start: 2;
+
+
+
+    grid-row-start: 3;
+
+}
+.tutorial h1 ,.regras h1{
+    font-size: 6vh;
+
+}
+
+.tutorial h2, .regras h2  {
+    font-size: 5vh;
+}
+
+.tutorial p,.regras p,.regras h3,.tutorial li,.tutorial h3, .regras td,.regras th{
+
+    font-size: 4vh;
+}
+
+iframe{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 20px;
+    width: 90vw;
+    height: 60vw;
+}
+
+.videoTutorial{
+    margin: 0 auto;
+    width: 100%;
+    grid-row-start: 4;
+    height: 100%;
+
+
+
+}
+.tableregras {
+    display: flex;
+    justify-self: center;
+    align-self: center;
+
+}
+
+
+
+/* ----------------- Ranking ---------------------*/
+
+
+.ranking{
+    overflow: scroll;
+
+
+    height: 100%;
+    width: 100%;
+}
+
+.ranking th {
+    font-size: larger;
+}
+
+
+.ranking td {
+    font-size: larger;
+}
+
+.title{
+    text-align: center;
+
+    grid-row-start:1;
+
+    width: 100%;
+
+}
+
+
+/* ----------------- Quem Somos ---------------------*/
+.container h2{
+    font-size: 6vw;
+
+}
+
+.perfilContainer{
+
+    display: flex;
+    flex-direction: column;
+
+
+
+}
+.headingTutorial span{
+    font-size: 7vw;
+
+}
+.perfilContainer p {
+    font-size: 7vw;
+    text-align: center;
+    font-family:"Ubuntu Condensed";
+}
+
+
+
+.wrapperCard{
+    align-self: center;
+    padding:20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+    width: 80vw;
+
+
+
+}
+.perfil{
+
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+
+}
+
+.perfil img{
+
+
+   width: 60vw;
+
+
+}
+.descricão{
+
+    text-align: center;
+    width: 100%;
+
+}
+.textoContainer quote{
+    font-size: 6vw;
+
+    text-align: justify;
+}
+.textoContainer{
+
+    margin: 0 auto;
+    padding: 0;
+    justify-self: center;
+
+    width: 90vw;
+
+    grid-column-start: 2;
+    grid-column-end: 10;
+    grid-row-start:4;
+
+
+}
+.textoContainer p{
+
+    font-size:medium;
+}
+
+
+
+
+
+
+
+/* Local na grid para o footer */
+
+footer{
+    order:6;
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    min-height: auto;
+
+    width: 100vw;
+
+}
+footer p{
+    font-size:8vw;
+}

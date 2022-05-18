@@ -1,4 +1,5 @@
-  /* Contentor principal Grid */ 
+
+  /* Contentor principal Grid */
   .container{
     display: grid;
     grid-row: repeat;

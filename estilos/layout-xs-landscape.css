@@ -1,0 +1,414 @@
+/* Contentor principal Grid */
+.container{
+    display: grid;
+    grid-row: repeat;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto ;
+
+    min-height: 100vh;
+
+}
+
+
+article{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: fit-content;
+}
+
+article h1, article h2{
+    font-size: large;
+}
+
+/* Menu principal Grid position */
+nav li {
+    font-size: large;
+    float: none;
+    grid-row-start: 1;
+    width: 100%;
+}
+.caixa{
+    display: none;
+}
+
+/* Menu Escolha de tipo de jogo Grid position */
+.modos_jogo{
+    grid-row-start: 2;
+    align-self: center;
+    justify-self: center;
+    width: 100%;
+    height: 80%;
+}
+
+/* ######## Escolha Tipo de Jogo  ################# */
+
+/* Botão Mina */
+
+.mine{
+    background-size: auto;
+    padding: 55px;
+    background-origin: content-box;
+    box-shadow: inset hsla(0,0%,15%,  1) 0  0px 0px 1px, /* border */
+    inset hsla(0,0%,15%, .8) 0 -1px 5px 2px, /* soft SD */
+    inset hsla(0,0%,0%, .25) 0 -1px 0px 3px, /* bottom SD */
+    inset hsla(0,0%,100%,.7) 0  2px 1px 3px, /* top HL */
+
+    hsla(0,0%, 0%,.15) 0 -2px 3px 2px, /* outer SD */
+    hsla(0,0%,100%,.5) 0  2px 3px 2px; /* outer HL */
+}
+
+
+.mine:active {
+    background-image: url("../img/explosion.png");
+    background-repeat: no-repeat;
+    transform: scale(0.99);
+    background-origin: content-box;
+    opacity: 0.8;
+    padding: 55px;
+    display: flex;
+    justify-content: space-around;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.9);
+
+
+
+}
+.gamelabel {
+    font-size: larger;
+}
+/* Tamanho de Celulas do Jogo */
+.celula{
+
+    width: 30px;
+    height: 30px;
+}
+.openedCell{
+
+    width: 30px;
+    height: 30px;
+}
+
+.game {
+    grid-column-start:1 ;
+    grid-column-end:2;
+    grid-row-start: 2;
+    display: flex;
+    flex-direction: column;
+
+    align-content: center;
+
+}
+/* Caixa que contem o Jogo SinglePlayer Posição em grid  */
+.gridGame {
+    grid-column: 0/1;
+    grid-row-start:2;
+    align-self: center;
+    padding: 4vw;
+    margin: 10px auto;
+
+
+
+    background-color: silver;
+    border: 1px solid black;
+
+
+
+
+}
+
+.jogador{
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: fit-content;
+    width: fit-content;
+
+}
+.jogador img{
+    margin: 0 auto;
+    height: 15vh;
+    width: 15vh;
+
+}
+.menu_jogo{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    width: 100%;
+
+}
+.jogador span{
+    font-size: medium;
+
+}
+.gameStatus span{
+    font-size: medium;
+
+}
+.mute{
+    height: 40px;
+    width: 40px;
+
+
+}
+
+.time {
+    order: 1;
+
+    margin-right: 10vh;
+    margin-bottom: 5px;
+    font-size: 6vh;
+
+}
+.buttonStart{
+    width: 10vh;
+    height: 10vh;
+    margin-bottom: 5px;
+    order: 2;
+
+}
+.points{
+    order: 3;
+    margin-left: 10vh;
+
+    margin-bottom: 5px;
+
+
+    font-size: 6vh;
+}
+.gameStatus{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+
+
+}
+.downbar {
+    display: flex;
+    justify-content: space-between;
+    grid-row-start:3;
+    grid-row-end: 4;
+    width: 100%;
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+}
+
+
+
+
+/*  ---------------##################   custom Game SinglePlayer  ##############-------------------------------- */
+.customContainer {
+    grid-column-start:1 ;
+    grid-column-end:2 ;
+    grid-row-start: 2;
+    display: flex;
+
+    align-content: center;
+
+}
+.customContainer table {
+    font-size: large;
+    border-spacing:5vh;
+    margin:8px;
+}
+.customContainer td{
+
+    font-family: 'Ubuntu Condensed', sans-serif;
+
+}
+/* ----------------- Tutorial ---------------------*/
+
+.tutorial{
+
+    justify-content: center;
+    text-align: justify;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: fit-content;
+    grid-row-start: 2;
+    margin: 0 auto;
+
+
+
+
+}
+
+
+.regras{
+    justify-content: center;
+    text-align: justify;
+
+    width: fit-content;
+    padding: 20px;
+    margin: 0 auto;
+    grid-row-start: 2;
+
+
+
+    grid-row-start: 3;
+
+}
+.tutorial h1 ,.regras h1{
+    font-size: 6vh;
+
+}
+
+.tutorial h2, .regras h2  {
+    font-size: 5vh;
+}
+
+.tutorial p,.regras p,.regras h3,.tutorial li,.tutorial h3, .regras td,.regras th{
+
+    font-size: 4vh;
+}
+
+iframe{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    padding: 20px;
+    width: 90%;
+    height: 80%;
+}
+
+.videoTutorial{
+    margin: 0 auto;
+    width: 100%;
+    grid-row-start: 4;
+    height: 100%;
+
+
+
+}
+.tableregras {
+    display: flex;
+    justify-self: center;
+    align-self: center;
+
+}
+
+
+
+/* ----------------- Ranking ---------------------*/
+
+
+.ranking{
+
+    display: grid;
+    grid-template-columns: auto ;
+    grid-template-rows:  auto auto;
+    grid-gap: 5px;
+    height: 100%;
+    width: 100%;
+}
+
+.ranking th {
+    font-size: medium;
+}
+
+
+.ranking td {
+    font-size: small;
+}
+
+.title{
+    text-align: center;
+
+    grid-row-start:1;
+
+    width: 100%;
+
+}
+
+
+/* ----------------- Quem Somos ---------------------*/
+.perfilContainer{
+
+    display: flex;
+    flex-direction: column;
+
+
+
+}
+
+.perfilContainer p {
+    font-size: large;
+}
+
+
+
+.wrapperCard{
+    align-self: center;
+    padding:20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+    width: 40%;
+
+
+
+}
+.perfil{
+
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+
+}
+
+.perfil img{
+
+
+    max-width: 30vw;
+
+
+}
+.descricão{
+    text-align: center;
+    width: 100%;
+
+}
+
+.textoContainer{
+    margin: 0 auto;
+    padding: 0;
+    justify-self: center;
+    font-size: larger;
+    width: 70%;
+
+    grid-column-start: 2;
+    grid-column-end: 10;
+    grid-row-start:4;
+
+
+}
+.textoContainer p{
+
+    font-size:medium;
+}
+
+
+
+
+
+
+
+/* Local na grid para o footer */
+
+footer{
+    grid-row: 9 / span 2;
+    z-index: 1;
+    margin: 0;
+    width: 100%;
+
+}
+footer p{
+    font-size:small;
+}

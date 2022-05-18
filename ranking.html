@@ -15,18 +15,18 @@
     <title>Minesweeper - Ranking</title>
 </head>
 <body>
-<div class="container">
-    <nav class="navigation">
-        <ul>
-            <li ><a href="index.html">Minesweeper</a></li>
-            <li><a href="quickGame.html">Jogar</a></li>
-            <li><a href="tutorial.html">Tutorial</a></li>
-            <li class="active"><a href="ranking.html">Ranking</a></li>
-            <li><a href="sobrenos.html">Sobre Nós</a></li>
-            <li class="right"><a id="username"></a></li>
-        </ul>
-    </nav>
-    <article>
+<nav class="navigation">
+<ul>
+    <li ><a href="index.html">Minesweeper</a></li>
+    <li><a href="quickGame.html">Jogar</a></li>
+    <li><a href="tutorial.html">Tutorial</a></li>
+    <li class="active"><a href="ranking.html">Ranking</a></li>
+    <li><a href="sobrenos.html">Sobre Nós</a></li>
+    <li class="right"><div class="user"><a id="username"></a><span class="profile"></span></div></li>
+</ul>
+</nav>
+<article class="container">
+
         <select name="opcaoEstatistica" id="selEstatistica">
             <option>Número de jogos ganhos</option>
             <option>Tempo total a jogar</option>
@@ -35,133 +35,23 @@
             <option>Número de jogos ganhos no modo SinglePlayer</option>
             <option>Número de jogos ganhos no modo multiplayer</option>
         </select>
+        <div id="titleBox"></div>
         <div id="rankingBox" class="ranking" >
 
 
         </div>
 
-        <div id="numeroJogosRanking">
-            <h1>Número de jogos ganhos</h1>
-            <div class="ranking">
-
-                <table id="numeroJogosTable" class="rankingTable">
-                    <thead>
-                    <tr>
-                        <th>Jogador</th>
-                        <th>Nºjogos</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-
-        <div id="tempoTotalRanking">
-            <h1>Tempo total a jogar</h1>
-            <div class="ranking">
-                <table id="tempoTotalTable" class="rankingTable">
-                    <thead>
-                    <tr>
-                        <th>Jogador</th>
-                        <th>Tempo total (s)</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-
-        <div id="melhorTempoRanking">
-            <h1>Melhor tempo</h1>
-            <div class="ranking">
-                <table id="melhorTempoTable" class="rankingTable">
-                    <thead>
-                    <tr>
-                        <th>Jogador</th>
-                        <th>Melhor tempo (s)</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-
-        <div id="tempoMedioRanking">
-            <h1>Tempo Médio</h1>
-            <div class="ranking">
-                <table id="tempoMedioTable" class="rankingTable">
-                    <thead>
-                    <tr>
-                        <th>Jogador</th>
-                        <th>Tempo médio (s)</th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-
-        <div id="ganhouMultiplayerRanking">
-            <h1>Número de vezes que ganhou no modo multiplayer</h1>
-            <div class="ranking">
-                <table id="ganhouMultiplayerTable" class="rankingTable">
-                    <thead>
-                    <tr>
-                        <th>Jogador</th>
-                        <th>Vezes que ganhou</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Jog1</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td>Jog2</td>
-                        <td>90</td>
-                    </tr>
-                    <tr>
-                        <td>Jog3</td>
-                        <td>80</td>
-                    </tr>
-                    <tr>
-                        <td>Jog4</td>
-                        <td>70</td>
-                    </tr>
-                    <tr>
-                        <td>Jog5</td>
-                        <td>60</td>
-                    </tr>
-                    <tr>
-                        <td>Jog6</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>Jog7</td>
-                        <td>40</td>
-                    </tr>
-                    <tr>
-                        <td>Jog8</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>Jog9</td>
-                        <td>20</td>
-                    </tr>
-                    <tr>
-                        <td>Jog10</td>
-                        <td>10</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-
-    </article>
 
 
 
-    <footer>
-        <p> &copy; Cidália, Filipe, Rita</p>
-    </footer>
-</div>
 
+
+
+
+
+</article>
+<footer>
+    <p> &copy; Filipe, Rita</p>
+</footer>
 </body>
 </html>
