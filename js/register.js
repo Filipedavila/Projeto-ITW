@@ -57,12 +57,13 @@ let jogadores = [];
  * @param {string} faixaEtaria - Faixa Etária do jogador
  * @param {string} genero - Genero do jogador
  */
-function Jogador(nome, email, password, faixaEtaria, genero) {
+function Jogador(nome, email, password, faixaEtaria, genero,tema) {
     this.nome = nome;
     this.email = email;
     this.password = password;
     this.faixaEtaria = faixaEtaria;
     this.genero = genero;
+    this.tema = tema
 }
 
 /* ------------------------------------------------------------------------- */
@@ -126,8 +127,10 @@ function obtemDadosJogador() {
             genero = g.value;
         }
     }
+    let tema = $("#theme").val();
 
-    return new Jogador(nome, email, password, faixaEtaria, genero);
+
+    return new Jogador(nome, email, password, faixaEtaria, genero,tema);
 }
 
 /* ------------------------------------------------------------------------- */

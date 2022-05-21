@@ -31,6 +31,8 @@ const LINK_USERNAME = 'username';
 /** Item de local storage que guarda os dados dos jogadores. */
 const ITEM_JOGADORES = 'jogadores';
 
+/** Item de local storage da escolha de tema do utilizador. */
+const ITEM_TEMA ="theme";
 /** Item de local storage que guarda o nome do utilizador corrente. */
 const ITEM_USER = 'user';
 
@@ -125,6 +127,7 @@ function verificaLogin() {
             linkUsername.innerHTML = nomeLogin;
             linkUsername.setAttribute('href', 'user.html');
             sessionStorage.setItem(ITEM_USER, JSON.stringify(nomeLogin));
+            sessionStorage.setItem(ITEM_TEMA, JSON.stringify(j.tema));
             window.location.reload();
             break;
         } else if (nomeLogin == j.nome && passLogin != j.password) {
