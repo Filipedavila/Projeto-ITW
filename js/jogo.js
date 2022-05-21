@@ -1104,8 +1104,8 @@ class Table {
     scrambleBombs(firsOpenedRow, firsOpenedCol) {
         let bombsToPlace = this.bombs;
         while (bombsToPlace != 0) {
-            let colRandom = Math.floor(Math.random() * (this.col )) + 1;
-            let rowRandom = Math.floor(Math.random() * (this.row )) + 1;
+            let colRandom = Math.floor(Math.random() * (this.col -1)) + 1;
+            let rowRandom = Math.floor(Math.random() * (this.row-1 )) + 1;
             if (colRandom == firsOpenedCol && rowRandom == firsOpenedRow) continue;
             console.log(colRandom);
             console.log(rowRandom);
