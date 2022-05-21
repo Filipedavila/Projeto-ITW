@@ -16,16 +16,12 @@ window.addEventListener("DOMContentLoaded", principal);
 function principal() {
     if(isLoggedIn()){
         $('#frmLogin').hide();
-        $('.caixa').show();
+        $('.modos_jogo').show();
     document.getElementById('username').innerHTML = JSON.parse(sessionStorage.getItem('user'));
     document.getElementById('username').setAttribute('href', 'user.html');
 
     }else{
-        $(document).ready(function(){
-
-
-    });
-
+      $(".modos_jogo").hide();
         document.getElementById('username').innerHTML = "Login";
         document.getElementById('username').setAttribute('href', 'index.html');
 

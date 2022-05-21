@@ -12,7 +12,6 @@
     <script src="js/jogo.js" ></script>
     <script src="js/main.js"></script>
 
-    <link rel="stylesheet" href="esboços_ecras/jogo.css" type="text/css">
   <title>Minesweeper - Multiplayer Mode</title>
 </head>
 <body >
@@ -26,7 +25,7 @@
         <li class="right"><div class="user"><a id="username"></a><span class="profile"></span></div></li>
     </ul>
 </nav>
-    <article class="container">
+    <article >
 
 
         <div id="rankingBox"></div>
@@ -63,11 +62,13 @@
 
 
             <section  class="game gridGame">
-                <span class="centrado" >TURN</span>
-                <span class="timeMulti "id="idTurnPlayer">P1</span>
+                <div><span class="display_info_label">P1:</span><span id="player1"> </span>
+                <span class="display_info_label" >TURN</span>
+                <span class="gameDisplayInfo "id="idTurnPlayer">P1</span>
+                </div>
                 <div class="menu_jogo">
                     <div class="jogador">
-                        <span id="player1"> </span>
+
                     </div>
                     <div class="divPoints" ><span class="display_info_label">Points</span><span class="gameDisplayInfo " id="idPointsPlayer1">000</span></div>
 
@@ -92,16 +93,17 @@
 
 
         <div  class="game gridGame">
-
+            <div><span class="display_info_label">P2:</span><span  id="player2"> </span>
+                <span class="display_info_label" >TURN</span>
+                <span class="gameDisplayInfo "id="idTurnPlayer2">P1</span>
+            </div>
             <div class="menu_jogo">
-                <div class="jogador">
-                    <span id="player2"> </span>
-                </div>
+
                 <div class="divPoints" ><span class="display_info_label">Points</span><span class="gameDisplayInfo " id="idPointsPlayer2">000</span></div>
 
 
 
-                <div class="divTime" ><span class="display_info_label">Time</span><span id="idScreenTempoJogo2" class="gameDisplayInfo" >000</span></div>
+                <div class="divTime" ><span class="display_info_label">Time</span><span id="idScreenTempoJogoP2" class="gameDisplayInfo" >000</span></div>
                 <div id="smileP2" class="buttonStart "></div>
                 <div class="divBombs" ><span class="display_info_label"> Bombs </span><span id="idBombsRemained2" class="gameDisplayInfo">000</span></div>
 
@@ -111,12 +113,12 @@
             </div>
             <div class="downbar">
 
-                <div></span><span class="trophy"><span Class="win " id="timesWonPlayer2">00</span></span></div>
+                <div class="divWin"><span class="trophy"></span><span Class="win " >00</span></div>
 
-                <div><img class="normalicon  centrado" src="img/sound-off.png" alt="desligar som" ></div>
+                <div class="divMute"><img class="mute  " src="img/sound-off.png" alt="desligar som" ></div>
             </div>
         </div>
-            <p id="winMsg"></p>
+
 
        
 

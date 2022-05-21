@@ -9,6 +9,9 @@ window.addEventListener("DOMContentLoaded", isLoggedIn);
 const ID_SPAN_TEMPO_JOGO = "idScreenTempoJogo";
 
 /** Tempo do jogo SINGLE PLAYER e QuickGame */
+const ID_SPAN_TEMPO_JOGOP2 = "idScreenTempoJogoP2";
+
+/** Tempo do jogo SINGLE PLAYER e QuickGame */
 const ID_BOMBS_REMAINED = "idBombsRemained";
 
 /** Tempo do jogo SINGLE PLAYER e QuickGame */
@@ -190,6 +193,7 @@ const NOME_AVATAR_2 = 'nomeAvatar2';
 const IMAGEM_AVATAR_2 = 'imagemAvatar2';
 
 const ID_SPAN_PLAYER_TURN = "idTurnPlayer";
+const ID_SPAN_PLAYER2_TURN = "idTurnPlayer2";
 
 /** Item de local storage que guarda os dados dos jogadores. */
 const ITEM_JOGADORES = 'jogadores';
@@ -200,7 +204,7 @@ const MSG_NO_SCORES_AVAILABLE = "Ainda Não existem Registos";
 
 const openedCellSound = new Audio('../audio/open.mp3');
 const cellExplodedSound = new Audio('../audio/explode.mp3');
-
+const wonGameSound = new Audio('../audio/win.mp3');
 
 var zeroPad = (num, places) =>{
     if(num>=0) {
@@ -249,7 +253,6 @@ const jogo = {
     },
     resetData: function() {
         temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
-        verificarSeAcabou = setInterval(isFinished, 300);
         jogo.won = false;
         jogo.lost = false;
         jogo.turns_played = 0;
@@ -419,17 +422,18 @@ function setRankingMP(winner, loser, pointsWinner, pointsLoser, timeGame, gamety
 
 
 }
-
 function showTopRankingSp(msgGame) {
+    $(".gridGame").hide();
+
     let gameResult = document.createElement("div");
     gameResult.innerHTML = "<span> " + msgGame + " </span>";
     let tittleBox = document.createElement("div");
-    tittleBox.innerHTML = "<span> Ranking Top 10 SinglePlayer </span>";
+    tittleBox.innerHTML = "<span class='titleTypeOfRanking'> Ranking Top 10 SinglePlayer </span>";
     let rankingTop = document.createElement("table");
     rankingTop.setAttribute("class", "rankingTable");
     rankingTop.innerHTML += " <tr><th>Nome Jogador</th><th>Pontos</th><th>Tempo Jogo</th><th>Difficulty</th>   </tr> ";
     let rankingNumber = 0;
-    console.log(jogo.difficulty);
+
 
     rankings.SpRankings.forEach((ranking) => {
         if (ranking.gameType === jogo.difficulty) {
@@ -454,31 +458,54 @@ function showTopRankingSp(msgGame) {
         rankingTop.innerHTML += "<tr><td colspan='3'>" + MSG_NO_SCORES_AVAILABLE + "</td></tr>";
     }
 
-    let divBox = document.getElementById("rankingBox");
-    divBox.setAttribute("class", "ranking centeredDialog");
+    let buttonRestartSp = document.createElement("button");
+    buttonRestartSp.innerText = "Restart ";
+    buttonRestartSp.addEventListener("click", ()=>{
+        jogo.resetGameSp();
+        $(".gridGame").show();
+    });
+    let buttonExitSp = document.createElement("button");
+    buttonExitSp.innerText = "Exit";
+    buttonExitSp.addEventListener("click", ()=>{
+        window.location.replace("index.html");
+    });
+    let buttonGroupSp = document.createElement("div");
+    buttonGroupSp.setAttribute("class","optionRanking");
 
-    divBox.appendChild(gameResult);
-    divBox.appendChild(tittleBox);
-    divBox.appendChild(rankingTop);
-    divBox.appendChild(rankingTop);
+    let divBoxSp = document.getElementById("rankingBox");
+    divBoxSp.setAttribute("class", "rankingWindow");
+    gameResult.setAttribute("class", "gameResult");
+
+    divBoxSp.appendChild(gameResult);
+    divBoxSp.appendChild(tittleBox);
+    divBoxSp.appendChild(rankingTop);
+
+    buttonGroupSp.appendChild(buttonRestartSp);
+    buttonGroupSp.appendChild(buttonExitSp);
+    divBoxSp.appendChild(buttonGroupSp);
+
 }
+
 
 function removeScore() {
     $("#rankingBox").empty();
+    $("#rankingBox").removeClass("rankingWindow");
+
 
 }
 
 function showTopRankingMp(msgGame) {
+    $(".gridGame").hide();
     let gameResult = document.createElement("div");
     gameResult.innerHTML = "<span> " + msgGame + " </span>";
     let tittleBox = document.createElement("div");
-    tittleBox.innerHTML = "<span> Ranking Top 10 Multiplayer </span>";
+    tittleBox.innerHTML = "<span class='titleTypeOfRanking'> Ranking Top 10 Multiplayer </span>";
     let rankingTop = document.createElement("table");
     rankingTop.setAttribute("class", "rankingTable");
     rankingTop.innerHTML += " <tr><th>Winner</th><th>Loser</th><th>Pontos Winner</th> <th>Pontos Loser</th><th>Tempo de Jogo</th><th>Difficuldade</th>  </tr> ";
     let rankingNumber = 0;
-    console.log(jogo.difficulty);
 
+    // verifica quantos jogos há na dificuldade currente
     rankings.MpRankings.forEach((ranking) => {
         if (ranking.gameType === jogo.difficulty) {
             rankingNumber++;
@@ -504,13 +531,34 @@ function showTopRankingMp(msgGame) {
     } else {
         rankingTop.innerHTML += "<tr><td colspan='6'>" + MSG_NO_SCORES_AVAILABLE + "</td></tr>";
     }
+    let buttonRestart = document.createElement("button");
+    buttonRestart.innerText = "Restart ";
+    buttonRestart.addEventListener("click", ()=>{
+        jogo.resetGameMp();
+        $(".gridGame").show();
+    });
+    let buttonExit = document.createElement("button");
+    buttonExit.innerText = "Exit";
+    buttonExit.addEventListener("click", ()=>{
+        window.location.replace("index.html");
+    });
+    let buttonBox = document.createElement("div");
+    buttonBox.setAttribute("class", "buttonDiv")
+    let buttonGroup = document.createElement("div");
+    buttonGroup.setAttribute("class","optionRanking");
+
     let divBox = document.getElementById("rankingBox");
-    divBox.setAttribute("class", "topRankingBox");
-    divBox.setAttribute("class", "centeredDialog");
+    divBox.setAttribute("class", "rankingWindow");
+    gameResult.setAttribute("class", "gameResult");
+
     divBox.appendChild(gameResult);
     divBox.appendChild(tittleBox);
     divBox.appendChild(rankingTop);
-    divBox.appendChild(rankingTop);
+
+    buttonGroup.appendChild(buttonRestart);
+    buttonGroup.appendChild(buttonExit);
+    divBox.appendChild(buttonGroup);
+
 
 }
 
@@ -523,7 +571,8 @@ function showTopRankingMp(msgGame) {
  *
  */
 function iniciarJogoRapido() {
-    $(".game").css("visibility", "visible");
+    $(".gridGame").css("visibility", "visible");
+
     jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
     jogo.difficulty = "EASY";
     init(9, 9, 1);
@@ -638,7 +687,10 @@ function init(linhas, colunas, bombs) {
             celula.setAttribute('class', 'celula');
             celula.setAttribute('id', id);
             celula.setAttribute('alt', 'Celula nº ' + "(" + id + ")");
+            celula.setAttribute('aria-label', 'Celula nº ' + "(" + id + ")");
+            celula.setAttribute('tabindex', String(col +row));
             celula.addEventListener("mouseup", clicado, false);
+
 
             jogo.table_player[0].cells[i][j].buttonTd = celula;
             linha.appendChild(celula);
@@ -656,7 +708,6 @@ function init(linhas, colunas, bombs) {
 
     // Chama mostraTempoJogo() a cada segundo
     temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
-    verificarSeAcabou = setInterval(isFinished, 300);
     verificacaoPontos = setInterval(updatePointsSP, 1000);
     document.getElementById(BTN_ID_RESET_GAME_SP).addEventListener("mouseup", jogo.resetGameSp, false);
 
@@ -672,6 +723,7 @@ function init(linhas, colunas, bombs) {
  */
 function initMulti(linhas, colunas, bombs) {
     initRankings();
+    $(".gridGame").css("visibility", "visible");
     jogo.table_player.push(new Table(linhas, colunas, 1));
     jogo.table_player.push(new Table(linhas, colunas, 1));
 
@@ -742,9 +794,11 @@ function initMulti(linhas, colunas, bombs) {
 
     // Chama mostraTempoJogo() a cada segundo
 
-    temporizadorTempoJogo = setInterval(mostraTempoJogo, 1000);
+    temporizadorTempoJogo = setInterval(()=>{
+        mostraTempoJogo();
+        mostraTempoJogoP2();}, 1000);
 
-    verificarSeAcabou = setInterval(isFinished, 300);
+
     verificacaoPontos = setInterval(updatePointsMP, 1000);
     document.getElementById(BTN_ID_RESET_GAME_MP_P1).addEventListener("mouseup", jogo.resetGameMp, false);
     document.getElementById(BTN_ID_RESET_GAME_MP_P2).addEventListener("mouseup", jogo.resetGameMp, false);
@@ -831,7 +885,7 @@ function clicadoMp(id, e) {
 
         jogo.nextTurn();
         document.getElementById(ID_SPAN_PLAYER_TURN).innerText = "P" + Number(jogo.turn + 1);
-
+        document.getElementById(ID_SPAN_PLAYER2_TURN).innerText = "P" + Number(jogo.turn + 1);
     } else {
         console.log("Jogador errado, espere a sua vez, agora é a vez do jogador " + Number(jogo.turn + 1) + " " + jogo.name_player[jogo.turn]);
 
@@ -849,24 +903,28 @@ function mostraTempoJogo() {
     document.getElementById(ID_SPAN_TEMPO_JOGO).innerHTML = zeroPad(Math.floor((Date.now() / 1000) - jogo.inicio), 3);
 }
 
+function mostraTempoJogoP2() {
+    document.getElementById(ID_SPAN_TEMPO_JOGOP2).innerHTML = zeroPad(Math.floor((Date.now() / 1000) - jogo.inicio), 3);
+}
 /**Função que verifica se o jogo currente acabaou e caso isto se verifique remove e blooqueia o jogo até ser reniciado
  *
  */
-function isFinished() {
+function finishGame() {
 
     // se o Jogo acabou
-    if (jogo.finished) {
-        clearInterval(verificarSeAcabou);
-        let time_played = Math.floor((Date.now() / 1000) - jogo.inicio);
+
+
+
         // Parar todos os timmers
 
         clearInterval(temporizadorTempoJogo);
         clearInterval(verificacaoPontos);
-
+    let time_played = Math.floor((Date.now() / 1000) - jogo.inicio);
         let celulas = document.getElementsByClassName("celula");
         for (let i = 0; i < celulas.length; i++) {
             celulas[i].removeEventListener("mouseup", clicado);
         }
+
         //se foi um jogo ganho
 
         if (jogo.won) {
@@ -876,7 +934,8 @@ function isFinished() {
 
                 setRankingSP(jogo.name_player[0], jogo.table_player[0].points, time_played, jogo.difficulty);
                 jogo.addTimeWonP1();
-                showTopRankingSp(jogo.name_player[0] + " " + MSG_WIN_SP);
+                window.setTimeout(() =>{
+                    showTopRankingSp(jogo.name_player[0] + " " + MSG_WIN_SP);}, 2000);
 
 
                 //caso contrario sabemos que é um multiplayer game
@@ -893,7 +952,8 @@ function isFinished() {
                     pointsLoser = jogo.table_player[1].getPoints();
                     setRankingMP(winner, loser, pointsWinner, pointsLoser, time_played, jogo.difficulty);
                     console.log("ganhou jogador 1");
-                    showTopRankingMp(winner + " " + MSG_WIN_MP + " " + loser);
+                    window.setTimeout(() =>{
+                        showTopRankingMp(winner + " " + MSG_WIN_MP + " " + loser);}, 2000);
                 } else {
                     jogo.addTimeWonP2();
                     winner = jogo.name_player[1];
@@ -901,7 +961,8 @@ function isFinished() {
                     pointsWinner = jogo.table_player[1].getPoints();
                     pointsLoser = jogo.table_player[0].getPoints();
                     setRankingMP(winner, loser, pointsWinner, pointsLoser, time_played, jogo.difficulty);
-                    showTopRankingMp(winner + " " + MSG_WIN_MP + " " + loser);
+                    window.setTimeout(() =>{
+                        showTopRankingMp(winner + " " + MSG_WIN_MP + " " + loser);}, 2000);
                 }
 
 
@@ -912,23 +973,26 @@ function isFinished() {
             if (jogo.table_player[1] === undefined) {
 
                 setLostGame(jogo.name_player[0], time_played);
-                showTopRankingSp(jogo.name_player[0] + " " + MSG_LOSE_SP);
-
+                window.setTimeout(() =>{
+                    showTopRankingSp(jogo.name_player[0] + " " + MSG_LOSE_SP);}, 2000);
             } else {
 
                 if (jogo.table_player[0].lost) {
                     setLostGame(jogo.name_player[0], time_played);
-                    showTopRankingMp(jogo.name_player[0] + " " + MSG_LOSE_MP);
+                    window.setTimeout(() =>{
+                        showTopRankingMp(jogo.name_player[0] + " " + MSG_LOSE_MP);}, 2000);
+
                 } else {
                     setLostGame(jogo.name_player[1], time_played);
-                    showTopRankingMp(jogo.name_player[1] + " " + MSG_LOSE_MP);
+                    window.setTimeout(() =>{
+                        showTopRankingMp(jogo.name_player[1] + " " + MSG_LOSE_MP);}, 2000);
                 }
             }
 
 
 
         }
-    }
+
 
 }
 
@@ -1073,7 +1137,7 @@ class Table {
             this.placedFlags--;
 
         }
-        this.checkIfWon();
+        this.checkIfFinished();
     }
 
     /*penso que esta função não é necessaria
@@ -1104,6 +1168,7 @@ class Table {
                 this.lost = true;
                 jogo.finished = true;
                 jogo.lost = true;
+                finishGame();
                 // caso contrario se não estiver aberto
             } else if (!this.cells[row][col].isOpened()) {
                 // abrir celula
@@ -1197,7 +1262,7 @@ class Table {
         this.cells[row][col].openCell();
         this.points += POINTS_GIVEN_OPENED_CELL;
         this.openedCells++;
-        this.checkIfWon();
+        this.checkIfFinished();
 
 
     }
@@ -1255,7 +1320,7 @@ class Table {
      * abrir é igual a 0, contando as celulas com flag como celulas a menos
      *
      */
-    checkIfWon() {
+    checkIfFinished() {
         // condições para ganhar
         // não existir mais nenhuma celula por abrir
         // estarem exatamente tantas bandeiras quanto o numero de bombas existentes
@@ -1266,7 +1331,12 @@ class Table {
             jogo.finished = true;
             jogo.won = true;
             this.won = true;
+            wonGameSound.play();
         }
+        if(jogo.finished) {
+            finishGame();
+        }
+
 
     }
 

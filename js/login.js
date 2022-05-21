@@ -51,7 +51,7 @@ let jogadores = [];
 /*                                                INICIALIZAÇÃO DA APLICAÇÃO */
 /* ------------------------------------------------------------------------- */
 
-window.addEventListener("load", principal);
+window.addEventListener("DOMContentLoaded", principal);
 
 /* ------------------------------------------------------------------------- */
 

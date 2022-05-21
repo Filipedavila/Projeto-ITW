@@ -8,7 +8,7 @@
     --white: #ffffff;
     /*  ------ Variaveis relacionadas com componentes estaticos do site website --------------------------------------  */
     --background_Color: #FFF5EE;
-    --navBar_color:#0C2340;
+    --navBar_color: #0c2340;
     --navBar_color_Bottom:#0396d6;
     --divBox_background_color:white;
     --divBox_border_color:black;
@@ -123,7 +123,7 @@ progress[value] {
 
     background-origin: border-box;
     opacity: 0.8;
-    padding: 32px;
+
     display: flex;
     justify-content: space-around;
     background-position: center;
@@ -175,11 +175,8 @@ input[type=text], input[type=password] {
 .loginTittle{
     font-size: larger;
     text-align: center;
-    height: auto;
 
-    margin-top: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+
     background: #0C2340;
     order:0;
 
@@ -418,6 +415,7 @@ nav li a{
 
 /* Caixa do jogo */
 .gridGame{
+    visibility: hidden;
     display: flex;
     text-align: center;
     justify-content: center;
@@ -427,6 +425,8 @@ nav li a{
     -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
     -moz-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
     box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
+    box-shadow: inset 0.2em 0.2em 0.2em 0 rgba(255,255,255,0.5), inset -0.2em -0.2em 0.2em 0 rgba(0,0,0,0.5);
+
 }
 /* Tabela criada pelo javascript para jogo*/
 .gameTable{
@@ -442,6 +442,7 @@ nav li a{
     
 }
 .menu_jogo {
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -485,12 +486,11 @@ nav li a{
 .buttonStart{
     background-color: var(--game_button_reset_background_color);
     background-image: var(--game_button_reset_background_image);
-    margin: 10px;
-    border: 2px solid black;
+    border: 1px solid black;
     background-position: center;
-    padding: 5px;
-    padding-right: 0;
-    background-origin: content-box;
+    box-shadow: inset 0.2em 0.2em 0.2em 0 rgba(255,255,255,0.5), inset -0.2em -0.2em 0.2em 0 rgba(0,0,0,0.5);
+
+
     background-repeat: no-repeat;
 
 
@@ -697,12 +697,12 @@ box-shadow: 0 0  3px 3px  #6e7d89;
 
 
 .regras{
-    justify-content: center;
+
     text-align: justify;
+    height: fit-content;
+   width: 100vw;
 
-   width: fit-content;    
 
-   margin: 0 auto;
 }
 
 
@@ -711,10 +711,7 @@ box-shadow: 0 0  3px 3px  #6e7d89;
     background-color: dodgerblue;
 
 }
-.regras {
-    height: fit-content;
-    padding-right: 20px;
-}
+
 
 iframe {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
