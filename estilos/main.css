@@ -1,3 +1,9 @@
+/* ------------------------------------------------------------------------- */
+/* ITW 2021/2022 Grupo 66                                                    */
+/* Filipe Dávila Fernandes, Nº 55981, PL26                                   */
+/* Rita Rodrigues, Nº 54859, PL26                                            */
+/* ------------------------------------------------------------------------- */
+
 /* Font importadada do google fonts     */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Ubuntu+Condensed&display=swap');
 @charset "UTF-8";
@@ -427,10 +433,6 @@
 
 
 /*  ------ Regras Globais --------------------------------------  */
-* {
-
-
-}
 ::-webkit-scrollbar {
     display: none;
 }
@@ -1192,5 +1194,3 @@ footer {
 
 
 }
-
-

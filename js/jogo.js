@@ -1,4 +1,10 @@
 /* ------------------------------------------------------------------------- */
+/* ITW 2021/2022 Grupo 66                                                    */
+/* Filipe Dávila Fernandes, Nº 55981, PL26                                   */
+/* Rita Rodrigues, Nº 54859, PL26                                            */
+/* ------------------------------------------------------------------------- */
+
+/* ------------------------------------------------------------------------- */
 "use strict";
 /* ------------------------Game Screens IDS--------------------------- */
 /**  Current page */
@@ -198,7 +204,6 @@ document.getElementById("audio").addEventListener("click",(event) => {
          wonGameSound.muted = true;
          musicGame.pause();
          $(event.target).attr("class","soundOn");
-
      }else{
          openedCellSound.muted =false;
          cellExplodedSound.muted =false;

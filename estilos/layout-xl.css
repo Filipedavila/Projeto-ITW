@@ -1,3 +1,9 @@
+/* ------------------------------------------------------------------------- */
+/* ITW 2021/2022 Grupo 66                                                    */
+/* Filipe Dávila Fernandes, Nº 55981, PL26                                   */
+/* Rita Rodrigues, Nº 54859, PL26                                            */
+/* ------------------------------------------------------------------------- */
+
 :root {
 
     --game_button_reset_background_image:url("../img/smile64px.png");
@@ -112,10 +118,6 @@ option{
     background-size: contain;
 }
 
-.loginTittle{
-
-}
-
 .loginTittle span{
 
     font-size: 4vh;
@@ -197,10 +199,6 @@ article h1, article h2{
 nav li {
     float: left;
     font-size:4vh;
-
-}
-
-nav ul {
 
 }
 

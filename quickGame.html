@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt">
+
+<!-- ====================================================================== -->
+<!-- ITW 2021/2022 Grupo 66                                                 -->
+<!-- Filipe Dávila Fernandes, Nº 55981, PL26                                -->
+<!-- Rita Rodrigues, Nº 54859, PL26                                         -->
+<!-- ====================================================================== -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,16 +16,12 @@
     <link rel="stylesheet"  href="https://fonts.googleapis.com/css?family=Tangerine">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="esboços_ecras/jogo.css" type="text/css">
-
     <script src="js/jogo.js" ></script>
     <script src="js/main.js"></script>
-
-
-  <title>Minesweeper  - Modo singleplayer</title>
+    <title>Minesweeper  - Modo singleplayer</title>
 </head>
+
 <body onload='iniciarJogoRapido()'>
-
-
         <nav class="navigation"> 
             <ul>
                 <li><a href="index.html">Minesweeper</a></li>
@@ -29,42 +32,24 @@
                 <li class="right"><div class="user"><a id="username"></a><span class="profile"></span></div></li>
             </ul>
         </nav>
-    <article >
+        <article>
         <div id="rankingBox"></div>
-
-  
-            <div  class="gridGame">
-        
-                <div class="menu_jogo">
-
-                    <div class="divPoints" ><span class="display_info_label">Points</span><span class="gameDisplayInfo " id="idPointsSinglePlayer">000</span></div>
-
-
-
-                    <div class="divTime" ><span class="display_info_label">Time</span><span id="idScreenTempoJogo" class="gameDisplayInfo" >000</span></div>
-                    <div id="idResetGame" class="buttonStart "></div>
-                    <div class="divBombs" ><span class="display_info_label"> Bombs </span><span id="idBombsRemained" class="gameDisplayInfo">000</span></div>
-
-                </div>
-                  <div id="idGameTable" class="tablePlace">
-            
-                </div>
-                <div class="downbar">
-
-                    <div class="divWin"><span class="trophy"></span><span Class="win " id="timesWonPlayer1" >00</span></div>
-
-                    <div class="divMute"><span class="mute" id="audio" ></span></div>
-                </div>
+        <div  class="gridGame">
+            <div class="menu_jogo">
+                <div class="divPoints" ><span class="display_info_label">Points</span><span class="gameDisplayInfo " id="idPointsSinglePlayer">000</span></div>
+                <div class="divTime" ><span class="display_info_label">Time</span><span id="idScreenTempoJogo" class="gameDisplayInfo" >000</span></div>
+                <div id="idResetGame" class="buttonStart "></div>
+                <div class="divBombs" ><span class="display_info_label"> Bombs </span><span id="idBombsRemained" class="gameDisplayInfo">000</span></div>
             </div>
-
-                   
-
+            <div id="idGameTable" class="tablePlace"></div>
+            <div class="downbar">
+                <div class="divWin"><span class="trophy"></span><span Class="win " id="timesWonPlayer1" >00</span></div>
+                <div class="divMute"><span class="mute" id="audio" ></span></div>
+            </div>
+        </div>
         </article>
-
-
-        <footer >
+        <footer>
             <p> &copy; Filipe, Rita</p>
         </footer>
-
 </body>
 </html>
