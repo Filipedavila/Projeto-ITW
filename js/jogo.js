@@ -1163,6 +1163,9 @@ class Table {
             if (this.cells[row][col].hasBomb()) {
                 cellExplodedSound.play();
                 this.cells[row][col].explode();
+                window.setTimeout(() =>{
+                   this.explodeAll()}, 500);
+                this.explodeAll();
                 //é posto como verdadeiro o estado jogoCurrente finished
                 this.lost = true;
                 jogo.finished = true;
@@ -1248,6 +1251,18 @@ class Table {
         }
 
 
+    }
+    explodeAll(){
+
+        for (let i = 1; i <= this.row; i++) {
+            // ciclo para iniciar cada celula dessa linha
+            for (let j = 1; j <= this.col; j++) {
+                if(this.cells[i][j].hasBomb() && !this.cells[i][j].isOpen ){
+                    this.cells[i][j].explode();
+
+                }
+            }
+        }
     }
 
     /**Função que abre a celula e faz update do estado do jogo

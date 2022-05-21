@@ -13,7 +13,8 @@
     order: 0;
     display: flex;
     justify-content: center;
-    width: 90vw;
+    width: fit-content;
+    min-width: 60vw;
 }
 .rankingWindow{
     display: flex;
@@ -39,7 +40,9 @@
 .gameResult span{
     font-size: 5vh;
 }
-
+.buttonStyle{
+    font-size: 4vh;
+}
 .optionRanking{
     width: 80%;
     order:4;
