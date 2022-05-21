@@ -3,6 +3,8 @@
 /* ------------------------Game Screens IDS--------------------------- */
 /**  Current page */
 const PAGE_NAME = window.location.pathname.split("/").pop();
+var path = window.location.pathname;
+var currentDirectory = path.substring(0, path.lastIndexOf('/'));
 
 window.addEventListener("DOMContentLoaded", isLoggedIn);
 /** Tempo do jogo SINGLE PLAYER e QuickGame */
@@ -183,10 +185,10 @@ const LOCALSTORAGE_KEY_RANKINGS = "rankings";
 
 const MSG_NO_SCORES_AVAILABLE = "Ainda Não existem Registos";
 
-const openedCellSound = new Audio('../audio/open.mp3');
-const cellExplodedSound = new Audio('../audio/explode.mp3');
-const wonGameSound = new Audio('../audio/win.mp3');
-const musicGame = new Audio('../audio/creative.mp3');
+const openedCellSound = new Audio(currentDirectory+'/audio/open.mp3');
+const cellExplodedSound = new Audio(currentDirectory+'/audio/explode.mp3');
+const wonGameSound = new Audio(currentDirectory+'/audio/win.mp3');
+const musicGame = new Audio(currentDirectory+'/audio/creative.mp3');
 /*
 document.getElementById("audio").addEventListener("click",(event) => {
      let currentClass = $(event.target).attr('class');
@@ -278,15 +280,14 @@ var rankings = {
     MpRankings: [],
     LostGames: []
 }
-/*
-//TODO ver se é necessario e apagar se não for o rankings object em principio ja faz isto
+
 function Ranking(rankingSp, rankingMp, lostGames) {
     this.SpRankings = rankingSp;
     this.MpRankings = rankingMp;
     this.LostGames = lostGames;
 
 }
-*/
+
 /**Construtor tipo objecto RankingSp que guarda informação sobre o ranking
  * de um jogo SinglePlayer
  *
@@ -336,6 +337,7 @@ function isLoggedIn() {
         window.location.replace("index.html");
 
     }
+
 }
 
 function initRankings() {
@@ -456,7 +458,7 @@ function showTopRankingSp(msgGame) {
             }
         }
     } else {
-        rankingTop.innerHTML += "<tr><td colspan='3'>" + MSG_NO_SCORES_AVAILABLE + "</td></tr>";
+        rankingTop.innerHTML += "<tr><td colspan='4'>" + MSG_NO_SCORES_AVAILABLE + "</td></tr>";
     }
 
     let buttonRestartSp = document.createElement("button");
