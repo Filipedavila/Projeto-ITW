@@ -22,10 +22,6 @@ const ID_BOMBS_REMAINED_P1 = "idBombsRemained1";
 const ID_BOMBS_REMAINED_P2 = "idBombsRemained2";
 
 
-/**  Times Won SINGLE PLAYER Information **/
-
-const ID_TIMES_WON_SINGLE_PLAYER = "timesWonPlayer";
-
 /**  Times Won MULTIPLAYER P1 Information **/
 
 const ID_TIMES_WON_MULTIPLAYER_P1 = "timesWonPlayer1";
@@ -64,8 +60,7 @@ const FORM_GAME_DIFFICULTY_SP = "formGameTypeSp";
 /** Intervalo do tempo do jogo */
 var temporizadorTempoJogo;
 
-var verificarSeAcabou;
-
+/** Intervalo de atualização de pontuação */
 var verificacaoPontos;
 
 
@@ -154,11 +149,6 @@ const DIFICULDADE_JOGO_S = 'difficulty';
 /** Item de local storage que guarda as configurações do jogo singleplayer */
 const ITEM_CONFIGURACAO_S = 'configuracao';
 
-/** Identificador do nome do avatar no caso singleplayer */
-const NOME_AVATAR_S = 'nomeAvatar';
-
-/** Identificador da imagem do avatar no caso singleplayer */
-const IMAGEM_AVATAR_S = 'imagemAvatar';
 
 /* ------------------------------------------------------------------------- */
 
@@ -180,19 +170,10 @@ const DIFICULDADE_JOGO_M = 'difficultyMulti';
 /** Item de local storage que guarda as configurações do jogo multiplayer */
 const ITEM_CONFIGURACAO_M = 'configuracaoMulti';
 
-/** Identificador do nome do avatar 1 no caso multiplayer */
-const NOME_AVATAR_1 = 'nomeAvatar1';
-
-/** Identificador da imagem do avatar 1 no caso multiplayer */
-const IMAGEM_AVATAR_1 = 'imagemAvatar1'
-
-/** Identificador do nome do avatar 2 no caso multiplayer */
-const NOME_AVATAR_2 = 'nomeAvatar2';
-
-/** Identificador da imagem do avatar 2 no caso multiplayer */
-const IMAGEM_AVATAR_2 = 'imagemAvatar2';
-
+/** Id do span de visualização do turno atual do player 1*/
 const ID_SPAN_PLAYER_TURN = "idTurnPlayer";
+
+/** Id do span de visualização do turno atual do player 2*/
 const ID_SPAN_PLAYER2_TURN = "idTurnPlayer2";
 
 /** Item de local storage que guarda os dados dos jogadores. */
@@ -205,7 +186,26 @@ const MSG_NO_SCORES_AVAILABLE = "Ainda Não existem Registos";
 const openedCellSound = new Audio('../audio/open.mp3');
 const cellExplodedSound = new Audio('../audio/explode.mp3');
 const wonGameSound = new Audio('../audio/win.mp3');
+const musicGame = new Audio('../audio/creative.mp3');
+/*
+document.getElementById("audio").addEventListener("click",(event) => {
+     let currentClass = $(event.target).attr('class');
+     if(currentClass == "mute"){
+         openedCellSound.muted = true;
+         cellExplodedSound.muted = true;
+         wonGameSound.muted = true;
+         musicGame.pause();
+         $(event.target).attr("class","soundOn");
 
+     }else{
+         openedCellSound.muted =false;
+         cellExplodedSound.muted =false;
+         wonGameSound.muted =false;
+         musicGame.play();
+         $(event.target).attr("class","mute");
+     }
+});
+*/
 var zeroPad = (num, places) =>{
     if(num>=0) {
        return String(num).padStart(places, '0');
@@ -278,6 +278,7 @@ var rankings = {
     MpRankings: [],
     LostGames: []
 }
+/*
 //TODO ver se é necessario e apagar se não for o rankings object em principio ja faz isto
 function Ranking(rankingSp, rankingMp, lostGames) {
     this.SpRankings = rankingSp;
@@ -285,7 +286,7 @@ function Ranking(rankingSp, rankingMp, lostGames) {
     this.LostGames = lostGames;
 
 }
-
+*/
 /**Construtor tipo objecto RankingSp que guarda informação sobre o ranking
  * de um jogo SinglePlayer
  *
@@ -575,11 +576,12 @@ function showTopRankingMp(msgGame) {
  *
  */
 function iniciarJogoRapido() {
+    musicGame.play();
     $(".gridGame").css("visibility", "visible");
 
     jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
     jogo.difficulty = "EASY";
-    init(9, 9, 10);
+    init(9, 9, BOMBS_GAME_EASY);
 
 }
 
@@ -588,6 +590,7 @@ function iniciarJogoRapido() {
  *
  */
 function iniciarJogo() {
+    musicGame.play();
     var tamanho = $("input[type=radio][name=difficulty]:checked").val();
     if (tamanho != null) {
         $("#" + FORM_GAME_DIFFICULTY_SP).hide();
@@ -610,6 +613,7 @@ function iniciarJogo() {
  *
  */
 function iniciarJogoMP() {
+    musicGame.play();
     var tamanho = $("input[type=radio][name=difficulty]:checked").val();
     var nomePlayer2 = $("#nomePlayer2").val();
     var exists = existsPlayer(nomePlayer2);
@@ -663,7 +667,7 @@ function existsPlayer(user) {
  */
 function init(linhas, colunas, bombs) {
     initRankings();
-    let table = new Table(linhas, colunas, 1);
+    let table = new Table(linhas, colunas, bombs);
     jogo.table_player.push(table);
     jogo.row = Number(linhas);
     jogo.col = Number(colunas);
@@ -728,8 +732,8 @@ function init(linhas, colunas, bombs) {
 function initMulti(linhas, colunas, bombs) {
     initRankings();
     $(".gridGame").css("visibility", "visible");
-    jogo.table_player.push(new Table(linhas, colunas, 1));
-    jogo.table_player.push(new Table(linhas, colunas, 1));
+    jogo.table_player.push(new Table(linhas, colunas, bombs));
+    jogo.table_player.push(new Table(linhas, colunas, bombs));
 
     console.log("criou table");
 

@@ -42,7 +42,8 @@
     --game_display_info_text_color:red;
     --game_display_font:Consolas;
 
-
+    --game_sound_off_image:url("../img/sound-off.png");
+    --game_sound_on_image:url("../img/sound-on.png");
     /*  ------ Variaveis dos butões das celulas do jogo --------------------------------------  */
     --game_cells_background_color :#e7e7e78e;
     --game_cells_background_color_hover :rgba(128, 128, 128, 0.678);
@@ -503,7 +504,12 @@ nav li a{
     border: 1px solid grey;
 
 }
-
+.mute{
+    background-image: var(--game_sound_off_image);
+}
+.soundOn{
+    background-image: var(--game_sound_on_image);
+}
 .points{
     border: 1px solid grey;
     color: red;

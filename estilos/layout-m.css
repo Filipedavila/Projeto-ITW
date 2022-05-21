@@ -358,6 +358,10 @@ input[type=radio] {
 
 
 }
+.soundOn{
+    width: 4vh;
+    height: 4vh;
+}
 
 .time {
     order: 0;
