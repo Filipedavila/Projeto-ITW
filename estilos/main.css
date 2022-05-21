@@ -6,6 +6,10 @@
 :root {
     --blue: #1e90ff;
     --white: #ffffff;
+    --H2_h3_th_TITLES_TEXT_COLOR:black;
+    --Normal_text_Colors:black
+    --H1_TITLES_TEXT_COLOR:black;
+
     /*  ------ Variaveis relacionadas com componentes estaticos do site website --------------------------------------  */
     --background_Color: #FFF5EE;
     --navBar_color: #0c2340;
@@ -74,6 +78,7 @@
 
     /*  ------ Variaveis relacionada com os rankings do jogo --------------------------------------  */
     --ranking_Top_Title_background_color:#0C2340;
+    --tutorial_heading_background_color:dodgerblue;
     --ranking_table_background_color:silver;
     --ranking_table_border_color:black;
     --ranking_th_background_color:darkblue;
@@ -83,6 +88,10 @@
     --ranking_tr_text_color_odd:black;
     --ranking_tr_text_color_even:black;
 
+    /******************************** somos nos ************************/
+
+    --somosNos_Card_Text_Color:black;
+    --SomosNos_descricao_text:black;
 }
 /*  -------------------------------- Themes  ----------------------------------------- */
 .darkTheme{
@@ -313,6 +322,7 @@
 
 
     /*  ------ Variaveis relacionada com os rankings do jogo --------------------------------------  */
+    --tutorial_heading_background_color:#461F00;
     --ranking_Top_Title_background_color:#502900;
     --ranking_table_background_color:silver;
     --ranking_table_border_color:black;
@@ -327,6 +337,13 @@
 }
 
 .neonTheme{
+    --Normal_text_Colors:white;
+    --H2_h3_th_TITLES_TEXT_COLOR:yellow;
+    --H1_TITLES_TEXT_COLOR:yellow;
+    --somosNos_Card_Text_Color:white;
+    --SomosNos_descricao_text:white;
+    --tutorial_heading_background_color:#2243B6;
+
     --background_Color: #1b1a1b;
     --navBar_color: rgb(61, 61, 61);
     --navBar_color_Bottom:#2243B6;
@@ -393,6 +410,7 @@
 
 
     /*  ------ Variaveis relacionada com os rankings do jogo --------------------------------------  */
+    --tutorial_heading_background_color:#2243B6;
     --ranking_Top_Title_background_color:yellow;
     --ranking_table_background_color:silver;
     --ranking_table_border_color:black;
@@ -402,6 +420,7 @@
     --ranking_tr_background_color_even:lightgray;
     --ranking_tr_text_color_odd:black;
     --ranking_tr_text_color_even:black;
+    /******************************** somos nos ************************/
 
 
 }
@@ -579,14 +598,21 @@ h1 {
     font-family: 'Fredoka One', cursive;
     text-align: center;
     font-size:3vw;
+    color: var(--H1_TITLES_TEXT_COLOR);
 }
 
 h2 ,th , h3 {
+    color:var(--H2_h3_th_TITLES_TEXT_COLOR);
     font-family: 'Fredoka One', cursive;
     text-align: center;
     font-size:2vw;
 }
-p, li, ol , td ,span{
+p, li, ol {
+    color:var(--Normal_text_Colors);
+    font-family: 'Ubuntu Condensed', sans-serif;
+    font-size:2vw;
+}
+td,span{
     font-family: 'Ubuntu Condensed', sans-serif;
     font-size:2vw;
 }
@@ -1044,7 +1070,7 @@ box-shadow: 0 0  3px 3px  #6e7d89;
 
 /*  ---------------##################   Tutorial  ##############-------------------------------- */
 .headingTutorial{
-    background-color: dodgerblue;
+    background-color: var(--tutorial_heading_background_color)
 
 }
 
@@ -1144,8 +1170,12 @@ iframe {
 .wrapperCard {
     padding: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: var(--somosNos_Card_Text_Color);
 }
 
+ quote{
+    color: var(--SomosNos_descricao_text);
+}
 
 
 /*  --------------------------------   FOOTER  ----------------------------------------- */
