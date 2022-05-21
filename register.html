@@ -26,7 +26,7 @@
             </ul>
         </nav>   
         <article>
-                <div>
+
                     <form id="frmRegisto">
                         <div>
                             <div>
@@ -41,14 +41,14 @@
                         <div>
                             <div>
                                 <label for="password">Password:</label>
-                                <input type="password"  class="form-control" name="password" id="password">
+                                <input type="password"  class="form-control" name="password" id="password" required>
                             </div>
                             <div>
                                 <label for="password2">Repita sua Password:</label>
-                                <input type="password"  class="form-control" name="password2" id="password2">
+                                <input type="password"  class="form-control" name="password2" id="password2" required>
                              </div>
                         </div>
-                        <div class="faixaEtaria">
+
                             <label for="selFaixaEtaria">Faixa Etária</label>
                             <select name="faixaEtaria" id="selFaixaEtaria" required>
                                 <option value="5-10">5 a 10 anos</option>
@@ -59,29 +59,25 @@
                                 <option value="35-50">35 a 50 anos</option>
                                 <option value="+50">mais de 50 anos</option>
                             </select>
-                        </div>
+
                         <div class="genero">
 
-
-
-
                             <label for="chkMasculino">Masculino</label>
-                            <input id="chkMasculino" type="radio" name="genero" value="Masculino">
+                            <input id="chkMasculino" type="radio" name="genero" value="Masculino" required>
                             <label for="chkFeminino">Feminino</label>
-                            <input id="chkFeminino" type="radio" name="genero" value="Feminino">
+                            <input id="chkFeminino" type="radio" name="genero" value="Feminino" required>
 
                             <label for="chkOutro">Outro</label>
-                            <input id="chkOutro" type="radio" name="genero" value="Outro">
+                            <input id="chkOutro" type="radio" name="genero" value="Outro" required>
 
                         </div>
 
-                        <div>
-                            <button id="btnFazerRegisto" type="button">Registar</button>
+                        <div class="divButton">
+                            <button class="buttonStyle" id="btnFazerRegisto" type="button">Registar</button>
                         </div>
 
                  </form>
 
-                 </div>
 
 
 

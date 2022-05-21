@@ -465,6 +465,8 @@ function showTopRankingSp(msgGame) {
         $(".gridGame").show();
     });
     let buttonExitSp = document.createElement("button");
+    buttonRestartSp.setAttribute("class","buttonStyle");
+    buttonExitSp.setAttribute("class","buttonStyle");
     buttonExitSp.innerText = "Exit";
     buttonExitSp.addEventListener("click", ()=>{
         window.location.replace("index.html");
@@ -551,6 +553,8 @@ function showTopRankingMp(msgGame) {
     divBox.setAttribute("class", "rankingWindow");
     gameResult.setAttribute("class", "gameResult");
 
+    buttonRestart.setAttribute("class","buttonStyle");
+    buttonExit.setAttribute("class","buttonStyle");
     divBox.appendChild(gameResult);
     divBox.appendChild(tittleBox);
     divBox.appendChild(rankingTop);
@@ -575,7 +579,7 @@ function iniciarJogoRapido() {
 
     jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
     jogo.difficulty = "EASY";
-    init(9, 9, 1);
+    init(9, 9, 10);
 
 }
 
@@ -1096,8 +1100,8 @@ class Table {
     scrambleBombs(firsOpenedRow, firsOpenedCol) {
         let bombsToPlace = this.bombs;
         while (bombsToPlace != 0) {
-            let colRandom = Math.floor(Math.random() * (this.col - 1)) + 1;
-            let rowRandom = Math.floor(Math.random() * (this.row - 1)) + 1;
+            let colRandom = Math.floor(Math.random() * (this.col )) + 1;
+            let rowRandom = Math.floor(Math.random() * (this.row )) + 1;
             if (colRandom == firsOpenedCol && rowRandom == firsOpenedRow) continue;
             console.log(colRandom);
             console.log(rowRandom);
@@ -1140,15 +1144,6 @@ class Table {
         this.checkIfFinished();
     }
 
-    /*penso que esta função não é necessaria
-    removeFlag(row,col){
-        if(this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened()){
-            this.cells[row][col].removeFlag();
-            this.placedFlags--;
-
-
-        }
-    }/**/
 
     /**Método que responsavel pela lógica associada à abertura de celulas
      *

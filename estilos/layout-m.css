@@ -2,29 +2,29 @@
 
     --game_button_reset_background_image:url("../img/smile64px.png");
 
-    --game_cell_explosion_effect1:url("../img/mine32px.png");
-    --game_menu_background_image_Active:url("../img/explosion24px.png");
-    --game_cells_flag_image: url("../img/portugal24px.png");
-    --game_cells_question_image:url("../img/question24px.png");
+    --game_cell_explosion_effect1:url("../img/mine64px.png");
+    --game_menu_background_image_Active:url("../img/explosion64px.png");
+    --game_cells_flag_image: url("../img/portugal32px.png");
+    --game_cells_question_image:url("../img/question32px.png");
 }
 
 /*--------------  Ranking TOP 10 Box window ----------*/
-#rankingBox{
-    order: 0;
-    display: flex;
-    justify-content: center;
-    width: 90vw;
-}
+
+
 .rankingWindow{
+margin: 1vh;
+    order: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     align-self: center;
-    padding:20px;
+
+   padding: 2vh;
+    border: 1px solid black;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    margin-bottom: 20px;
-    width: 80vw;
+
+
 }
 
 .gameResult{
@@ -48,7 +48,7 @@
     flex-direction: row;
 }
 .optionRanking button{
-    padding: 2vh;
+    padding: 3px;
     font-size: 4vh;
     width: fit-content;
 
@@ -56,9 +56,13 @@
 }
 
 
+.login{
+    width: 50vw;
+}
 
-
-
+.login button{
+    font-size: 4vh;
+}
 
 
 
@@ -120,6 +124,7 @@ option{
 }
 .login {
     align-self: center;
+
 }
 .titleTypeOfRanking{
     font-size: 4vh;
@@ -208,12 +213,13 @@ nav ul {
     flex-direction: row;
     padding: 0;
     margin: 0;
+    word-break: keep-all;
     flex-wrap: wrap;
     order:1;
     justify-content: center;
     align-self: center;
     justify-self: center;
-    width: 30vw;
+    width: 40vw;
 
 }
 
@@ -223,7 +229,7 @@ nav ul {
 
 .mine{
 
-    background-size:24vh 24vh;
+    background-size:contain;
 
     width:15vh;
     height:15vh ;
@@ -265,12 +271,12 @@ nav ul {
 .celula{
     box-shadow: inset 0.2em 0.2em 0.2em 0 rgba(255,255,255,0.5), inset -0.2em -0.2em 0.2em 0 rgba(0,0,0,0.5);
 
-    width: 5vh;
-    height: 5vh;
+    width: 4vh;
+    height: 4vh;
 }
 .openedCell{
-    width: 5vh;
-    height: 5vh;
+    width: 4vh;
+    height: 4vh;
 }
 
 .centrado{
@@ -284,11 +290,18 @@ nav ul {
 
 
 /* ----- Escolha difficuldade do jogo -----------*/
-#formGameTypeSp{
-    width: 90vw;
+#formGameTypeSp,#frmMultiPlayerSettings{
+    margin: 1vh;
+    width: 60vw;
 
 }
-#formGameTypeSp span{
+.MpPlayerName{
+    font-size: 5vh;
+}
+.MpPlayerName input{
+    font-size: 4vh;
+}
+#formGameTypeSp span,#frmMultiPlayerSettings span{
     font-size: 5vh;
 
 }
@@ -530,26 +543,39 @@ iframe{
 
 
 /* ----------------- Ranking ---------------------*/
+#rankingBox{
+    order: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    min-width: 70vw;
+}
+/*Ranking depois de um jogo*/
+.rankingTable{
+    text-align: center;
+    justify-self: center;
+    width: 60vw;
+}
 
-
+.rankingTable th{
+    font-size: 3vh;
+}
+.rankingTable td{
+    font-size: 3vh;
+}
+/* ranking na pagina de rankings*/
 .ranking{
 
     display: flex;
     flex-direction: column;
     justify-content: center;
+    justify-items: center;
 
     height: 100%;
-    width: 100%;
+    width: 100vw;
 }
 
-#rankingBox th {
-    font-size: 4vh;
-}
-
-
-#rankingBox  td {
-    font-size: 6vh;
-}
 
 .title{
     text-align: center;
@@ -560,6 +586,49 @@ iframe{
 
 }
 
+/**  Registro de Utilizadores */
+#frmRegisto{
+
+    width: 50vw;
+}
+
+#frmRegisto input{
+    height: 5vh;
+    font-size: 5vh;
+}
+#frmRegisto label{
+    text-align: left;
+    font-size: 3vh;
+
+
+}
+#frmRegisto select{
+    width: fit-content;
+
+
+
+}
+#frmRegisto option{
+    text-align: center;
+
+}
+#frmRegisto button{
+    text-align: right;
+
+}
+.divButton{
+    display: flex;
+    justify-content: right;
+
+}
+.genero{
+    margin-top: 2vh;
+    display: flex;
+    justify-content: space-between;
+
+
+
+}
 
 /* ----------------- Quem Somos ---------------------*/
 .container h2{
@@ -591,14 +660,11 @@ iframe{
 .wrapperCard{
     overflow: hidden;
     align-self: center;
-    height: 18vw;
+    min-height: 25vw;
     width: 19vw;
     margin: 5vh;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-
-
-
-
+    height: fit-content;
 
 }
 .perfil{
@@ -612,13 +678,13 @@ iframe{
 .perfil img{
 
 
-    width: 20vh;
+    width: 25vh;
 
 
 }
 .wrapperCard p{
     line-height: 2vw;
-    font-size: 1vw ;
+    font-size:3vh ;
 }
 .descricão {
 
@@ -760,7 +826,7 @@ footer{
 
 }
 .interrogation{
-    background-size: 6vh 6vh;
+    background-size: contain;
 }
 .bombCell{
     background-size: 6vh 6vh;

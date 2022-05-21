@@ -62,6 +62,7 @@ function principal() {
         // Associar comportamento a elementos na página HTML.
         currentUser = JSON.parse(sessionStorage.getItem("user"));
         defineEventHandlersParaElementosHTML();
+        initRankings();
 
     }
 }
@@ -105,15 +106,13 @@ function mostraEstatistica() {
 
         mostraTempoMédio();
     } else if (this.selectedIndex === 4) {
-
-        mostraTempoMédio()
-    } else if (this.selectedIndex === 5) {
         showTopRankingSp()
 
-
-
-    } else if (this.selectedIndex === 6) {
+    } else if (this.selectedIndex === 5) {
         showTopRankingMp();
+
+
+
     }
 }
 
@@ -127,7 +126,7 @@ function mostraEstatistica() {
 
 function mostraNumeroJogos() {
 
-    initRankings();
+
     let rankingTop = document.createElement("table");
     rankingTop.setAttribute("class", "rankingTable");
     rankingTop.innerHTML += " <tr><th>Jogador</th><th>Jogos SP</th><th>Jogos MP</th> <th>Jogos Perdidos</th><th>Total</th>  </tr> ";
@@ -193,7 +192,7 @@ function mostraNumeroJogos() {
 
 function mostraTempoTotal() {
 
-    initRankings();
+
     let rankingTop = document.createElement("table");
     rankingTop.setAttribute("class", "rankingTable");
     rankingTop.innerHTML += " <tr><th>Jogador</th><th>Tempo SP</th><th>Tempo MP</th> <th>Tempo Jogos Perdidos</th><th>Tempo Total</th>  </tr> ";
@@ -251,7 +250,7 @@ function mostraTempoTotal() {
 function mostraTempoMédio() {
 
 
-    initRankings();
+
     let rankingTop = document.createElement("table");
     rankingTop.setAttribute("class", "rankingTable");
     rankingTop.innerHTML += " <tr><th></th><th colspan='3'>Single Player Mode</th><th colspan='3'>Multiplayer Mode</th> </tr> ";
@@ -315,13 +314,10 @@ function isLoggedIn() {
 
 function initRankings(){
     let loadRankings = getRankings();
-    if(loadRankings == null){
-        rankings = new Ranking(new Array(),new Array());
 
-    }else {
         rankings = JSON.parse(loadRankings);
 
-    }
+
 
 }
 
@@ -396,7 +392,7 @@ function showTopRankingSp(){
  *
  */
 function showTopRankingMp(){
-    initRankings();
+
     $("#rankingBox").empty();
 
     let rankingTop = document.createElement("table");

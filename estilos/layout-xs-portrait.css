@@ -98,7 +98,8 @@ font-size: small;
 #rankingBox{
  order:0;
 
-
+    min-width: 80vw;
+    width: fit-content;
 }
 
 .loginTittle span{
@@ -109,7 +110,11 @@ font-size: small;
 
 
 }
+.MpPlayerName{
+    font-size: 8vw;
+}
 .login {
+    margin: 3vw;
 align-self: center;
 }
 .titleTypeOfRanking{
@@ -274,6 +279,7 @@ nav li {
 radioDifficultyGame{
     display: flex;
     flex-direction: row;
+    width: fit-content;
 }
 .radioDifficultyGame label{
     font-size: 7vw;
@@ -469,29 +475,31 @@ font-size: large;
 }
 .tutorial h1 ,.regras h1{
     font-size: 6vh;
+    width: fit-content;
 
 }
 
 .tutorial h2, .regras h2  {
     font-size: 5vh;
+    width: fit-content;
 }
 
 .tutorial p,.regras p,.regras h3,.tutorial li,.tutorial h3, .regras td,.regras th{
-
+    width: fit-content;
     font-size: 4vh;
 }
 
 iframe{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     padding: 20px;
-    width: 90vw;
+    width: 70vw;
     height: 60vw;
 }
 
 .videoTutorial{
     margin: 0 auto;
     width: 100%;
-    grid-row-start: 4;
+
     height: 100%;
 
 
@@ -504,6 +512,27 @@ iframe{
 
 }
 
+/**  Registro de Utilizadores */
+#frmRegisto{
+width: 100vw;
+}
+
+#frmRegisto input{
+    height: 5vh;
+    font-size: 4vh;
+}
+#frmRegisto label{
+    text-align: left;
+    font-size: 4vh;
+
+
+}
+#frmRegisto option{
+    text-align: center;
+
+
+
+}
 
 
 /* ----------------- Ranking ---------------------*/

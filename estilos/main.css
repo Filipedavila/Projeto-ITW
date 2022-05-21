@@ -1,6 +1,6 @@
 /* Font importadada do google fonts     */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Ubuntu+Condensed&display=swap');
-
+@charset "UTF-8";
 
 /*  ------ Variaveis Globais--------------------------------------  */
 :root {
@@ -19,9 +19,9 @@
     --navBar_button_currentPage_text_color_hover:black;
     --navBar_text_color:#ffffff;
     --navBar_settings_user_image:url("../img/profile.png");
-
-
-
+    --stylled_button_website_background_gradient:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
+    --stylled_button_website_background_color:#3d94f6;
+    --stylled_button_website_text_color:#ffffff;
     /*  ------ Variaveis relacionadas com a escolha do tipo de jogo --------------------------------------  */
     --game_menu_background_image:url("../img/mine.png");
     --game_menu_background_image_Active:url("../img/explosion.png");
@@ -30,6 +30,8 @@
 
 
     /*  ------ Variaveis relacionadas com o jogo em si  --------------------------------------  */
+
+    --Ranking_Window_Background_color:white;
     --game_table_background_color:silver;
     --game_table_border_color:black;
     --game_zone_border_color:black;
@@ -70,7 +72,7 @@
 
 
     /*  ------ Variaveis relacionada com os rankings do jogo --------------------------------------  */
-
+    --ranking_Top_Title_background_color:#0C2340;
     --ranking_table_background_color:silver;
     --ranking_table_border_color:black;
     --ranking_th_background_color:darkblue;
@@ -94,7 +96,7 @@ progress[value] {
 
     -webkit-appearance: none;
     appearance: none;
-
+    accent-color: green;
     width: 250px;
     height: 20px;
 }
@@ -143,27 +145,28 @@ input[type=text], input[type=password] {
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
-.myButton {
+.buttonStyle {
     box-shadow:inset 0px 0px 0px 0px #97c4fe;
-    background:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
-    background-color:#3d94f6;
+    background:var(--stylled_button_website_background_gradient);
+    background-color:var(--stylled_button_website_background_color);
     border-radius:5px;
     border:1px solid #337fed;
     display:inline-block;
     cursor:pointer;
-    color:#ffffff;
-    font-family:Arial;
-    font-size:15px;
+    color:var(--stylled_button_website_text_color);
+    font-family:Fredoka;
+
     font-weight:bold;
-    padding:7px 22px;
+
+    margin: 7px;
     text-decoration:none;
     text-shadow:0px 1px 0px #1570cd;
 }
-.myButton:hover {
+.buttonStyle:hover {
     background:linear-gradient(to bottom, #1e62d0 5%, #3d94f6 100%);
     background-color:#1e62d0;
 }
-.myButton:active {
+.buttonStyle:active {
     position:relative;
     top:1px;
 }
@@ -570,7 +573,7 @@ nav li a{
 .celula{
 
     background-color:var(--game_cells_background_color);
-    border: 2px;
+
     border: 1px solid var(--game_cells_border_color);
 -webkit-box-shadow:  0 0  3px 3px  #6e7d89;
 -moz-box-shadow: 0 0 3px 3px  #6e7d89;
@@ -726,6 +729,14 @@ iframe {
 
 /*  --------------------------------   Ranking  ----------------------------------------- */
 
+.rankingWindow{
+     background-color: var(--Ranking_Window_Background_color);
+    border: 1px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+
+}
+
 .topRankingTitle{
     font-size: larger;
     text-align: center;
@@ -734,7 +745,7 @@ iframe {
     margin-top: 0;
     padding-top: 0;
     padding-bottom: 0;
-    background: #0C2340;
+    background: var(--ranking_Top_Title_background_color);
     order:0;
 
 
@@ -754,22 +765,9 @@ iframe {
     justify-items: center;
 
 }
-. centeredDialog {
-    z-index: 99 !important;
-    display: flex;
-    justify-content: center;
-    transform: translate(-50%, -50%);
-}
 
-.ranking table {
-    padding: 4px;
-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-border: 1px solid black;
-    -webkit-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
-    box-shadow: 5px 2px 17px 1px rgba(0,0,0,0.75);
-    height: fit-content;
-}
+
+
 
 .rankingTable{
     background-color: var(--ranking_table_background_color);
@@ -799,7 +797,7 @@ border: 1px solid black;
 
     gap: 0;
     text-align: center;
-    border: 1px solid black;
+
 
 }
 

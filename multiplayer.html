@@ -15,7 +15,7 @@
   <title>Minesweeper - Multiplayer Mode</title>
 </head>
 <body >
-<nav class="navigation">
+<nav >
     <ul>
         <li><a href="index.html">Minesweeper</a></li>
         <li class="active"><a href="quickGame.html">Jogar</a></li>
@@ -28,7 +28,7 @@
     <article >
 
 
-        <div id="rankingBox"></div>
+
         <form class="login" id="frmMultiPlayerSettings" >
             <div class="loginTittle">
                 <span> Modo Multiplayer </span>
@@ -53,13 +53,13 @@
 
             </div>
             <div class="btnPlay">
-                <button class="myButton" type="button" id="btnJogarSinglePlayer" onclick="iniciarJogoMP()" >Jogar</button>
+                <button class="buttonStyle" type="button" id="btnJogarSinglePlayer" onclick="iniciarJogoMP()" >Jogar</button>
             </div>
 
 
         </form>
 
-
+        <div id="rankingBox"></div>
 
             <section  class="game gridGame">
                 <div><span class="display_info_label">P1:</span><span id="player1"> </span>

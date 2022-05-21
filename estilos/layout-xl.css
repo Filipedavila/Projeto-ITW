@@ -2,10 +2,10 @@
 
     --game_button_reset_background_image:url("../img/smile64px.png");
 
-    --game_cell_explosion_effect1:url("../img/mine32px.png");
-    --game_menu_background_image_Active:url("../img/explosion24px.png");
-    --game_cells_flag_image: url("../img/portugal24px.png");
-    --game_cells_question_image:url("../img/question24px.png");
+    --game_cell_explosion_effect1:url("../img/mine64px.png");
+    --game_menu_background_image_Active:url("../img/explosion64px.png");
+    --game_cells_flag_image: url("../img/portugal32px.png");
+    --game_cells_question_image:url("../img/question32px.png");
 }
 
 /*--------------  Ranking TOP 10 Box window ----------*/
@@ -190,6 +190,7 @@ nav li {
     font-size:4vh;
 
 }
+
 nav ul {
 
 }
@@ -204,6 +205,7 @@ nav ul {
 
 /* Menu Escolha de tipo de jogo Grid position */
 .modos_jogo{
+
     display: flex;
     flex-direction: row;
     padding: 0;
@@ -213,7 +215,7 @@ nav ul {
     justify-content: center;
     align-self: center;
     justify-self: center;
-    width: 30vw;
+    width: 50vh;
 
 }
 
@@ -222,12 +224,15 @@ nav ul {
 /* Botão Mina */
 
 .mine{
-
-    background-size:24vh 24vh;
-
-    width:15vh;
-    height:15vh ;
+    background-size: contain;
     background-origin: padding-box;
+    width:16vh;
+    height:16vh ;
+    text-align: center;
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
     box-shadow: inset hsla(0,0%,15%,  1) 0  0px 0px 1px, /* border */
     inset hsla(0,0%,15%, .8) 0 -1px 5px 2px, /* soft SD */
     inset hsla(0,0%,0%, .25) 0 -1px 0px 3px, /* bottom SD */
@@ -239,12 +244,14 @@ nav ul {
 
 
 .mine:active {
-    width:15vh;
-    height:15vh ;
+
+    width:16vh;
+    height:16vh ;
     background-image: url("../img/explosion.png");
     background-repeat: no-repeat;
     transform: scale(0.99);
-    background-origin: content-box;
+    background-size: contain;
+    background-origin: padding-box;
     opacity: 0.8;
 
     display: flex;
@@ -259,7 +266,7 @@ nav ul {
 .gamelabel {
     font-family: "Ubuntu Condensed";
     font-weight: bold;
-    font-size:5vh;
+    font-size:4vh;
 }
 /* Tamanho de Celulas do Jogo */
 .celula{
@@ -285,13 +292,19 @@ nav ul {
 
 /* ----- Escolha difficuldade do jogo -----------*/
 #formGameTypeSp{
-    width: 90vw;
+    width: 30vw;
 
 }
 #formGameTypeSp span{
-    font-size: 5vh;
+    font-size: 4vh;
 
 }
+#formGameTypeSp button{
+    font-size: 4vh;
+
+}
+
+
 radioDifficultyGame{
     display: flex;
     flex-direction: row;
@@ -303,7 +316,7 @@ radioDifficultyGame{
 input[type=radio] {
     border: 0px;
     width: 3vh;
-    height: 2em;
+    height: 3vh;
 }
 .infoLogin p{
     text-align: center;
@@ -358,8 +371,8 @@ input[type=radio] {
 /** Botão de restart com smilley*/
 .buttonStart{
     order:1;
-    width: 7vh;
-    height: 7vh;
+    width: 6vh;
+    height: 6vh;
 
     margin: 2vw;
     box-shadow: inset 0.2em 0.2em 0.2em 0 rgba(255,255,255,0.5), inset -0.2em -0.2em 0.2em 0 rgba(0,0,0,0.5);
@@ -531,7 +544,11 @@ iframe{
 
 /* ----------------- Ranking ---------------------*/
 
-
+/*Ranking depois de um jogo*/
+.rankingTable td{
+    font-size: 2vh;
+}
+/* ranking na pagina de rankings*/
 .ranking{
 
     display: flex;
@@ -548,7 +565,7 @@ iframe{
 
 
 #rankingBox  td {
-    font-size: 6vh;
+    font-size: 3vh;
 }
 
 .title{
@@ -591,8 +608,9 @@ iframe{
 .wrapperCard{
     overflow: hidden;
     align-self: center;
-    height: 18vw;
+    min-height: 25vw;
     width: 19vw;
+    height: fit-content;
     margin: 5vh;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 
@@ -612,13 +630,13 @@ iframe{
 .perfil img{
 
 
-    width: 20vh;
+    width: 30vh;
 
 
 }
 .wrapperCard p{
     line-height: 2vw;
-    font-size: 1vw ;
+    font-size: 3vh ;
 }
 .descricão {
 
@@ -648,6 +666,50 @@ iframe{
 .textoContainer p{
 
     font-size:medium;
+}
+
+/**  Registro de Utilizadores */
+#frmRegisto{
+
+    width: 50vw;
+}
+
+#frmRegisto input{
+    height: 5vh;
+    font-size: 5vh;
+}
+#frmRegisto label{
+    text-align: left;
+    font-size: 3vh;
+
+
+}
+#frmRegisto select{
+    width: fit-content;
+
+
+
+}
+#frmRegisto option{
+    text-align: center;
+
+}
+#frmRegisto button{
+    text-align: right;
+
+}
+.divButton{
+    display: flex;
+    justify-content: right;
+
+}
+.genero{
+    margin-top: 2vh;
+    display: flex;
+    justify-content: space-between;
+
+
+
 }
 
 
@@ -756,11 +818,11 @@ footer{
 
 }
 .flagCell{
-    background-size: 6vh 6vh;
+    background-size: contain;
 
 }
 .interrogation{
-    background-size: 6vh 6vh;
+    background-size: contain;
 }
 .bombCell{
     background-size: 6vh 6vh;
