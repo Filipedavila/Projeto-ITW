@@ -24,7 +24,10 @@ function principal() {
         $("body").addClass("darkTheme");
     }else if (tema == "darkTheme"){
         $('body').addClass("darkTheme");
-
+    }else if (tema == 'woodTheme') {
+        $('body').addClass('woodTheme');
+    } else if (tema == 'neonTheme') {
+        $('body').addClass('neonTheme');
     }
 
     document.getElementById('username').setAttribute('href', 'user.html');
