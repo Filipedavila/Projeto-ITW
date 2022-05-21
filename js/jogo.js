@@ -195,24 +195,26 @@ const openedCellSound = new Audio(currentDirectory+'/audio/open.mp3');
 const cellExplodedSound = new Audio(currentDirectory+'/audio/explode.mp3');
 const wonGameSound = new Audio(currentDirectory+'/audio/win.mp3');
 const musicGame = new Audio(currentDirectory+'/audio/creative.mp3');
-/*
-document.getElementById("audio").addEventListener("click",(event) => {
-     let currentClass = $(event.target).attr('class');
-     if(currentClass == "mute"){
+var isMusicOn = true;
+document.getElementById("audio").addEventListener("click",() => {
+
+    if(isMusicOn){
          openedCellSound.muted = true;
          cellExplodedSound.muted = true;
          wonGameSound.muted = true;
          musicGame.pause();
-         $(event.target).attr("class","soundOn");
+        isMusicOn = false;
+         $("#audio").attr("class","soundOn");
      }else{
          openedCellSound.muted =false;
          cellExplodedSound.muted =false;
          wonGameSound.muted =false;
          musicGame.play();
-         $(event.target).attr("class","mute");
+        $("#audio").attr("class","mute");
+        isMusicOn = true;
      }
 });
-*/
+
 var zeroPad = (num, places) =>{
     if(num>=0) {
        return String(num).padStart(places, '0');

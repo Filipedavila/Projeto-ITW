@@ -15,6 +15,7 @@
     --H2_h3_th_TITLES_TEXT_COLOR:black;
     --Normal_text_Colors:black;
     --H1_TITLES_TEXT_COLOR:black;
+    --footer-Text-Color:white;
 
     /*  ------ Variaveis relacionadas com componentes estaticos do site website --------------------------------------  */
     --background_Color: #FFF5EE;
@@ -520,7 +521,9 @@ input[type=text], input[type=password] {
     top:1px;
 }
 
-
+footer p{
+    color: var(--footer-Text-Color);
+}
 
 
 
