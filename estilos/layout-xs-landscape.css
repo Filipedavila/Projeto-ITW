@@ -330,12 +330,7 @@ input[type=radio] {
     font-size: 6vh;
 
 }
-.mute{
-    width: 8vh;
-    height: 8vh;
 
-
-}
 
 .time {
     order: 0;
@@ -349,8 +344,8 @@ input[type=radio] {
 /** Botão de restart com smilley*/
 .buttonStart{
     order:1;
-    width: 3vh;
-    height: 3vh;
+    width: 8vh;
+    height: 8vh;
 
     margin: 2vw;
     box-shadow: inset 0.2em 0.2em 0.2em 0 rgba(255,255,255,0.5), inset -0.2em -0.2em 0.2em 0 rgba(0,0,0,0.5);
@@ -370,7 +365,20 @@ input[type=radio] {
     order:1;
 }
 .divMute{
+    display: flex;
     order:2;
+}
+.mute{
+    width: 8vh;
+    height: 8vh;
+
+
+}
+.soundOn{
+    width: 8vh;
+    height: 8vh;
+
+
 }
 .divBombs{
     order:2;

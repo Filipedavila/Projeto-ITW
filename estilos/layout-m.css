@@ -351,12 +351,14 @@ input[type=radio] {
 
 }
 .mute{
+    order:1;
     width: 4vh;
     height: 4vh;
 
 
 }
 .soundOn{
+    order:1;
     width: 4vh;
     height: 4vh;
 }
@@ -395,6 +397,7 @@ input[type=radio] {
     order:1;
 }
 .divMute{
+    display: flex;
     order:2;
 }
 .divBombs{

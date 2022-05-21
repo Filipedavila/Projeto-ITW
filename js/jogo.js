@@ -195,25 +195,10 @@ const openedCellSound = new Audio(currentDirectory+'/audio/open.mp3');
 const cellExplodedSound = new Audio(currentDirectory+'/audio/explode.mp3');
 const wonGameSound = new Audio(currentDirectory+'/audio/win.mp3');
 const musicGame = new Audio(currentDirectory+'/audio/creative.mp3');
+const placingFlag = new Audio(currentDirectory+'/audio/flag.mp3');
+const question = new Audio(currentDirectory+'/audio/question.mp3');
 var isMusicOn = true;
-document.getElementById("audio").addEventListener("click",() => {
 
-    if(isMusicOn){
-         openedCellSound.muted = true;
-         cellExplodedSound.muted = true;
-         wonGameSound.muted = true;
-         musicGame.pause();
-        isMusicOn = false;
-         $("#audio").attr("class","soundOn");
-     }else{
-         openedCellSound.muted =false;
-         cellExplodedSound.muted =false;
-         wonGameSound.muted =false;
-         musicGame.play();
-        $("#audio").attr("class","mute");
-        isMusicOn = true;
-     }
-});
 
 var zeroPad = (num, places) =>{
     if(num>=0) {
@@ -579,13 +564,29 @@ function showTopRankingMp(msgGame) {
 
 
 
-
 /*
 /**Função responsavel por iniciar o jogo singleplayer e perguntar o nivel de dificuld
  *
  */
 function iniciarJogoRapido() {
+    document.getElementById("audio").addEventListener("click",() => {
+
+        if(isMusicOn){
+
+            musicGame.pause();
+
+            isMusicOn = false;
+            $("#audio").attr("class","soundOn");
+        }else{
+
+            musicGame.play();
+            $("#audio").attr("class","mute");
+            isMusicOn = true;
+        }
+    });
     musicGame.play();
+    musicGame.volume =0.1;
+    musicGame.loop=true;
     $(".gridGame").css("visibility", "visible");
 
     jogo.name_player[0] = JSON.parse(sessionStorage.getItem("user"));
@@ -599,7 +600,24 @@ function iniciarJogoRapido() {
  *
  */
 function iniciarJogo() {
+    document.getElementById("audio").addEventListener("click",() => {
+
+        if(isMusicOn){
+
+            musicGame.pause();
+
+            isMusicOn = false;
+            $("#audio").attr("class","soundOn");
+        }else{
+
+            musicGame.play();
+            $("#audio").attr("class","mute");
+            isMusicOn = true;
+        }
+    });
     musicGame.play();
+    musicGame.volume =0.1;
+    musicGame.loop=true;
     var tamanho = $("input[type=radio][name=difficulty]:checked").val();
     if (tamanho != null) {
         $("#" + FORM_GAME_DIFFICULTY_SP).hide();
@@ -622,7 +640,43 @@ function iniciarJogo() {
  *
  */
 function iniciarJogoMP() {
+    document.getElementById("audio").addEventListener("click",() => {
+
+        if(isMusicOn){
+
+            musicGame.pause();
+
+            isMusicOn = false;
+            $("#audio").attr("class","soundOn");
+            $("#audio2").attr("class","soundOn");
+        }else{
+
+            musicGame.play();
+            $("#audio").attr("class","mute");
+            $("#audio2").attr("class","mute");
+            isMusicOn = true;
+        }
+    });
+    document.getElementById("audio2").addEventListener("click",() => {
+
+        if(isMusicOn){
+
+            musicGame.pause();
+
+            isMusicOn = false;
+            $("#audio").attr("class","soundOn");
+            $("#audio2").attr("class","soundOn");
+        }else{
+
+            musicGame.play();
+            $("#audio").attr("class","mute");
+            $("#audio2").attr("class","mute");
+            isMusicOn = true;
+        }
+    });
     musicGame.play();
+    musicGame.volume =0.1;
+    musicGame.loop=true;
     var tamanho = $("input[type=radio][name=difficulty]:checked").val();
     var nomePlayer2 = $("#nomePlayer2").val();
     var exists = existsPlayer(nomePlayer2);
@@ -853,7 +907,7 @@ function clicadoSp(id, e) {
 
 
     if (e.button == 0) {
-        openedCellSound.play();
+
         jogo.table_player[0].open(row, col);
     } else if (e.button == 1) {
 
@@ -885,7 +939,7 @@ function clicadoMp(id, e) {
 
 
         if (e.button == 0) {
-            openedCellSound.play();
+
             currentPlayer.open(row, col);
         } else if (e.button == 1) {
 
@@ -1129,7 +1183,7 @@ class Table {
         this.scrambled = true;
     }
     placeQuestion(row, col) {
-
+        question.play();
         if (!this.cells[row][col].hasFlag() && !this.cells[row][col].isQuestioned()) {
             this.cells[row][col].placeQuestion();
 
@@ -1144,6 +1198,7 @@ class Table {
      * @param col
      */
     placeFlag(row, col) {
+        placingFlag.play();
         if (!this.cells[row][col].hasFlag() && !this.cells[row][col].isOpened() && !this.cells[row][col].isQuestioned()) {
             this.cells[row][col].placeFlag();
             this.placedFlags++;
@@ -1281,7 +1336,7 @@ class Table {
      * @requires !this.cells[row][col].isOpened() &&  !this.cells[row][col].hasBomb()
      */
     openCell(row, col) {
-
+        openedCellSound.play();
         this.cells[row][col].openCell();
         this.points += POINTS_GIVEN_OPENED_CELL;
         this.openedCells++;

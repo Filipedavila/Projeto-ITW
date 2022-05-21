@@ -360,8 +360,17 @@ input[type=radio] {
 
 }
 .mute{
-    width: 4vh;
-    height: 4vh;
+    order:1;
+    height: 5vh;
+    width: 5vh;
+
+
+
+}
+.soundOn{
+    order:1;
+    height: 5vh;
+    width: 5vh;
 
 
 }
@@ -400,6 +409,7 @@ input[type=radio] {
     order:1;
 }
 .divMute{
+    display: flex;
     order:2;
 }
 .divBombs{
@@ -435,7 +445,7 @@ input[type=radio] {
     justify-content:space-evenly;
 
 
-    width: 100%;
+    width: 30vw;
 
 
 
@@ -547,7 +557,10 @@ iframe{
     order:0;
 
 }
+.instructions li{
+font-size: 3vh;
 
+}
 
 /* ----------------- Ranking ---------------------*/
 
@@ -600,8 +613,11 @@ iframe{
 
 
 }
+.headingTutorial{
+    font-size: 3vh;
+}
 .headingTutorial span{
-    font-size: 5vh;
+    font-size: 3vh;
 
 }
 .perfilContainer p {

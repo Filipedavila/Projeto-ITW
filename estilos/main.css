@@ -862,11 +862,26 @@ nav li a{
     border: 1px solid grey;
 
 }
-.mute{
-    background-image: var(--game_sound_off_image);
-}
 .soundOn{
+    border: 1px solid grey;
+    background-image: var(--game_sound_off_image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:contain;
+
+    background-origin:padding-box;
+    box-shadow: inset 0.2em 0.2em 0.2em 0 rgba(255,255,255,0.5), inset -0.2em -0.2em 0.2em 0 rgba(0,0,0,0.5);
+}
+.mute{
+    border: 1px solid grey;
+
     background-image: var(--game_sound_on_image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:contain;
+
+    background-origin:padding-box;
+    box-shadow: inset 0.2em 0.2em 0.2em 0 rgba(255,255,255,0.5), inset -0.2em -0.2em 0.2em 0 rgba(0,0,0,0.5);
 }
 .points{
     border: 1px solid grey;
@@ -919,10 +934,7 @@ nav li a{
     color: var(--game_display_info_text_color);
     font-family: var(--game_display_font);
     background-color: var(--game_display_info_background_color);
-
     text-align: center;
-
-    width: fit-content;
 
 
 }
