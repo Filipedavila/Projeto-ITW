@@ -246,6 +246,167 @@
 }
 
 
+.woodTheme{
+    --background_Color: #E6BF83;
+    --navBar_color: #A0793D;
+    --navBar_color_Bottom:#502900;
+    --divBox_background_color:white;
+    --divBox_border_color:black;
+    --divBox_tittle_color:white;
+    --navBar_button_hover_backg_color:#0C2340;
+    --navBar_button_hover_text_color:black;
+    --navBar_button_currentPage_color:#461F00;
+    --navBar_button_currentPage_text_color_hover:black;
+    --navBar_text_color:#ffffff;
+    --navBar_settings_user_image:url("../img/profile.png");
+    --stylled_button_website_background_gradient:linear-gradient(to bottom, #E6BF83 5%, #A0793D 100%);
+    --stylled_button_website_background_color:#A0793D;
+    --stylled_button_website_text_color:#ffffff;
+    /*  ------ Variaveis relacionadas com a escolha do tipo de jogo --------------------------------------  */
+    --game_menu_background_image:url("../img/mine.png");
+    --game_menu_background_image_Active:url("../img/explosion.png");
+    --game_menu_background_color:#502900;
+    --game_menu_text_color:#FFF5EE;
+
+
+    /*  ------ Variaveis relacionadas com o jogo em si  --------------------------------------  */
+
+    --Ranking_Window_Background_color:white;
+    --game_table_background_color:#6E470B;
+    --game_table_border_color:black;
+    --game_zone_border_color:black;
+    --game_button_reset_background_image:url("../img/smile.png");
+    --game_button_reset_background_color:silver;
+    --game_button_reset_background_color_active:dimgrey;
+    --game_display_info_background_color:black;
+    --game_display_info_text_color:red;
+    --game_display_font:Consolas;
+
+    --game_sound_off_image:url("../img/sound-off.png");
+    --game_sound_on_image:url("../img/sound-on.png");
+    /*  ------ Variaveis dos butões das celulas do jogo --------------------------------------  */
+    --game_cells_background_color :white;
+    --game_cells_background_color_hover :rgba(128, 128, 128, 0.678);
+    --game_cells_background_color_active:#e7e7e78e;
+    --game_cells_border_color:black;
+    --game_cells_background_color_opened:silver;
+    --game_cells_explode_image:url("../img/explosionCell2.png");
+    --game_cells_flag_image: url("../img/portuguese-flag.png");
+    --game_cells_question_image:url("../img/interrogation.png");
+    --game_image_trophy:url("../img/icons8-troféu-20.png");
+    --game_adjacent_bomb_1:blue;
+    --game_adjacent_bomb_2:green;
+    --game_adjacent_bomb_3:red;
+    --game_adjacent_bomb_4:darkblue;
+    --game_adjacent_bomb_5:purple;
+    --game_adjacent_bomb_6:lightgreen;
+    --game_adjacent_bomb_7:OrangeRed;
+    --game_adjacent_bomb_8:Yellow;
+
+    /*  ------ Variaveis do efeito de explosão das minas --------------------------------------  */
+    --game_cell_explosion_effect1:url("../img/mineCell.png");
+    --game_cell_explosion_effect2:url("../img/explosionCell.png");
+    --game_cell_explosion_effect_Background_color2: rgb(227, 17, 17);
+    --game_cell_explosion_effect3:url("../img/explosionCell2.png");
+    --game_cell_explosion_effect_Background_color3:rgb(223, 254, 136);
+    --game_cell_explosion_effect4:url("../img/explosionCell2.png");
+
+
+    /*  ------ Variaveis relacionada com os rankings do jogo --------------------------------------  */
+    --ranking_Top_Title_background_color:#502900;
+    --ranking_table_background_color:silver;
+    --ranking_table_border_color:black;
+    --ranking_th_background_color:#502900;
+    --ranking_th_text_color:white;
+    --ranking_tr_background_color_odd:blanchedalmond;
+    --ranking_tr_background_color_even:lightgray;
+    --ranking_tr_text_color_odd:black;
+    --ranking_tr_text_color_even:black;
+
+
+}
+
+.neonTheme{
+    --background_Color: #1b1a1b;
+    --navBar_color: rgb(61, 61, 61);
+    --navBar_color_Bottom:#2243B6;
+    --divBox_background_color:white;
+    --divBox_border_color:black;
+    --divBox_tittle_color:white;
+    --navBar_button_hover_backg_color:#2243B6;
+    --navBar_button_hover_text_color:yellow;
+    --navBar_button_currentPage_color:#2243B6;
+    --navBar_button_currentPage_text_color_hover:black;
+    --navBar_text_color:#ffffff;
+    --navBar_settings_user_image:url("../img/profile.png");
+    --stylled_button_website_background_gradient:linear-gradient(to bottom, #3d94f6 5%, #2243B6 100%);
+    --stylled_button_website_background_color:#FFFF66;
+    --stylled_button_website_text_color:#ffffff;
+    /*  ------ Variaveis relacionadas com a escolha do tipo de jogo --------------------------------------  */
+    --game_menu_background_image:url("../img/mine.png");
+    --game_menu_background_image_Active:url("../img/explosion.png");
+    --game_menu_background_color: red;
+    --game_menu_text_color:white;
+
+
+    /*  ------ Variaveis relacionadas com o jogo em si  --------------------------------------  */
+
+    --Ranking_Window_Background_color:white;
+    --game_table_background_color:	#A7F432;
+    --game_table_border_color:black;
+    --game_zone_border_color:black;
+    --game_button_reset_background_image:url("../img/smile.png");
+    --game_button_reset_background_color:silver;
+    --game_button_reset_background_color_active:dimgrey;
+    --game_display_info_background_color:black;
+    --game_display_info_text_color:red;
+    --game_display_font:Consolas;
+
+    --game_sound_off_image:url("../img/sound-off.png");
+    --game_sound_on_image:url("../img/sound-on.png");
+    /*  ------ Variaveis dos butões das celulas do jogo --------------------------------------  */
+    --game_cells_background_color :#e7e7e78e;
+    --game_cells_background_color_hover :rgba(128, 128, 128, 0.678);
+    --game_cells_background_color_active:#e7e7e78e;
+    --game_cells_border_color:black;
+    --game_cells_background_color_opened:silver;
+    --game_cells_explode_image:url("../img/explosionCell2.png");
+    --game_cells_flag_image: url("../img/portuguese-flag.png");
+    --game_cells_question_image:url("../img/interrogation.png");
+    --game_image_trophy:url("../img/icons8-troféu-20.png");
+    --game_adjacent_bomb_1:blue;
+    --game_adjacent_bomb_2:green;
+    --game_adjacent_bomb_3:red;
+    --game_adjacent_bomb_4:darkblue;
+    --game_adjacent_bomb_5:purple;
+    --game_adjacent_bomb_6:lightgreen;
+    --game_adjacent_bomb_7:OrangeRed;
+    --game_adjacent_bomb_8:Yellow;
+
+    /*  ------ Variaveis do efeito de explosão das minas --------------------------------------  */
+    --game_cell_explosion_effect1:url("../img/mineCell.png");
+    --game_cell_explosion_effect2:url("../img/explosionCell.png");
+    --game_cell_explosion_effect_Background_color2: rgb(227, 17, 17);
+    --game_cell_explosion_effect3:url("../img/explosionCell2.png");
+    --game_cell_explosion_effect_Background_color3:rgb(223, 254, 136);
+    --game_cell_explosion_effect4:url("../img/explosionCell2.png");
+
+
+    /*  ------ Variaveis relacionada com os rankings do jogo --------------------------------------  */
+    --ranking_Top_Title_background_color:yellow;
+    --ranking_table_background_color:silver;
+    --ranking_table_border_color:black;
+    --ranking_th_background_color:yellow;
+    --ranking_th_text_color:black;
+    --ranking_tr_background_color_odd:white;
+    --ranking_tr_background_color_even:lightgray;
+    --ranking_tr_text_color_odd:black;
+    --ranking_tr_text_color_even:black;
+
+
+}
+
+
 /*  ------ Regras Globais --------------------------------------  */
 * {
 
