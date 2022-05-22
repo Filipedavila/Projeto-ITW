@@ -162,7 +162,7 @@ option{
     padding: 2vh;
 }
 
-article{
+article, main{
     overflow: scroll;
 
     display: flex;
@@ -613,11 +613,8 @@ font-size: 3vh;
 
 
 }
-.headingTutorial{
-    font-size: 3vh;
-}
 .headingTutorial span{
-    font-size: 3vh;
+    font-size: 5vh;
 
 }
 .perfilContainer p {
@@ -668,7 +665,7 @@ font-size: 3vh;
     width: 100%;
 
 }
-.textoContainer quote{
+.textoContainer p{
     font-size: 4vh;
 
     text-align: justify;
@@ -685,10 +682,6 @@ font-size: 3vh;
     grid-row-start:4;
 
 
-}
-.textoContainer p{
-
-    font-size:medium;
 }
 
 /**  Registro de Utilizadores */
@@ -752,7 +745,7 @@ font-size: 3vh;
     font-size:4vh;
 
 }
-article button{
+article button, main button{
     justify-items: right;
     font-size: 8vh;
     width: fit-content;

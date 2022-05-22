@@ -3,10 +3,10 @@
 /* Filipe Dávila Fernandes, Nº 55981, PL26                                   */
 /* Rita Rodrigues, Nº 54859, PL26                                            */
 /* ------------------------------------------------------------------------- */
+@charset "UTF-8";
 
 /* Font importadada do google fonts     */
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Ubuntu+Condensed&display=swap');
-@charset "UTF-8";
 
 /*  ------ Variaveis Globais--------------------------------------  */
 :root {
@@ -102,6 +102,12 @@
 }
 /*  -------------------------------- Themes  ----------------------------------------- */
 .darkTheme{
+
+    --H2_h3_th_TITLES_TEXT_COLOR:white;
+    --Normal_text_Colors:white;
+    --H1_TITLES_TEXT_COLOR:white;
+
+
     --background_Color: #1b1a1b;
     --navBar_color: #0071ff;
     --navBar_color_Bottom:#000000;
@@ -177,12 +183,17 @@
     --ranking_tr_background_color_even:lightgray;
     --ranking_tr_text_color_odd:black;
     --ranking_tr_text_color_even:black;
+
+    /******************************** somos nos ************************/
+
+    --somosNos_Card_Text_Color:white;
+    --SomosNos_descricao_text:white;
 
 
 }
 
 .lightTheme{
-    --background_Color: #1b1a1b;
+    --background_Color: #FFF5EE;
     --navBar_color: #0071ff;
     --navBar_color_Bottom:#000000;
     --divBox_background_color:white;
@@ -190,10 +201,11 @@
     --divBox_tittle_color:white;
     --navBar_button_hover_backg_color:#0C2340;
     --navBar_button_hover_text_color:yellow;
-    --navBar_button_currentPage_color:#000000;
-    --navBar_button_currentPage_text_color_hover:black;
+    --navBar_button_currentPage_color:#0C2340;
+    --navBar_button_currentPage_text_color_hover:yellow;
     --navBar_text_color:#ffffff;
     --navBar_settings_user_image:url("../img/profile.png");
+    --footer-Text-Color:black;
     --stylled_button_website_background_gradient:linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
     --stylled_button_website_background_color:#3d94f6;
     --stylled_button_website_text_color:#ffffff;
@@ -257,7 +269,6 @@
     --ranking_tr_background_color_even:lightgray;
     --ranking_tr_text_color_odd:black;
     --ranking_tr_text_color_even:black;
-
 
 }
 
@@ -431,7 +442,6 @@
 
 
 }
-
 
 /*  ------ Regras Globais --------------------------------------  */
 ::-webkit-scrollbar {

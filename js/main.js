@@ -26,8 +26,8 @@ function principal() {
     document.getElementById('username').innerHTML = JSON.parse(sessionStorage.getItem('user'));
     let tema = JSON.parse(sessionStorage.getItem("theme"));
     console.log(tema);
-    if(tema === "lightTheme"){
-        $("body").addClass("darkTheme");
+    if(tema == "lightTheme"){
+        $("body").addClass("lightTheme");
     }else if (tema == "darkTheme"){
         $('body').addClass("darkTheme");
     }else if (tema == 'woodTheme') {

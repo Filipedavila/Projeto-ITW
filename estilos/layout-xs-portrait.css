@@ -144,7 +144,7 @@ align-self: center;
     font-size: 8vw;
 }
 
-article{
+article, main{
     overflow: scroll;
     text-align: center;
     display: flex;
@@ -637,7 +637,7 @@ width: 100vw;
     width: 100%;
 
 }
-.textoContainer quote{
+.textoContainer p{
     font-size: 6vw;
 
     text-align: justify;
@@ -656,11 +656,6 @@ width: 100vw;
 
 
 }
-.textoContainer p{
-
-    font-size:medium;
-}
-
 
 /* Perfil do utilizador*/
 
@@ -676,7 +671,7 @@ width: 100vw;
     font-size:6vw;
 
 }
-article button{
+article button, main button{
     justify-items: right;
     font-size: 8vw;
     width: fit-content;
